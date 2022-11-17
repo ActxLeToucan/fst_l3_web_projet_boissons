@@ -1,0 +1,60 @@
+@startuml
+
+left to right direction
+
+enum Gender {
+    MALE
+    FEMALE
+    OTHER
+}
+
+class User {
+    id: number
+    login: text
+    password: text
+    firstname: text
+    lastname: text
+    birthdate: date
+    email: text
+    phone: text
+
+    ' ADRESSE '
+    city: text
+    zip: text
+    street: text
+}
+User "1" -- "1" Gender: gender
+
+class Produit {
+    titre: text
+    preparation: text
+}
+Produit "1" -- "*" Ingredient: ingredients
+
+class Ingredient {
+    quantite: number
+    unite: text
+}
+Ingredient "1" -- "1" Aliment: aliment
+
+class Aliment {
+    id: number
+    nom: text
+}
+
+class SubCateg {
+
+}
+SubCateg "*" -- "1" Aliment: aliment
+SubCateg "*" -- "1" Aliment: aliment_sub
+
+class SupCateg {
+
+}
+SupCateg "*" -- "1" Aliment: aliment
+SupCateg "*" -- "1" Aliment: aliment_sup
+
+Produit "0..*" -- "0..1" User
+(Produit, User) .. Favoris
+
+@enduml

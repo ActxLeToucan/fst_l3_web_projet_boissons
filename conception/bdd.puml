@@ -25,11 +25,11 @@ class User {
 }
 User "1" -- "1" Gender: gender
 
-class Produit {
+class Recette {
     titre: text
     preparation: text
 }
-Produit "1" -- "*" Ingredient: ingredients
+Recette "1" -- "*" Ingredient: ingredients
 
 class Ingredient {
     quantite: number
@@ -54,7 +54,6 @@ class SupCateg {
 SupCateg "*" -- "1" Aliment: aliment
 SupCateg "*" -- "1" Aliment: aliment_sup
 
-Produit "0..*" -- "0..1" User
-(Produit, User) .. Favoris
+Recette "*" -- "*" User: favoris
 
 @enduml

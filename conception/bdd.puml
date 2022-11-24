@@ -23,7 +23,7 @@ class User {
     zip: text
     street: text
 }
-User "1" -- "1" Gender: gender
+User "*" -- "1" Gender: gender
 
 class Recipe {
     title: text

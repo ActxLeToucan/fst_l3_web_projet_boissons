@@ -36,7 +36,7 @@ class Ingredient {
     quantity: number
     unit: text
 }
-Ingredient "1" -- "1" Aliment: aliment
+Ingredient "*" -- "1" Aliment: aliment
 
 class Aliment {
     id: number

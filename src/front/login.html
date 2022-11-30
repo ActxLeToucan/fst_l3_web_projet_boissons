@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script> <!-- TAILWIND CDN FOR STYLE -->
+    <script type="module" src="./scripts/index.js"></script>
+    <title> Cocktails & cie - Connexion </title>
+</head>
+<body class="flex flex-col w-screen h-screen bg-slate-700">
+    <!-- START HEADER -->
+    <div id="header" class="flex w-full h-fit p-2 sticky top-0">
+        
+    </div>
+    <!-- END HEADER -->
+
+    <!-- START MAIN -->
+    <div class="flex flex-col grow h-fit justify-center">
+
+        <!-- START MODAL -->
+        <div class="flex flex-col w-fit h-fit border-2 border-pink-600 rounded-lg shadow-lg bg-slate-700 mx-auto">
+            <div class="flex grow h-fit p-2 bg-pink-600">
+                <h1 class="text-xl font-extrabold text-slate-200"> Se connecter </h1>
+            </div>
+            <div class="flex flex-col grow h-fit p-4 space-y-4">
+                <div class="flex h-fit w-full justify-between space-x-4">
+                    <div class="flex flex-col justify-center">
+                        <p class="text-slate-200 font-semibold text-md"> Email : </p>
+                    </div>
+                    <input
+                        name="email" type="email"
+                        class="border-2 border-slate-500 bg-slate-700 rounded outline-none focus:border-slate-300 text-md text-slate-200 px-1 transition-all"
+                    >
+                </div>
+                <div class="flex h-fit w-full justify-between space-x-4">
+                    <div class="flex flex-col justify-center">
+                        <p class="text-slate-200 font-semibold text-md"> Mot de passe : </p>
+                    </div>
+                    <input
+                        name="password" type="password"
+                        class="border-2 border-slate-500 bg-slate-700 rounded outline-none focus:border-slate-300 text-md text-slate-200 px-1 transition-all"
+                    >
+                </div>
+            </div>
+            <span class="flex grow h-[2px] bg-pink-600 rounded mx-4"></span>
+            <div class="flex justify-between p-4">
+                <a class="border-2 border-transparent rounded px-2 bg-transparent text-slate-200 font-semibold transition-all
+                    hover:bg-pink-600 cursor-pointer" onclick="window.location = window.origin"> Annuler </a>
+                <a class="border-2 border-pink-600 rounded px-2 bg-transparent text-slate-200 font-semibold transition-all
+                    hover:bg-pink-600 cursor-pointer" onclick=""> Continuer </a>
+            </div>
+        </div>
+        <!-- END MODAL -->
+    </div>
+</body>
+</html>

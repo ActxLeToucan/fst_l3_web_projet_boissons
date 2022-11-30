@@ -1,39 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script> <!-- TAILWIND CDN FOR STYLE -->
-    <script type="module" src="./index.js"></script>
+    <script type="module" src="./scripts/index.js"></script>
     <title> Cocktails & cie </title>
 </head>
 <body class="flex flex-col w-screen h-screen bg-slate-700">
     <!-- START HEADER -->
     <div id="header" class="flex w-full h-fit p-2 sticky top-0">
-        <div class="flex grow h-fit rounded-lg shadow-xl bg-transparent border-2 border-pink-600 px-4 py-4">
-            <div class="flex flex-col justify-center w-fit">
-                <h1 class="text-2xl font-extrabold text-pink-600"> Cocktails & Cie </h1>
-            </div>
-            <div class="flex justify-center grow space-x-8">
-                <a class="text-xl font-semibold text-pink-600 px-2 rounded cursor-pointer
-                          transition-all hover:bg-pink-600 hover:text-slate-700" href="/list"> Cocktails </a>
-                <a class="text-xl font-semibold text-pink-600 px-2 rounded cursor-pointer
-                          transition-all hover:bg-pink-600 hover:text-slate-700" href="/favorites"> Favorites </a>
-            </div>
-            <div class="flex justify-end">
-                <div id="is-connected">
-                    <a class="border-2 border-pink-600 rounded px-2 bg-transparent text-pink-500 font-semibold transition-all
-                    hover:border-pink-600 hover:text-slate-700 hover:bg-pink-600" href="/profile"> Mon profile </a>
-                </div>
-                <div id="is-disconnected" class="space-x-4">
-                    <a class="border-2 border-transparent rounded px-2 bg-transparent text-pink-600 font-semibold transition-all
-                          hover:text-slate-700 hover:bg-pink-600" href="/register"> S'inscrire </a>
-                    <a class="border-2 border-pink-600 rounded px-2 bg-transparent text-pink-500 font-semibold transition-all
-                          hover:border-pink-600 hover:text-slate-700 hover:bg-pink-600" href="/login"> Se connecter </a>
-                </div>
-            </div>
-        </div>
+        
     </div>
     <!-- END HEADER -->
 
@@ -48,25 +26,25 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
                     </svg>
                 </div>
-                <h1 class="text-[6em] font-extrabold text-pink-600 mx-auto my-0 p-0"> Bienvenue </h1>
+                <h1 class="text-[6em] font-extrabold text-slate-200 mx-auto my-0 p-0"> Bienvenue </h1>
                 <div class="flex justify-center flex-col">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20 text-pink-600" style="transform: scale(-1, 1)">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
                     </svg>
                 </div>
             </div>
-            <h1 class="text-[3em] font-bold italic text-pink-600 mx-auto my-0 p-0"> Sur Cocktails & Cie ! </h1>
+            <h1 class="text-[3em] font-bold italic text-slate-400 mx-auto my-0 p-0"> Sur Cocktails & Cie ! </h1>
         </div>
         <!-- END BANNER -->
 
         <!-- START CONTENT -->
         <div class="flex justify-evenly grow">
             <a class="rounded-lg shadow-lg px-4 py-2 h-fit bg-pink-600 text-pink-100 text-xl font-semibold border-4 border-pink-600 transition-all
-                      hover:border-pink-500 hover:shadow-xl hover:-translate-y-1" href="/list"> Voir les Cocktails </a>
+                      hover:border-pink-500 hover:shadow-xl hover:-translate-y-1" href="/list.html"> Voir les Cocktails </a>
             <a class="rounded-lg shadow-lg px-4 py-2 h-fit bg-pink-600 text-pink-100 text-xl font-semibold border-4 border-pink-600 transition-all
-                      hover:border-pink-500 hover:shadow-xl hover:-translate-y-1" href="/favorites"> Mes favoris </a>
+                      hover:border-pink-500 hover:shadow-xl hover:-translate-y-1" href="/favorites.html"> Mes favoris </a>
             <a class="rounded-lg shadow-lg px-4 py-2 h-fit bg-pink-600 text-pink-100 text-xl font-semibold border-4 border-pink-600 transition-all
-                    hover:border-pink-500 hover:shadow-xl hover:-translate-y-1" href="/login"> Se connecter </a>
+                    hover:border-pink-500 hover:shadow-xl hover:-translate-y-1" href="/login.html"> Se connecter </a>
         </div>
         <!-- END CONTENT -->
     </div>

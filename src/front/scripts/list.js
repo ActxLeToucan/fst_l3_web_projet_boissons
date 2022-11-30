@@ -16,13 +16,14 @@ const COCKTAIL_TILE_BODY = `<div class="flex flex-col h-fit w-max max-w-[15em]">
 </div>`;
 
 const cocktails_arr = [
-    {title: "Alerte à Malibu (Boisson de la couleurs des fameux maillots de bains... ou presque)", id: 1},
-    {title: "Aperol Spritz : Boisson italien pétillant", id: 2, icon: "https://resize.elle.fr/portrait/var/plain_site/storage/images/elle-a-table/recettes-de-cuisine/cocktail-bora-bora-sans-alcool-2806526/50409614-1-fre-FR/Cocktail-Bora-Bora-sans-alcool.jpg"},
-    {title: "Aquarium", id: 3},
-    {title: "Black velvet", id: 4},
-    {title: "Bloody Mary", id: 5, icon: "https://images.radio-canada.ca/v1/alimentation/recette/4x3/cocktail-camerise-oolong.jpg"},
-    {title: "Bora bora", id: 6},
-    {title: "Builder", id: 7},
+    {title: "Alerte à Malibu (Boisson de la couleurs des fameux maillots de bains... ou presque)"},
+    {title: "Aperol Spritz : Boisson italien pétillant"},
+    {title: "Aquarium"},
+    {title: "Black velvet"},
+    {title: "Bloody Mary"},
+    {title: "Bora bora"},
+    {title: "Builder"},
+    {title: "Caïpirinha"}
 ];
 
 function createCocktailTile(cocktail) {
@@ -36,13 +37,15 @@ function createCocktailTile(cocktail) {
         .replace("{{icon}}", cocktail.icon);
     container.id = "cocktail-tile-"+cocktail.id;
     
-    if (cocktail.icon == undefined) {
-        container.querySelector("img").style.display = "none";
-        container.querySelector(".noimg-svg").style.display = "flex";
-    } else {
-        container.querySelector("img").style.display = "flex";
-        container.querySelector(".noimg-svg").style.display = "none";
-    }
+    fetch(cocktail.icon).then(res => {
+        if (res.status == 404) {
+            container.querySelector("img").style.display = "none";
+            container.querySelector(".noimg-svg").style.display = "flex";
+        } else {
+            container.querySelector("img").style.display = "flex";
+            container.querySelector(".noimg-svg").style.display = "none";
+        }
+    }).catch(err => {});
 
     return container;
 }
@@ -55,7 +58,9 @@ onload = () => {
 function cleanCocktails() {
     for (let i = 0; i < cocktails_arr.length; i++) {
         const cocktail = cocktails_arr[i];
+        cocktail.id = i;
         cocktail.title = cocktail.title.split(":")[0].split("(")[0].trim();
+        cocktail.icon = "/img/"+cocktail.title.replaceAll(" ", "_").toLowerCase()+".jpg";
     }
 }
 
@@ -68,10 +73,15 @@ function setup() {
     search_btn.addEventListener("click", () => {
         filterCocktails(search_input.value);
     });
+    let searchTimeout = -1;
     search_input.addEventListener("keyup", (e) => {
-        if (e.key === "Enter" || true) {
-            filterCocktails(search_input.value);
+        if (searchTimeout != -1) {
+            clearTimeout(searchTimeout);
         }
+        searchTimeout = setTimeout(() => {
+            filterCocktails(search_input.value);
+            searchTimeout = -1;
+        }, 500);
     });
     filterCocktails("");
     filterCocktails(search_input.value);

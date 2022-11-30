@@ -3,11 +3,8 @@ RewriteEngine on
 # url : /img/Black_velvet.jpg | file: /assets/img/Black_velvet.jpg
 RewriteRule ^/?img/(.*)$ /assets/img/$1 [END]
 
-# url : /api/ | file: /back/index.php
-RewriteRule ^/?api/?$ /back/index.php [END]
-
-# url : /api/cocktails | file: /back/cocktails.php
-RewriteRule ^/?api/(.*)$ /back/$1.php [END]
+# url : /api/cocktails | file: /back/index.php/cocktails
+RewriteRule ^/?api(.*)$ /back/index.php [END]
 
 # url : / | file: /front/index.html
 RewriteRule ^/?$ /front/index.html [END]

@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script> <!-- TAILWIND CDN FOR STYLE -->
-    <script type="module" src="./scripts/index.js"></script>
+    <script type="module" src="./scripts/list.js"></script>
     <title> Cocktails & cie </title>
 </head>
 <body class="flex flex-col w-screen h-screen bg-slate-50">
     <!-- START HEADER -->
-    <div id="header" class="flex w-full h-fit p-2 sticky top-0">
+    <div id="header" class="flex w-full h-fit p-2 sticky top-0 z-50">
         
     </div>
     <!-- END HEADER -->
@@ -19,32 +19,40 @@
     <div class="flex flex-col grow h-fit">
 
         <!-- START BANNER -->
-        <div class="flex flex-col justify-center grow h-fit py-20">
+        <div class="flex flex-col justify-center h-fit py-20 z-[0]">
             <div class="flex flex-row w-fit mx-auto space-x-8">
                 <div class="flex justify-center flex-col">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20 text-pink-600">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
                     </svg>
                 </div>
-                <h1 class="text-[6em] font-extrabold text-pink-600 mx-auto my-0 p-0"> Bienvenue </h1>
+                <h1 class="text-[6em] font-extrabold text-pink-600 mx-auto my-0 p-0"> Nos cocktails </h1>
                 <div class="flex justify-center flex-col">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20 text-pink-600" style="transform: scale(-1, 1)">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
                     </svg>
                 </div>
             </div>
-            <h1 class="text-[3em] font-bold italic text-slate-400 mx-auto my-0 p-0"> Sur Cocktails & Cie ! </h1>
         </div>
         <!-- END BANNER -->
 
         <!-- START CONTENT -->
-        <div class="flex justify-evenly grow">
-            <a class="rounded-lg shadow-lg px-4 py-2 h-fit text-slate-700 text-xl font-semibold border-4 border-pink-600 transition-all
-                      hover:shadow-xl hover:-translate-y-1 hover:bg-pink-600 hover:text-slate-50" href="/list.html"> Voir les Cocktails </a>
-            <a class="rounded-lg shadow-lg px-4 py-2 h-fit text-slate-700 text-xl font-semibold border-4 border-pink-600 transition-all
-                      hover:shadow-xl hover:-translate-y-1 hover:bg-pink-600 hover:text-slate-50" href="/favorites.html"> Mes favoris </a>
-            <a class="rounded-lg shadow-lg px-4 py-2 h-fit text-slate-700 text-xl font-semibold border-4 border-pink-600 transition-all
-                      hover:shadow-xl hover:-translate-y-1 hover:bg-pink-600 hover:text-slate-50" href="/login.html"> Se connecter </a>
+        <div class="flex flex-col grow">
+            <div class="flex grow-0 sticky top-[6em] h-fit mx-8 border-2 border-pink-600 rounded-lg shadow-lg overflow-hidden p-2 bg-slate-50">
+                <div class="flex grow flex-col justify-center">
+                    <input id="search-input" type="text" placeholder="Chercher un cocktail" class="flex grow h-fit bg-transparent outline-none text-lg text-pink-600">
+                </div>
+                <div id="search-btn" class="flex flex-col justify-center cursor-pointer text-slate-400 hover:text-pink-600 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                      </svg>
+                </div>
+            </div>
+            <!-- START LIST -->
+            <div id="cocktail-list" class="flex flex-wrap justify-center mx-auto my-10">
+
+            </div>
+            <!-- END LIST -->
         </div>
         <!-- END CONTENT -->
     </div>

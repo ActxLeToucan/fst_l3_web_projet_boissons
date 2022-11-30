@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script> <!-- TAILWIND CDN FOR STYLE -->
-    <script type="module" src="./scripts/login.js"></script>
-    <title> Cocktails & cie - Connexion </title>
+    <script type="module" src="./scripts/profile.js"></script>
+    <title> Cocktails & cie - Profil </title>
 </head>
 <body class="flex flex-col w-screen h-screen bg-slate-50">
     <!-- START HEADER -->
@@ -21,34 +21,43 @@
         <!-- START MODAL -->
         <div class="flex flex-col w-fit h-fit border-2 border-pink-600 rounded-lg shadow-lg bg-slate-50 mx-auto">
             <div class="flex grow h-fit p-2 bg-pink-600">
-                <h1 class="text-xl font-extrabold text-slate-50"> Se connecter </h1>
+                <h1 class="text-xl font-extrabold text-slate-50"> Profile </h1>
             </div>
             <div class="flex flex-col grow h-fit p-4 space-y-4">
+                <div class="flex h-fit w-full justify-between space-x-4">
+                    <div class="flex flex-col justify-center">
+                        <p class="text-slate-700 font-semibold text-md"> Nom : </p>
+                    </div>
+                    <input
+                        name="firstname" type="text" disabled="true"
+                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
+                    >
+                </div>
+                <div class="flex h-fit w-full justify-between space-x-4">
+                    <div class="flex flex-col justify-center">
+                        <p class="text-slate-700 font-semibold text-md"> Prénom : </p>
+                    </div>
+                    <input
+                        name="lastname" type="text" disabled="true"
+                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
+                    >
+                </div>
                 <div class="flex h-fit w-full justify-between space-x-4">
                     <div class="flex flex-col justify-center">
                         <p class="text-slate-700 font-semibold text-md"> Email : </p>
                     </div>
                     <input
-                        name="email" type="email"
-                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
-                    >
-                </div>
-                <div class="flex h-fit w-full justify-between space-x-4">
-                    <div class="flex flex-col justify-center">
-                        <p class="text-slate-700 font-semibold text-md"> Mot de passe : </p>
-                    </div>
-                    <input
-                        name="password" type="password"
-                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
+                        name="email" type="email" disabled="true"
+                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
                     >
                 </div>
             </div>
             <span class="flex grow h-[2px] bg-pink-600 rounded mx-4"></span>
             <div class="flex justify-between p-4">
                 <a class="border-2 border-transparent rounded px-2 bg-transparent text-slate-700 font-semibold transition-all
-                    hover:bg-pink-600 hover:text-slate-50 cursor-pointer" onclick="window.location = window.origin"> Annuler </a>
+                    hover:bg-pink-600 hover:text-slate-50 cursor-pointer" onclick="window.location = window.origin"> Retour </a>
                 <a class="border-2 border-pink-600 rounded px-2 bg-transparent text-slate-700 font-semibold transition-all
-                    hover:bg-pink-600 hover:text-slate-50 cursor-pointer" id="continue-btn"> Continuer </a>
+                    hover:bg-pink-600 hover:text-slate-50 cursor-pointer" id="disconnect-btn"> Se déconnecter </a>
             </div>
         </div>
         <!-- END MODAL -->

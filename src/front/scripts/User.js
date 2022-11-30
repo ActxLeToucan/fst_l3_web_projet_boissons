@@ -2,20 +2,39 @@ class User {
     static #currentUser = null;
 
     static get CurrentUser() {
-        return this.#currentUser;
+        if (User.#currentUser == null) {
+            User.#currentUser = User.fromLocalStorage();
+        }
+        return User.#currentUser;
     }
 
     static isConnected() {
-        return this.#currentUser !== null;
+        return this.CurrentUser !== null;
+    }
+
+    static toLocalStorage(user) {
+        localStorage.setItem("user", JSON.stringify(user));
+    }
+
+    static fromLocalStorage() {
+        const data = JSON.parse(localStorage.getItem("user"));
+        if (data)
+            return new User(data);
+        return null;
+    }
+
+    static disconnect() {
+        localStorage.removeItem("user");
+        User.#currentUser = null;
     }
 
     firstname = "";
     lastname = "";
     email = "";
-    constructor() {
-        this.firstname = "firstname";
-        this.lastname = "lastname";
-        this.email = "email";
+    constructor(infos) {
+        this.firstname = infos.firstname ?? "";
+        this.lastname = infos.lastname ?? "";
+        this.email = infos.email ?? "";
         User.#currentUser = this;
     }
 
@@ -25,6 +44,11 @@ class User {
 
     getEmail() {
         return this.email;
+    }
+
+    save() {
+        User.#currentUser = this;
+        User.toLocalStorage(this);
     }
 }
 

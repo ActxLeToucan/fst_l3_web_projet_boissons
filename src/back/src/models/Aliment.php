@@ -28,4 +28,13 @@ class Aliment extends Model {
             "aliment_id"
         );
     }
+
+    public function inRecipes(): BelongsToMany {
+        return $this->belongsToMany(
+            Recipe::class,
+            "ingredient",
+            "aliment_id",
+            "recipe_id"
+        )->withPivot("unit", "quantity");
+    }
 }

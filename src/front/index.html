@@ -1,39 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script> <!-- TAILWIND CDN FOR STYLE -->
-    <script type="module" src="./index.js"></script>
+    <script type="module" src="./scripts/index.js"></script>
     <title> Cocktails & cie </title>
 </head>
 <body class="flex flex-col w-screen h-screen bg-slate-700">
     <!-- START HEADER -->
     <div id="header" class="flex w-full h-fit p-2 sticky top-0">
-        <div class="flex grow h-fit rounded-lg shadow-xl bg-transparent border-2 border-pink-600 px-4 py-4">
-            <div class="flex flex-col justify-center w-fit">
-                <h1 class="text-2xl font-extrabold text-pink-600"> Cocktails & Cie </h1>
-            </div>
-            <div class="flex justify-center grow space-x-8">
-                <a class="text-xl font-semibold text-pink-600 px-2 rounded cursor-pointer
-                          transition-all hover:bg-pink-600 hover:text-slate-700" href="/list"> Cocktails </a>
-                <a class="text-xl font-semibold text-pink-600 px-2 rounded cursor-pointer
-                          transition-all hover:bg-pink-600 hover:text-slate-700" href="/favorites"> Favorites </a>
-            </div>
-            <div class="flex justify-end">
-                <div id="is-connected">
-                    <a class="border-2 border-pink-600 rounded px-2 bg-transparent text-pink-500 font-semibold transition-all
-                    hover:border-pink-600 hover:text-slate-700 hover:bg-pink-600" href="/profile"> Mon profile </a>
-                </div>
-                <div id="is-disconnected" class="space-x-4">
-                    <a class="border-2 border-transparent rounded px-2 bg-transparent text-pink-600 font-semibold transition-all
-                          hover:text-slate-700 hover:bg-pink-600" href="/register"> S'inscrire </a>
-                    <a class="border-2 border-pink-600 rounded px-2 bg-transparent text-pink-500 font-semibold transition-all
-                          hover:border-pink-600 hover:text-slate-700 hover:bg-pink-600" href="/login"> Se connecter </a>
-                </div>
-            </div>
-        </div>
+        
     </div>
     <!-- END HEADER -->
 
@@ -62,11 +40,11 @@
         <!-- START CONTENT -->
         <div class="flex justify-evenly grow">
             <a class="rounded-lg shadow-lg px-4 py-2 h-fit bg-pink-600 text-pink-100 text-xl font-semibold border-4 border-pink-600 transition-all
-                      hover:border-pink-500 hover:shadow-xl hover:-translate-y-1" href="/list"> Voir les Cocktails </a>
+                      hover:border-pink-500 hover:shadow-xl hover:-translate-y-1" href="/list.html"> Voir les Cocktails </a>
             <a class="rounded-lg shadow-lg px-4 py-2 h-fit bg-pink-600 text-pink-100 text-xl font-semibold border-4 border-pink-600 transition-all
-                      hover:border-pink-500 hover:shadow-xl hover:-translate-y-1" href="/favorites"> Mes favoris </a>
+                      hover:border-pink-500 hover:shadow-xl hover:-translate-y-1" href="/favorites.html"> Mes favoris </a>
             <a class="rounded-lg shadow-lg px-4 py-2 h-fit bg-pink-600 text-pink-100 text-xl font-semibold border-4 border-pink-600 transition-all
-                    hover:border-pink-500 hover:shadow-xl hover:-translate-y-1" href="/login"> Se connecter </a>
+                    hover:border-pink-500 hover:shadow-xl hover:-translate-y-1" href="/login.html"> Se connecter </a>
         </div>
         <!-- END CONTENT -->
     </div>

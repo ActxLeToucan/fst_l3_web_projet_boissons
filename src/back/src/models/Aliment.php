@@ -11,7 +11,7 @@ class Aliment extends Model {
     protected $primaryKey = 'id';
     public $timestamps = false;
 
-    public function under(): BelongsToMany {
+    public function subAliments(): BelongsToMany {
         return $this->belongsToMany(
             Aliment::class,
             "category",
@@ -20,7 +20,7 @@ class Aliment extends Model {
         );
     }
 
-    public function above(): BelongsToMany {
+    public function superAliments(): BelongsToMany {
         return $this->belongsToMany(
             Aliment::class,
             "category",
@@ -35,6 +35,6 @@ class Aliment extends Model {
             "ingredient",
             "aliment_id",
             "recipe_id"
-        )->withPivot("unit", "quantity");
+        );
     }
 }

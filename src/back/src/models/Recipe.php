@@ -10,7 +10,7 @@ class Recipe extends Model {
     protected $primaryKey = 'id';
     public $timestamps = false;
 
-    public function favoritesOf(): BelongsToMany {
+    public function favoriteOf(): BelongsToMany {
         return $this->belongsToMany(
             User::class,
             "favorite",
@@ -25,6 +25,27 @@ class Recipe extends Model {
             "ingredient",
             "recipe_id",
             "aliment_id"
-        )->withPivot("unit", "quantity");
+        );
+    }
+
+    public function toArrayMin(): array {
+        return [
+            "id" => $this->id,
+            "title" => $this->title
+        ];
+    }
+
+    public function toArrayFull(): array {
+        $tabIngredients = [];
+        foreach ($this->ingredients as$ingredient) {
+            $tabIngredients[$ingredient->id] = $ingredient->name;
+        }
+        return [
+            "id" => $this->id,
+            "title" => $this->title,
+            "preparation" => $this->preparation,
+            "descrIngredients" => explode("|", $this->descrIngredients),
+            "ingredients" => $tabIngredients
+        ];
     }
 }

@@ -38,14 +38,19 @@
 
         <!-- START CONTENT -->
         <div class="flex flex-col grow">
-            <div class="flex grow-0 sticky top-[6em] h-fit mx-8 border-2 border-pink-600 rounded-lg shadow-lg overflow-hidden p-2 bg-slate-50">
-                <div class="flex grow flex-col justify-center">
-                    <input id="search-input" type="text" placeholder="Chercher un cocktail" class="flex grow h-fit bg-transparent outline-none text-lg text-pink-600">
+            <div id="search-zone" class="flex sticky top-[90px] flex-col rounded-lg p-1 mx-8 bg-slate-50 z-[10] border-2 border-slate-50 shadow-none transition-all">
+                <div class="flex grow-0 h-fit border-2 border-pink-600 rounded-lg overflow-hidden p-2 z-[10]">
+                    <div class="flex grow flex-col justify-center">
+                        <input id="search-input" type="text" placeholder="Chercher un cocktail" class="flex grow h-fit bg-transparent outline-none text-lg text-pink-600">
+                    </div>
+                    <div id="search-btn" class="flex flex-col justify-center cursor-pointer text-slate-400 hover:text-pink-600 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                          </svg>
+                    </div>
                 </div>
-                <div id="search-btn" class="flex flex-col justify-center cursor-pointer text-slate-400 hover:text-pink-600 transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                      </svg>
+                <div class="flex grow px-1">
+                    <p class="text-lg font-semibold text-pink-600">Filtres :</p>
                 </div>
             </div>
             <!-- START LIST -->

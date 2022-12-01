@@ -53,6 +53,25 @@ function createCocktailTile(cocktail) {
 onload = () => {
     initHeader();
     setup();
+    let searchZone_floating = false;
+    const searchZone = document.getElementById("search-zone");
+    window.addEventListener("scroll", () => {
+        const top = searchZone.getBoundingClientRect().y;
+        if (top < 100 && !searchZone_floating) {
+            searchZone_floating = true;
+            searchZone.classList.remove("shadow-none");
+            searchZone.classList.remove("border-slate-50");
+            searchZone.classList.add("shadow-xl");
+            searchZone.classList.add("border-slate-300");
+        }
+        if (top > 100 && searchZone_floating) {
+            searchZone_floating = false;
+            searchZone.classList.add("shadow-none");
+            searchZone.classList.add("border-slate-50");
+            searchZone.classList.remove("shadow-xl");
+            searchZone.classList.remove("border-slate-300");
+        }
+    });
 }
 
 function cleanCocktails() {

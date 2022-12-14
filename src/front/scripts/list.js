@@ -15,6 +15,13 @@ const COCKTAIL_TILE_BODY = `<div class="flex flex-col h-fit w-max max-w-[15em]">
     </div>
 </div>`;
 
+const ALIMENT_TILE_BODY = `<div class="flex flex-col justify-center"><p class="font-semibold m-0 pb-1"> {{title}} </p></div>
+<div class="remove-btn flex flex-col justify-center cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+</div>`;
+
 const cocktails_arr = [
     {title: "Alerte à Malibu (Boisson de la couleurs des fameux maillots de bains... ou presque)"},
     {title: "Aperol Spritz : Boisson italien pétillant"},
@@ -25,6 +32,91 @@ const cocktails_arr = [
     {title: "Builder"},
     {title: "Caïpirinha"}
 ];
+
+const aliments_arr = [
+    
+];
+
+const aliments_list = [
+    {
+        title: "Fruits",
+        elements: [
+            {title: "Ananas", id: 0},
+            {title: "Orange", id: 1},
+            {title: "Pomme", id: 2},
+            {title: "Banane", id: 3},
+            {title: "Fraise", id: 4},
+        ]
+    },
+    {
+        title: "Légumes",
+        elements: [
+            {title: "Carotte", id: 5},
+            {title: "Tomate", id: 6},
+            {title: "Poivron", id: 7},
+        ]
+    }
+]
+
+let menus = [];
+function createListMenu(coords, elements, sub = 0) {
+    if (menus[sub]) {
+        for (let i = sub; i < menus.length; i++) {
+            if (!menus[i]) continue;
+            menus[i].remove();
+            menus[i] = null;
+        }
+        if (sub == 0) return;
+    }
+
+    const container = document.createElement("div");
+    const classes = "fixed z-20 bg-white border border-pink-600 shadow-lg rounded overflow-hidden";
+    classes.split(" ").forEach(c => container.classList.add(c));
+    container.style.top = coords.y+"px";
+    container.style.left = coords.x+"px";
+    container.innerHTML = `<div class="flex flex-col space-y-1"></div>`;
+    menus[sub] = container;
+
+    elements.forEach(element => {
+        const exists = aliments_arr.find(e => e.id == element.id);
+        const item = document.createElement("div");
+        let classes = "flex flex-row items-center space-x-2 px-2 py-1 transition-colors duration-200";
+        if (!exists) classes += " text-slate-700 hover:text-pink-600 hover:bg-pink-50 cursor-pointer";
+        else classes += " text-slate-400";
+        classes.split(" ").forEach(c => item.classList.add(c));
+        item.innerHTML = `<div class="flex flex-col justify-center"> <p class="font-semibold m-0 pb-1"> ${element.title} </p> </div>`;
+        item.addEventListener("click", () => {
+            if (element.elements) {
+                const rect = item.getBoundingClientRect();
+                const coords = {x: rect.x + rect.width, y: rect.y};
+                createListMenu(coords, element.elements, sub + 1);
+            } else {
+                if (exists) return;
+                aliments_arr.push(element);
+                displayAliments(aliments_arr);
+                menus.forEach(menu => menu.remove());
+                menus = [];
+            }
+        });
+        container.querySelector(".flex").appendChild(item);
+    });
+
+    document.body.appendChild(container);
+    return container;
+}
+
+function createAlimentTile(aliment) {
+    const container = document.createElement("div");
+    const classes = "flex text-slate-500 rounded bg-slate-50 border border-slate-200 shadow px-1 space-x-1";
+    classes.split(" ").forEach(c => container.classList.add(c));
+    container.innerHTML = ALIMENT_TILE_BODY.replace("{{title}}", aliment.title);
+    container.id = "aliment-tile-"+aliment.title;
+    container.querySelector(".remove-btn").addEventListener("click", () => {
+        container.remove();
+        aliments_arr.splice(aliments_arr.indexOf(aliment), 1);
+    });
+    return container;
+}
 
 function createCocktailTile(cocktail) {
     const container = document.createElement("a");
@@ -74,6 +166,13 @@ onload = () => {
     });
 }
 
+function cleanAliments() {
+    for (let i = 0; i < aliments_arr.length; i++) {
+        const aliment = aliments_arr[i];
+        aliment.id = i;
+    }
+}
+
 function cleanCocktails() {
     for (let i = 0; i < cocktails_arr.length; i++) {
         const cocktail = cocktails_arr[i];
@@ -86,8 +185,16 @@ function cleanCocktails() {
 function setup() {
     const search_input = document.getElementById("search-input");
     const search_btn = document.getElementById("search-btn");
+    const add_aliment_btn = document.getElementById("add-aliment");
 
     cleanCocktails();
+    cleanAliments();
+
+    add_aliment_btn.addEventListener("click", () => {
+        const rect = add_aliment_btn.getBoundingClientRect();
+        const coords = {x: rect.x, y: rect.y+rect.height+10};
+        const menu = createListMenu(coords, aliments_list);
+    });
 
     search_btn.addEventListener("click", () => {
         filterCocktails(search_input.value);
@@ -102,6 +209,8 @@ function setup() {
             searchTimeout = -1;
         }, 500);
     });
+
+    displayAliments(aliments_arr);
     filterCocktails("");
     filterCocktails(search_input.value);
 }
@@ -110,6 +219,14 @@ function filterCocktails(query) {
     displayCocktails(cocktails_arr.filter(cocktail => {
         return cocktail.title.toLowerCase().replaceAll(" ", "").contains(query.toLowerCase().replaceAll(" ", ""));
     }));
+}
+
+function displayAliments(aliments) {
+    const list = document.getElementById("aliment-list");
+    while (list.firstChild) list.firstChild.remove();
+    aliments.forEach(aliment => {
+        list.appendChild(createAlimentTile(aliment));
+    });
 }
 
 function displayCocktails(cocktails) {
@@ -138,7 +255,7 @@ function hideTile(tile) {
     tile.style.maxWidth = "0px";
     setTimeout(() => {
         tile.style.display = "none";
-    }, 100);
+    }, 120);
 }
 
 function showTile(tile) {

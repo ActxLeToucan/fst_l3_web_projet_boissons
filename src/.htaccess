@@ -4,7 +4,7 @@ RewriteEngine on
 RewriteRule ^/?img/(.*)$ /assets/img/$1 [END]
 
 # url : /api/cocktails | file: /back/index.php/cocktails
-RewriteRule ^/?api(.*)$ /back/index.php [END]
+RewriteRule ^/?api(.*)$ /api/index.php [END]
 
 # url : / | file: /front/index.html
 RewriteRule ^/?$ /front/index.html [END]

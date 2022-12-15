@@ -42,7 +42,7 @@ Avec XAMPP, modifier le fichier `httpd.conf` et définir `DocumentRoot` au chemi
 
 ### API
 * Créer une base de données
-* Créer le fichier [src/back/src/conf/db.ini](./src/back/src/conf/db.ini) en suivant le modèle ci-dessous
+* Créer le fichier [src/api/src/conf/db.ini](./src/api/src/conf/db.ini) en suivant le modèle ci-dessous
   ```ini
   driver=mysql
   username=my_username
@@ -52,5 +52,5 @@ Avec XAMPP, modifier le fichier `httpd.conf` et définir `DocumentRoot` au chemi
   charset=utf8
   collation=utf8_unicode_ci
   ```
-* Exécuter la commande `composer install` dans le dossier [src/back](./src/back)
-* Exécuter la commande `./vendor/bin/phinx migrate` dans le dossier [src/back](./src/back) pour créer les tables
+* Exécuter la commande `composer install` dans le dossier [src/api](./src/api)
+* Exécuter la commande `./vendor/bin/phinx migrate` dans le dossier [src/api](./src/api) pour créer les tables

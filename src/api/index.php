@@ -18,4 +18,6 @@ $app->group('/db', function () use ($app) {
     $app->get('/init[/]', 'boissons\controllers\DbController:init')->setName('dbInit');
 });
 
+$app->get('/search', 'boissons\controllers\CocktailController:search')->setName('search');
+
 $app->run();

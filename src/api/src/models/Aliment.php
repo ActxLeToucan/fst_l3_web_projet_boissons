@@ -4,12 +4,11 @@ namespace boissons\models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Aliment extends Model {
+    public $timestamps = false;
     protected $table = 'aliment';
     protected $primaryKey = 'id';
-    public $timestamps = false;
 
     public function subAliments(): BelongsToMany {
         return $this->belongsToMany(
@@ -36,5 +35,18 @@ class Aliment extends Model {
             "aliment_id",
             "recipe_id"
         );
+    }
+
+    /**
+     * Donne la liste des aliments descendants de l'aliment courant (récursivement)
+     * @return array Liste des aliments
+     */
+    public function getDescendants(): array {
+        $descendants = [];
+        foreach ($this->subAliments as $subAliment) {
+            $descendants[] = $subAliment;
+            $descendants = array_merge($descendants, $subAliment->getDescendants());
+        }
+        return $descendants;
     }
 }

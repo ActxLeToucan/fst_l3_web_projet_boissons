@@ -9,7 +9,7 @@ const HEADER_CONTENT = `<div class="flex grow h-fit rounded-lg shadow-xl bg-slat
     <a class="text-xl font-semibold text-slate-700 px-2 rounded cursor-pointer
               transition-all hover:bg-pink-600 hover:text-slate-50" href="/list.html"> Cocktails </a>
     <a class="text-xl font-semibold text-slate-700 px-2 rounded cursor-pointer
-              transition-all hover:bg-pink-600 hover:text-slate-50" href="/favorites.html"> Favorites </a>
+              transition-all hover:bg-pink-600 hover:text-slate-50" href="/favorites.html"> Favoris </a>
 </div>
 <div class="flex justify-end">
     <div id="is-connected">

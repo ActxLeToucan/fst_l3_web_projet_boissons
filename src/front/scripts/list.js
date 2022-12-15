@@ -129,7 +129,6 @@ function createListMenu(coords, elements, sub = 0) {
     container.remove = () => {
         if (menus.length == 0) return;
 
-        console.log("remove");
         window.removeEventListener("click", container.remove);
         container.isRemoved = true;
         container._remove();
@@ -144,7 +143,6 @@ function createListMenu(coords, elements, sub = 0) {
         if (container.isRemoved) return;
         if (sub != 0) return;
 
-        console.log("add");
         window.addEventListener("click", container.remove);
     }, 10);
 

@@ -15,9 +15,18 @@ const COCKTAIL_TILE_BODY = `<div class="flex flex-col h-fit w-max max-w-[15em]">
     </div>
 </div>`;
 
-const ALIMENT_TILE_BODY = `<div class="flex flex-col justify-center"><p class="font-semibold m-0 pb-1"> {{title}} </p></div>
+const ALIMENT_TILE_BODY = `
+<div class="toggle-btn flex flex-col justify-center cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="plus-btn w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" />
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="minus-btn w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+    </svg>
+</div>
+<div class="flex flex-col justify-center"><p class="font-semibold m-0 pb-1 pr-1"> {{title}} </p></div>
 <div class="remove-btn flex flex-col justify-center cursor-pointer">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 bg-pink-600 text-slate-50 rounded">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
     </svg>
 </div>`;
@@ -37,6 +46,8 @@ const aliments_arr = [
     
 ];
 
+const STATE_PLUS = true;
+const STATE_MINUS = false;
 const aliments_list = [
     {
         title: "Fruits",
@@ -62,13 +73,14 @@ const aliments_list = [
 
 let menus = [];
 function createListMenu(coords, elements, sub = 0) {
+    if (!elements) return;
+
     if (menus[sub]) {
         for (let i = sub; i < menus.length; i++) {
             if (!menus[i]) continue;
             menus[i].remove();
             menus[i] = null;
         }
-        if (sub == 0) return;
     }
 
     const container = document.createElement("div");
@@ -82,17 +94,16 @@ function createListMenu(coords, elements, sub = 0) {
     elements.forEach(element => {
         const exists = aliments_arr.find(e => e.id == element.id);
         const item = document.createElement("div");
-        let classes = "flex flex-row items-center space-x-2 px-2 py-1 transition-colors duration-200";
+        let classes = "flex flex-row justify-between space-x-2 px-2 py-1 transition-colors duration-200";
         if (!exists) classes += " text-slate-700 hover:text-pink-600 hover:bg-pink-50 cursor-pointer";
         else classes += " text-slate-400";
         classes.split(" ").forEach(c => item.classList.add(c));
         item.innerHTML = `<div class="flex flex-col justify-center"> <p class="font-semibold m-0 pb-1"> ${element.title} </p> </div>`;
+
         item.addEventListener("click", () => {
             if (exists) return;
             aliments_arr.push(element);
             displayAliments(aliments_arr);
-            menus.forEach(menu => menu.remove());
-            menus = [];
 
             if (element.elements) {
                 for (let i = 0; i < element.elements.length; i++) {
@@ -113,16 +124,57 @@ function createListMenu(coords, elements, sub = 0) {
         container.querySelector(".flex").appendChild(item);
     });
 
+    container.isRemoved = false;
+    container._remove = container.remove;
+    container.remove = () => {
+        if (menus.length == 0) return;
+
+        window.removeEventListener("click", container.remove);
+        container.isRemoved = true;
+        container._remove();
+        for (let i = sub + 1; i < menus.length; i++) {
+            if (!menus[i]) continue;
+            menus[i]._remove();
+            menus[i] = null;
+        }
+    };
+
+    setTimeout(() => {
+        if (container.isRemoved) return;
+        if (sub != 0) return;
+
+        window.addEventListener("click", container.remove);
+    }, 10);
+
     document.body.appendChild(container);
     return container;
 }
 
 function createAlimentTile(aliment) {
+    if (aliment.state == undefined) aliment.state = STATE_PLUS;
+
     const container = document.createElement("div");
     const classes = "flex text-slate-500 rounded bg-slate-50 border border-slate-200 shadow px-1 space-x-1";
     classes.split(" ").forEach(c => container.classList.add(c));
     container.innerHTML = ALIMENT_TILE_BODY.replace("{{title}}", aliment.title);
     container.id = "aliment-tile-"+aliment.title;
+
+    const setState = (state) => {
+        aliment.state = state;
+        container.classList[state? "remove":"add"]("bg-slate-100");
+        container.classList[state? "add":"remove"]("bg-pink-50");
+        container.querySelector(".plus-btn").classList[state? "add":"remove"]("hidden");
+        container.querySelector(".minus-btn").classList[state? "remove":"add"]("hidden");
+        container.querySelector("p").style.textDecoration = state? "none":"line-through";
+    }
+    setState(aliment.state);
+
+    container.querySelector(".minus-btn").addEventListener("click", () => {
+        setState(!aliment.state);
+    });
+    container.querySelector(".plus-btn").addEventListener("click", () => {
+        setState(!aliment.state);
+    });
     container.querySelector(".remove-btn").addEventListener("click", () => {
         container.remove();
         aliments_arr.splice(aliments_arr.indexOf(aliment), 1);
@@ -205,7 +257,7 @@ function setup() {
     add_aliment_btn.addEventListener("click", () => {
         const rect = add_aliment_btn.getBoundingClientRect();
         const coords = {x: rect.x, y: rect.y+rect.height+10};
-        const menu = createListMenu(coords, aliments_list);
+        createListMenu(coords, aliments_list);
     });
 
     search_btn.addEventListener("click", () => {

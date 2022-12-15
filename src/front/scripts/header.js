@@ -28,7 +28,10 @@ const HEADER_CONTENT = `<div class="flex grow h-fit rounded-lg shadow-xl bg-slat
 function initHeader() {
     initCommon();
 
-    const header = document.getElementById("header");
+    const header = document.querySelector("header");
+    if (!header) return;
+    const classes = "flex fixed top-0 w-full h-fit p-2 z-50";
+    classes.split(" ").forEach(c => header.classList.add(c));
     header.innerHTML = HEADER_CONTENT;
 
     if (User.isConnected()) {

@@ -40,20 +40,22 @@ const aliments_arr = [
 const aliments_list = [
     {
         title: "Fruits",
+        id: 1,
         elements: [
-            {title: "Ananas", id: 0},
-            {title: "Orange", id: 1},
-            {title: "Pomme", id: 2},
-            {title: "Banane", id: 3},
-            {title: "Fraise", id: 4},
+            {title: "Ananas", id: 2},
+            {title: "Orange", id: 3},
+            {title: "Pomme", id: 4},
+            {title: "Banane", id: 5},
+            {title: "Fraise", id: 6},
         ]
     },
     {
         title: "Légumes",
+        id: 7,
         elements: [
-            {title: "Carotte", id: 5},
-            {title: "Tomate", id: 6},
-            {title: "Poivron", id: 7},
+            {title: "Carotte", id: 8},
+            {title: "Tomate", id: 9},
+            {title: "Poivron", id: 10},
         ]
     }
 ]
@@ -86,17 +88,27 @@ function createListMenu(coords, elements, sub = 0) {
         classes.split(" ").forEach(c => item.classList.add(c));
         item.innerHTML = `<div class="flex flex-col justify-center"> <p class="font-semibold m-0 pb-1"> ${element.title} </p> </div>`;
         item.addEventListener("click", () => {
+            if (exists) return;
+            aliments_arr.push(element);
+            displayAliments(aliments_arr);
+            menus.forEach(menu => menu.remove());
+            menus = [];
+
             if (element.elements) {
-                const rect = item.getBoundingClientRect();
-                const coords = {x: rect.x + rect.width, y: rect.y};
-                createListMenu(coords, element.elements, sub + 1);
-            } else {
-                if (exists) return;
-                aliments_arr.push(element);
-                displayAliments(aliments_arr);
-                menus.forEach(menu => menu.remove());
-                menus = [];
+                for (let i = 0; i < element.elements.length; i++) {
+                    let index = aliments_arr.indexOf(element.elements[i]);
+                    if (index != -1) {
+                        aliments_arr.splice(index, 1);
+                        displayAliments(aliments_arr);
+                    }
+                }
             }
+        });
+        item.addEventListener("mouseenter", () => {
+            if (exists) return;
+            const rect = item.getBoundingClientRect();
+            const coords = {x: rect.x + rect.width, y: rect.y};
+            createListMenu(coords, element.elements, sub + 1);
         });
         container.querySelector(".flex").appendChild(item);
     });

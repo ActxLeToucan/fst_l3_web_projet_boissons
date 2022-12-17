@@ -104,6 +104,31 @@ class CocktailController {
             }
         }
 
+        // ordre des résultats
+        usort($min, function ($a, $b) use ($mots) {
+            $aPoints = 0;
+            $bPoints = 0;
+
+            $aTitle = unaccent($a['title']);
+            $bTitle = unaccent($b['title']);
+            $aTitleWithoutSpecialChars = preg_replace("/[^a-z0-9]/", " ", strtolower($aTitle));
+            $bTitleWithoutSpecialChars = preg_replace("/[^a-z0-9]/", " ", strtolower($bTitle));
+            $aWords = array_filter(explode(" ", $aTitleWithoutSpecialChars), fn($word) => $word !== "");
+            $bWords = array_filter(explode(" ", $bTitleWithoutSpecialChars), fn($word) => $word !== "");
+            foreach ($mots as $m) {
+                $mot = strtolower(unaccent($m));
+                // nombre de mots entiers dans le titre
+                if (in_array($mot, $aWords)) $aPoints++;
+                if (in_array($mot, $bWords)) $bPoints++;
+                // nombre de mots dans le titre
+                if (str_contains($aTitle, $mot)) $aPoints++;
+                if (str_contains($bTitle, $mot)) $bPoints++;
+            }
+
+            if ($aPoints !== $bPoints) return $bPoints - $aPoints;
+            return $aTitle <=> $bTitle;
+        });
+
         return $rs->withJson($min);
     }
 

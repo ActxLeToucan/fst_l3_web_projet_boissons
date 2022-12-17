@@ -59,6 +59,7 @@ Paramètres :
 | tags_minus |     non     | Ingrédients à exclure (OU) |       1;3       |
 
 Exemple : On veut les cocktails qui contiennent "alcool" ou "de" ou "fruit" dans leur nom, qui ont les ingrédients 2, 6 et 9, mais pas les ingrédients 1 et 3.
+
 `/search?query=alcöol de frùît&tags_plus=2;6;9&tags_minus=1;3`
 
 ```json
@@ -95,6 +96,7 @@ Exemple : On veut les cocktails qui contiennent "alcool" ou "de" ou "fruit" dans
   }
 ]
 ```
+Les résultats sont triés par pertinence.
 
 ## GET `/ingredients[/]`
 Liste des ingrédients :

@@ -24,3 +24,14 @@ $app->group('/db', function () use ($app) {
 });
 
 $app->run();
+
+
+/**
+ * Remove accents from a string
+ * (from {@link https://gist.github.com/evaisse/169594?permalink_comment_id=4048789#gistcomment-4048789 a GitHub comment})
+ * @param string $string String to remove accents from
+ * @return string String without accents
+ */
+function unaccent(string $string): string {
+    return preg_replace('~&([a-z]{1,2})(acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', htmlentities($string, ENT_QUOTES, 'UTF-8'));
+}

@@ -49,23 +49,14 @@ Détails d'un cocktail :
 }
 ```
 
-## `/db`
-### GET `/init[/]`
-Initialise la base de données. Efface les tables avant.
-```json
-{
-  "success": "Database initialized"
-}
-```
-
-## GET `/search`
+### GET `/search`
 Paramètres :
 
-|    Nom     |        Description         |     Exemple     |
-|:----------:|:--------------------------:|:---------------:|
-|   query    |         Recherche          | alcöol de frùît |
-| tags_plus  | Ingrédients à inclure (ET) |      2;6;9      |
-| tags_minus | Ingrédients à exclure (OU) |       1;3       |
+|    Nom     | Obligatoire |        Description         |     Exemple     |
+|:----------:|:-----------:|:--------------------------:|:---------------:|
+|   query    |     oui     |         Recherche          | alcöol de frùît |
+| tags_plus  |     non     | Ingrédients à inclure (ET) |      2;6;9      |
+| tags_minus |     non     | Ingrédients à exclure (OU) |       1;3       |
 
 Exemple : On veut les cocktails qui contiennent "alcool" ou "de" ou "fruit" dans leur nom, qui ont les ingrédients 2, 6 et 9, mais pas les ingrédients 1 et 3.
 `/search?query=alcöol de frùît&tags_plus=2;6;9&tags_minus=1;3`
@@ -103,4 +94,53 @@ Exemple : On veut les cocktails qui contiennent "alcool" ou "de" ou "fruit" dans
     "link": "/api/cocktails/682/"
   }
 ]
+```
+
+## GET `/ingredients[/]`
+Liste des ingrédients :
+```json
+{
+  "1142": {
+    "id": 1142,
+    "name": "Coriandre",
+    "children": [],
+    "parents": [
+      1310,
+      1311
+    ]
+  },
+  "1143": {
+    "id": 1143,
+    "name": "Vin effervescent",
+    "children": [
+      1116,
+      1139,
+      1181
+    ],
+    "parents": [
+      1302,
+      1303
+    ]
+  },
+  "1144": {
+    "id": 1144,
+    "name": "Triple sec",
+    "children": [
+      1138
+    ],
+    "parents": [
+      1329
+    ]
+  },
+    ...
+}
+```
+
+## `/db`
+### GET `/init[/]`
+Initialise la base de données. Efface les tables avant.
+```json
+{
+  "success": "Database initialized"
+}
 ```

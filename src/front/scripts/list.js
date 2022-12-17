@@ -1,3 +1,4 @@
+import { getCocktailImage } from "./common.js";
 import { initHeader } from "./header.js";
 
 const COCKTAIL_TILE_BODY = `<div class="flex flex-col h-fit w-max max-w-[15em]">
@@ -186,7 +187,7 @@ function createCocktailTile(cocktail) {
     const container = document.createElement("a");
     const classes = "flex flex-col m-10 rounded-lg shadow-lg border-2 border-slate-300 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all hover:border-pink-600 cursor-pointer";
     classes.split(" ").forEach(c => container.classList.add(c));
-    container.href = "/cocktail.html?id"+cocktail.id;
+    container.href = "/cocktail.html?id="+cocktail.id;
     container.innerHTML = COCKTAIL_TILE_BODY
         .replace("{{title}}", cocktail.title)
         .replace("{{description}}", cocktail.description)
@@ -242,7 +243,7 @@ function cleanCocktails() {
         const cocktail = cocktails_arr[i];
         cocktail.id = i;
         cocktail.title = cocktail.title.split(":")[0].split("(")[0].trim();
-        cocktail.icon = "/img/"+cocktail.title.replaceAll(" ", "_").toLowerCase()+".jpg";
+        cocktail.icon = getCocktailImage(cocktail.title);
     }
 }
 

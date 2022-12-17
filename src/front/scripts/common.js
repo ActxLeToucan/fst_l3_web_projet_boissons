@@ -18,10 +18,20 @@ function showDIV(id, type=TYPE_FLEX) {
     document.getElementById(id).style.display = type;
 }
 
+function setElementStyle(el, classes) {
+    classes.split(" ").forEach(c => el.classList.add(c));
+}
+
+function getCocktailImage(title) {
+    return "/img/"+title.replaceAll(" ", "_").toLowerCase()+".jpg";
+}
+
 export {
     initCommon,
     hideDIV,
     showDIV,
     TYPE_FLEX,
-    TYPE_BLOCK
+    TYPE_BLOCK,
+    setElementStyle,
+    getCocktailImage
 }

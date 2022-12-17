@@ -61,27 +61,46 @@ Initialise la base de données. Efface les tables avant.
 ## GET `/search`
 Paramètres :
 
-|    Nom     |        Description         | Exemple |
-|:----------:|:--------------------------:|:-------:|
-|   query    |         Recherche          | boisson |
-| tags_plus  | Ingrédients à inclure (ET) |  2;6;9  |
-| tags_minus | Ingrédients à exclure (OU) |   1;3   |
+|    Nom     |        Description         |     Exemple     |
+|:----------:|:--------------------------:|:---------------:|
+|   query    |         Recherche          | alcöol de frùît |
+| tags_plus  | Ingrédients à inclure (ET) |      2;6;9      |
+| tags_minus | Ingrédients à exclure (OU) |       1;3       |
 
-Exemple : On veut les cocktails qui contiennent "boisson" dans leur nom, qui ont les ingrédients 2, 6 et 9, mais pas les ingrédients 1 et 3.
-`/search?query=boisson&tags_plus=2;6;9&tags_minus=1;3`
+Exemple : On veut les cocktails qui contiennent "alcool" ou "de" ou "fruit" dans leur nom, qui ont les ingrédients 2, 6 et 9, mais pas les ingrédients 1 et 3.
+`/search?query=alcöol de frùît&tags_plus=2;6;9&tags_minus=1;3`
 
 ```json
 [
   {
-    "id": 1,
-    "title": "Alerte à Malibu (Boisson de la couleurs des fameux maillots de bains... ou presque)",
-    "link": "/api/cocktails/1/"
+    "id": 624,
+    "title": "Boisson bulles de melon",
+    "link": "/api/cocktails/624/"
   },
   {
-    "id": 98,
-    "title": "Boisson de la mort",
-    "link": "/api/cocktails/98/"
+    "id": 629,
+    "title": "Boisson citron-menthe (sans alcool)",
+    "link": "/api/cocktails/629/"
   },
-  ...
+  {
+    "id": 640,
+    "title": "Boisson exotique au fruit de la passion",
+    "link": "/api/cocktails/640/"
+  },
+  {
+    "id": 656,
+    "title": "Boisson sans alcool Cranberry-orange",
+    "link": "/api/cocktails/656/"
+  },
+  {
+    "id": 670,
+    "title": "Le baiser de la Schtroumpfette",
+    "link": "/api/cocktails/670/"
+  },
+  {
+    "id": 682,
+    "title": "Punch-sangria de pastèque",
+    "link": "/api/cocktails/682/"
+  }
 ]
 ```

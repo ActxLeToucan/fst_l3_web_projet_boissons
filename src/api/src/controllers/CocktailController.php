@@ -52,12 +52,17 @@ class CocktailController {
      * @return Response Réponse en JSON
      */
     public function search(Request $rq, Response $rs, array $args): Response {
-        if (!isset($_GET['query']) || !is_string($_GET['query'])) {
+        if (!isset($_GET['query']) || !is_string($_GET['query']) || $_GET['query'] === "") {
             return $rs->withJson(["error" => "Query not found"], 400);
         }
 
-        // liste des cocktails dont le nom contient la requête
-        $cocktails = Recipe::where("title", "like", "%{$_GET['query']}%")->get();
+        // liste des cocktails dont le nom contient un mot de la requête
+        $mots = explode(" ", $_GET['query']);
+        $cocktails = Recipe::where(function ($query) use ($mots) {
+            foreach ($mots as $mot) {
+                $query->orWhere("title", "like", "%$mot%");
+            }
+        })->get();
 
         // filtre, on ne garde que les cocktails dont les ingrédients contiennent la requête
         if (isset($_GET['tags_plus'])) {
@@ -91,7 +96,13 @@ class CocktailController {
         }
 
         // formatage des résultats
-        $min = $cocktails->map(fn($cocktail) => $cocktail->toArrayMin($this->c));
+        $min = [];
+        foreach ($cocktails as $cocktail) {
+            $cocktailMin = $cocktail->toArrayMin($this->c);
+            if (!in_array($cocktailMin, $min)) {
+                $min[] = $cocktailMin;
+            }
+        }
 
         return $rs->withJson($min);
     }

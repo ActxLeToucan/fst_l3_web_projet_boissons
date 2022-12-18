@@ -23,7 +23,13 @@ function setElementStyle(el, classes) {
 }
 
 function getCocktailImage(title) {
-    return "/img/"+title.replaceAll(" ", "_").toLowerCase()+".jpg";
+    let filename = title.toLowerCase().replaceAll(" ", "_")+".jpg";
+    filename = filename[0].toUpperCase() + filename.slice(1);
+    return "/img/"+filename;
+}
+
+function cleanTitle(title) {
+    return title.split(":")[0].split("(")[0].trim();
 }
 
 export {
@@ -33,5 +39,6 @@ export {
     TYPE_FLEX,
     TYPE_BLOCK,
     setElementStyle,
-    getCocktailImage
+    getCocktailImage,
+    cleanTitle
 }

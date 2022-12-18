@@ -48,9 +48,9 @@ function setCocktailInfos(cocktail) {
 
     for (let aliment in cocktail.ingredients) {
         const div = document.createElement("div");
-        setElementStyle(div, "border-4 border-pink-600 px-4 py-1 rounded-lg w-fit h-fit");
+        setElementStyle(div, "border-4 border-pink-600 px-4 py-1 m-2 rounded-lg w-fit h-fit");
         const p = document.createElement("p");
-        setElementStyle(div, "text-xl font-semibold text-slate-700");
+        setElementStyle(div, "text-xl font-semibold text-slate-700 whitespace-nowrap");
         p.innerText = cocktail.ingredients[aliment];
         div.appendChild(p);
         aliments.appendChild(div);

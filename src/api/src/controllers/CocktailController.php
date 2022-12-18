@@ -52,12 +52,13 @@ class CocktailController {
      * @return Response Réponse en JSON
      */
     public function search(Request $rq, Response $rs, array $args): Response {
-        if (!isset($_GET['query']) || !is_string($_GET['query']) || $_GET['query'] === "") {
+        if ((!isset($_GET['query']) || trim($_GET['query']) == "") && !isset($_GET['tags_plus']) && !isset($_GET['tags_moins'])) {
             return $rs->withJson(["error" => "Query not found"], 400);
         }
 
         // liste des cocktails dont le nom contient un mot de la requête
-        $mots = explode(" ", $_GET['query']);
+        $mots = isset($_GET['query']) ? explode(" ", $_GET['query']) : [];
+        $mots = array_filter($mots, fn($mot) => trim($mot) != ""); // supprime les mots vides
         $cocktails = Recipe::where(function ($query) use ($mots) {
             foreach ($mots as $mot) {
                 $query->orWhere("title", "like", "%$mot%");
@@ -111,22 +112,34 @@ class CocktailController {
 
             $aTitle = unaccent($a['title']);
             $bTitle = unaccent($b['title']);
-            $aTitleWithoutSpecialChars = preg_replace("/[^a-z0-9]/", " ", strtolower($aTitle));
-            $bTitleWithoutSpecialChars = preg_replace("/[^a-z0-9]/", " ", strtolower($bTitle));
+            $aTitleLower = strtolower($aTitle);
+            $bTitleLower = strtolower($bTitle);
+            $aTitleWithoutSpecialChars = preg_replace("/[^a-z0-9]/", " ", $aTitleLower);
+            $bTitleWithoutSpecialChars = preg_replace("/[^a-z0-9]/", " ", $bTitleLower);
             $aWords = array_filter(explode(" ", $aTitleWithoutSpecialChars), fn($word) => $word !== "");
             $bWords = array_filter(explode(" ", $bTitleWithoutSpecialChars), fn($word) => $word !== "");
             foreach ($mots as $m) {
                 $mot = strtolower(unaccent($m));
+                $aPointsToAdd = 0;
+                $bPointsToAdd = 0;
+
                 // nombre de mots entiers dans le titre
-                if (in_array($mot, $aWords)) $aPoints++;
-                if (in_array($mot, $bWords)) $bPoints++;
+                if (in_array($mot, $aWords)) $aPointsToAdd++;
+                if (in_array($mot, $bWords)) $bPointsToAdd++;
                 // nombre de mots dans le titre
-                if (str_contains($aTitle, $mot)) $aPoints++;
-                if (str_contains($bTitle, $mot)) $bPoints++;
+                if (str_contains($aTitleLower, $mot)) $aPointsToAdd++;
+                if (str_contains($bTitleLower, $mot)) $bPointsToAdd++;
+
+                // vérifier si le mot est quelque part entre les parenthèses
+                if (preg_match("/\(.*$mot.*\)/", $aTitleLower)) $aPointsToAdd /= 2;
+                if (preg_match("/\(.*$mot.*\)/", $bTitleLower)) $bPointsToAdd /= 2;
+
+                $aPoints += $aPointsToAdd;
+                $bPoints += $bPointsToAdd;
             }
 
-            if ($aPoints !== $bPoints) return $bPoints - $aPoints;
-            return $aTitle <=> $bTitle;
+            if ($aPoints !== $bPoints) return $aPoints > $bPoints ? -1 : 1;
+            return strcmp($aTitle, $bTitle);
         });
 
         return $rs->withJson($min);

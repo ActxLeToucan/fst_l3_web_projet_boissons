@@ -23,6 +23,13 @@ function displayCocktails(list) {
             console.error("Error fetching cocktail "+id);
         })
     });
+
+    const fav = document.getElementById("cocktail-list");
+    const msg = document.getElementById("no-fav");
+    const hasFav = list.length > 0;
+    
+    fav.style.display = hasFav? "flex" : "none";
+    msg.style.display = hasFav? "none" : "flex";
 }
 
 function getFavorites() {

@@ -1,4 +1,5 @@
 class User {
+    /**@type {User} */
     static #currentUser = null;
 
     static get CurrentUser() {
@@ -13,7 +14,12 @@ class User {
     }
 
     static toLocalStorage(user) {
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("user", JSON.stringify({
+            firstname:  user.firstname,
+            lastname:   user.lastname,
+            email:      user.email,
+            favorites:  user.favorites
+        }));
     }
 
     static fromLocalStorage() {
@@ -28,22 +34,43 @@ class User {
         User.#currentUser = null;
     }
 
-    firstname = "";
-    lastname = "";
-    email = "";
+    #firstname = "";
+    #lastname = "";
+    #email = "";
+    #favorites = [];
+
     constructor(infos) {
-        this.firstname = infos.firstname ?? "";
-        this.lastname = infos.lastname ?? "";
-        this.email = infos.email ?? "";
+        this.#firstname = infos.firstname ?? "";
+        this.#lastname = infos.lastname ?? "";
+        this.#email = infos.email ?? "";
+        this.#favorites = infos.favorites ?? [];
+
         User.#currentUser = this;
     }
 
-    getFullName() {
-        return this.firstname + " " + this.lastname;
+    get lastname() {
+        return this.#lastname;
     }
 
-    getEmail() {
-        return this.email;
+    get firstname() {
+        return this.#firstname;
+    }
+
+    get fullname() {
+        return this.#firstname + " " + this.#lastname;
+    }
+
+    get email() {
+        return this.#email;
+    }
+
+    get favorites() {
+        return this.#favorites;
+    }
+
+    set favorites(val) {
+        this.#favorites = val;
+        this.save();
     }
 
     save() {

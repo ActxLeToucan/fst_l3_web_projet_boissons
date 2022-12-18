@@ -1,5 +1,6 @@
 import { initHeader } from "./header.js";
 import { getCocktailImage, setElementStyle } from "./common.js";
+import { addFavorite, getFavorites, removeFavorite } from "./favorites.js";
 import API from "./API.js";
 
 onload = () => {
@@ -12,9 +13,7 @@ function setupPage() {
     if (!cocktailID) {
         window.location.href = window.location.origin;
     }
-    console.log("cocktailID", cocktailID);
     fetchCocktail(cocktailID).then(cocktail => {
-        console.log("cocktail", cocktail)
         setCocktailInfos(cocktail);
     });
 }
@@ -40,12 +39,14 @@ function setCocktailInfos(cocktail) {
     preparation.innerText = cocktail.preparation;
     image.src = getCocktailImage(cocktail.title);
 
+    ingredients.innerHTML = "";
     for (let ingredient of cocktail.descrIngredients) {
         const p = document.createElement("p");
         p.innerText = ingredient;
         ingredients.appendChild(p);
     }
 
+    aliments.innerHTML = "";
     for (let aliment in cocktail.ingredients) {
         const div = document.createElement("div");
         setElementStyle(div, "border-4 border-pink-600 px-4 py-1 m-2 rounded-lg w-fit h-fit");
@@ -55,4 +56,25 @@ function setCocktailInfos(cocktail) {
         div.appendChild(p);
         aliments.appendChild(div);
     }
+
+    const fav = getFavorites();
+    const isFav = fav.includes(cocktail.id);
+
+    const favIcon = document.getElementById("fav-icon");
+    const COLOR_WHITE = "#f8fafc";
+    favIcon.style.fill = isFav ? COLOR_WHITE : "none";
+
+    const favBtn = document.getElementById("fav-btn");
+    favBtn.addEventListener("click", ev => {
+        if (isFav)
+            removeFavorite(cocktail.id);
+        else addFavorite(cocktail.id);
+
+        // update page to show the new star icon
+        setCocktailInfos(cocktail);
+    });
+}
+
+export {
+    fetchCocktail
 }

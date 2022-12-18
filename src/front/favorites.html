@@ -7,6 +7,18 @@
     <script src="./scripts/tailwind.js"></script> <!-- TAILWIND CDN FOR STYLE -->
     <script type="module" src="./scripts/favorites.js"></script>
     <title> Cocktails & cie </title>
+    <style>
+        @keyframes spawn-up {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0px); }
+        }
+        @keyframes spawn-right {
+            0% { opacity: 0; transform: translateX(-10px); }
+            100% { opacity: 1; transform: translateX(0px); }
+        }
+        .spawn-up { animation: spawn-up 500ms ease; }
+        .spawn-right { animation: spawn-right 500ms ease; }
+    </style>
 </head>
 <body class="flex flex-col w-screen h-screen bg-slate-50">
     <!-- START HEADER -->

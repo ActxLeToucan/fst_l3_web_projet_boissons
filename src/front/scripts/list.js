@@ -48,7 +48,7 @@ function setup() {
     let searchTimeout = -1;
     let lastSearch = "";
     search_input.addEventListener("focus", showSearchBar);
-    search_input.addEventListener("blur", hideAutocomplete);
+    search_input.addEventListener("blur", () => setTimeout(hideAutocomplete, 100));
     search_input.addEventListener("keyup", e => {
         if (searchTimeout != -1)
             clearTimeout(searchTimeout);

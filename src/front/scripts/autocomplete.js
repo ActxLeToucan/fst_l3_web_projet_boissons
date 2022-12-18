@@ -4,6 +4,7 @@ let autocomplete_container;
 let focusIndex;
 let data_arr = [];
 let onselected_callback;
+
 function showAutocomplete(el, data, onselected) {
     focusIndex = -1;
     data_arr = data;
@@ -55,6 +56,16 @@ function showAutocomplete(el, data, onselected) {
                 else el.classList.remove("bg-pink-100");
             }
         };
+
+        window.addEventListener("scroll", () => {
+            const elBounds = el.getBoundingClientRect();
+            if (autocomplete_container == null) {
+                window.removeEventListener("scroll", this);
+                return;
+            }
+            autocomplete_container.style.top = elBounds.y + elBounds.height + "px";
+            autocomplete_container.style.left = elBounds.x + "px";
+        });
     }
     
     autocomplete_container.innerHTML = "";

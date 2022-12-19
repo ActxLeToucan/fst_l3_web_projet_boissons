@@ -135,4 +135,15 @@ class UserController {
 
         return $rs->withJson($user->toArrayPublic());
     }
+
+    public function fromLogin(Request $rq, Response $rs, array $args): Response {
+        $login = $args["login"];
+        try {
+            $user = User::where("login", $login)->firstOrFail();
+        } catch (ModelNotFoundException $_) {
+            return $rs->withJson(["error" => "User not found"], 404);
+        }
+
+        return $rs->withJson($user->toArrayPublic());
+    }
 }

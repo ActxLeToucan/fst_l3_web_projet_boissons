@@ -39,6 +39,11 @@ $app->group('/users', function () use ($app) {
     $app->post('/login', 'boissons\controllers\UserController:login')->setName('login');
     $app->post('/register', 'boissons\controllers\UserController:register')->setName('register');
     $app->get('/me', 'boissons\controllers\UserController:me')->setName('me');
+    $app->get('/{login}[/]', 'boissons\controllers\UserController:fromLogin')->setName('user');
+});
+
+$app->group('/genders', function () use ($app) {
+    $app->get('[/]', 'boissons\controllers\GenderController:all')->setName('genders');
 });
 
 $app->group('/db', function () use ($app) {

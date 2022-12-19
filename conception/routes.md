@@ -24,7 +24,13 @@ Liste des cocktails :
 ```
 
 ### GET `/{id}[/]`
-Détails d'un cocktail :
+Détails d'un cocktail.
+
+Arguments :
+
+| Nom | Obligatoire |       Description       |
+|:---:|:-----------:|:-----------------------:|
+| id  |     oui     | Identifiant du cocktail |
 
 `/2` donne : 
 ```json
@@ -211,6 +217,53 @@ Réponse :
 }
 ```
 
+### GET `/{login}[/]`
+Obtenir les informations d'un utilisateur.
+
+Arguments :
+
+|  Nom   | Obligatoire |       Description       |
+|:------:|:-----------:|:-----------------------:|
+| login  |     oui     | Login de l'utilisateur  |
+
+
+```json
+{
+  "id": 1,
+  "login": "toto",
+  "firstname": "Toto",
+  "lastname": "Toto",
+  "birthdate": "1990-01-01",
+  "email": "toto@toto.fr",
+  "city": "Paris",
+  "zip": "75001",
+  "address": "1 rue Toto",
+  "gender_id": 1,
+  "gender": "Homme",
+  "level": 1
+}
+```
+
+
+## `/genders`
+### GET `[/]`
+Liste des genres :
+```json
+{
+  "1": {
+    "id": 1,
+    "name": "Homme"
+  },
+  "2": {
+    "id": 2,
+    "name": "Femme"
+  },
+  "3": {
+    "id": 3,
+    "name": "Autre"
+  }
+}
+```
 
 ## `/db`
 ### GET `/init[/]`

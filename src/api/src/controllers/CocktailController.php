@@ -196,6 +196,71 @@ class CocktailController {
             }
         }
 
-        return $rs->withJson(["success" => $add ? "favorited" : "unfavorited"]);
+        return $rs->withJson(["success" => $add ? "Cocktail added to favorites" : "Cocktail removed from favorites"]);
+    }
+
+    public function favorites(Request $rq, Response $rs, array $args): Response {
+        return $this->favs($rq, $rs, $args, true);
+    }
+
+    public function unfavorites(Request $rq, Response $rs, array $args): Response {
+        return $this->favs($rq, $rs, $args, false);
+    }
+
+    private function favs(Request $rq, Response $rs, array $args, bool $add): Response {
+        if ($add) {
+            $body = $rq->getParsedBody();
+            $ids = $body['ids'] ?? null;
+        } else {
+            $ids = $rq->getQueryParam('ids');
+        }
+
+        if (is_null($ids))
+            return $rs->withJson(["error" => "Missing ids"], 400);
+
+        $ids = explode(";", $ids);
+
+        $res = User::fromToken($rq, $rs, $add ? PARAM_IN_BODY_POST : PARAM_IN_BODY_DELETE);
+        if ($res["response"]->getStatusCode() !== 200) return $res["response"];
+        $user = $res["user"];
+
+        $favorites = $user->favorites->map(fn($cocktail) => $cocktail->id);
+
+        foreach ($ids as $id) {
+            $cocktail = Recipe::find($id);
+            if ($cocktail === null) {
+                return $rs->withJson(["error" => "Cocktail $id not found"], 404);
+            }
+            if ($add) {
+                if (!$favorites->contains($cocktail->id)) {
+                    $user->favorites()->attach($cocktail);
+                    $favorites->push($cocktail->id);
+                }
+            } else {
+                if ($favorites->contains($cocktail->id)) {
+                    $user->favorites()->detach($cocktail);
+                    $favorites->pull($cocktail->id);
+                }
+            }
+        }
+
+        return $rs->withJson(["success" => $add ? "Cocktails added to favorites" : "Cocktails removed from favorites"]);
+    }
+
+    public function random(Request $rq, Response $rs, array $args): Response {
+        $nb = $args["nb"] ?? 1;
+        $nb = max($nb, 1);
+        $cocktails = Recipe::inRandomOrder()->take($nb)->get();
+
+        // formatage des résultats
+        $min = [];
+        foreach ($cocktails as $cocktail) {
+            $cocktailMin = $cocktail->toArrayMin($this->c);
+            if (!in_array($cocktailMin, $min)) {
+                $min[] = $cocktailMin;
+            }
+        }
+
+        return $rs->withJson($min);
     }
 }

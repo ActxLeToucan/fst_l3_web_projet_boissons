@@ -74,6 +74,71 @@ Exemple : On veut les cocktails qui contiennent "alcool" ou "de" ou "fruit" dans
 ```
 Les résultats sont triés par pertinence.
 
+### GET `/random[/[{n}[/]]]`
+Retourne `n` cocktails aléatoires. Si `n` n'est pas spécifié, retourne un seul cocktail.
+
+Argument :
+
+| Nom | Obligatoire |     Description      | Valeur par défaut |
+|:---:|:-----------:|:--------------------:|:-----------------:|
+|  n  |     non     | Nombre de cocktails  |         1         |
+
+Retourne pour `n` = 3 :
+
+```json
+[
+  {
+    "id": 42,
+    "title": "Boisson coco",
+    "link": "/api/cocktails/42/"
+  },
+  {
+    "id": 6,
+    "title": "Bora bora",
+    "link": "/api/cocktails/6/"
+  },
+  {
+    "id": 55,
+    "title": "Boisson la variante (à base de rosé)",
+    "link": "/api/cocktails/55/"
+  }
+]
+```
+
+### POST `/favorites[/]`
+Ajoute des cocktails aux favoris de l'utilisateur connecté.
+
+Paramètres :
+
+| Nom | Obligatoire |                   Description                    | Exemple |
+|:---:|:-----------:|:------------------------------------------------:|:-------:|
+| ids |     oui     | Identifiants des cocktails à ajouter aux favoris |  1;2;3  |
+
+Retourne :
+
+```json
+{
+  "success": "Cocktails added to favorites"
+}
+```
+
+### DELETE `/favorites[/]`
+Supprime des cocktails des favoris de l'utilisateur connecté.
+
+Paramètres :
+
+| Nom | Obligatoire |                    Description                     | Exemple |
+|:---:|:-----------:|:--------------------------------------------------:|:-------:|
+| ids |     oui     | Identifiants des cocktails à supprimer des favoris |  1;2;3  |
+
+Retourne :
+
+```json
+{
+  "success": "Cocktails removed from favorites"
+}
+```
+
 ### `/{id}`
 #### GET `[/]`
 Détails d'un cocktail.
@@ -125,7 +190,7 @@ Paramètres :
 Retourne :
 ```json
 {
-  "success": "favorited"
+  "success": "Cocktail added to favorites"
 }
 ```
 
@@ -147,7 +212,7 @@ Paramètres :
 Retourne :
 ```json
 {
-  "success": "unfavorited"
+  "success": "Cocktail removed from favorites"
 }
 ```
 

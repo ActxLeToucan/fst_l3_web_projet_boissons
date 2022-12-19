@@ -50,6 +50,8 @@ Détails d'un cocktail :
 ```
 
 ### GET `/search`
+Recherche de cocktails par nom et par ingrédients.
+
 Paramètres :
 
 |    Nom     |                       Obligatoire                       |        Description         |     Exemple     |
@@ -140,6 +142,8 @@ Liste des ingrédients :
 
 ## `/users`
 ### POST `/login`
+Obtenir un token d'authentification.
+
 Paramètres :
 
 |   Nom    | Obligatoire |           Description           |   Exemple   |
@@ -155,6 +159,8 @@ Réponse :
 ```
 
 ### POST `/register`
+Inscription d'un nouvel utilisateur et obtention d'un token d'authentification.
+
 Paramètres :
 
 |    Nom    | Obligatoire |        Description         | Vérification                                                                                                                                                                |   Exemple    |
@@ -179,11 +185,13 @@ Réponse :
 ```
 
 ### GET `/me`
+Obtenir les informations de l'utilisateur connecté.
+
 Paramètres :
 
-|  Nom   | Obligatoire |       Description       |      Exemple      |
-|:------:|:-----------:|:-----------------------:|:-----------------:|
-| token  |     oui     | Token de l'utilisateur  | mon_token_unique  |
+|  Nom   | Obligatoire |       Description       |
+|:------:|:-----------:|:-----------------------:|
+| token  |     oui     | Token de l'utilisateur  |
 
 Réponse :
 ```json
@@ -207,6 +215,13 @@ Réponse :
 ## `/db`
 ### GET `/init[/]`
 Initialise la base de données. Efface les tables avant.
+
+Paramètres :
+
+|  Nom   | Obligatoire |        Description        |
+|:------:|:-----------:|:-------------------------:|
+| token  |     oui     | Token de l'administrateur |
+
 ```json
 {
   "success": "Database initialized"

@@ -129,14 +129,10 @@ class UserController {
 
     public function me(Request $rq, Response $rs, array $args): Response
     {
-        if (is_null($token = $rq->getQueryParam("token")))
-            return $rs->withJson(["error" => "Missing token"], 400);
+        $res = User::getUser($rq, $rs, PARAM_IN_BODY_GET);
+        if ($res["response"]->getStatusCode() !== 200) return $res["response"];
 
-        try {
-            $user = User::where("token", $token)->firstOrFail();
-        } catch (ModelNotFoundException $_) {
-            return $rs->withJson(["error" => "Invalid token"], 404);
-        }
+        $user = $res["user"];
 
         return $rs->withJson($user->toArrayPublic());
     }

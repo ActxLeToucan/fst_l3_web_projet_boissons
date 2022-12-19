@@ -5,9 +5,9 @@ namespace boissons\controllers;
 use boissons\models\Gender;
 use boissons\models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Slim\Container;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Container;
 
 class UserController {
     public function __construct(private readonly Container $c) {
@@ -127,9 +127,8 @@ class UserController {
         return $rs->withJson(["token" => $user->token]);
     }
 
-    public function me(Request $rq, Response $rs, array $args): Response
-    {
-        $res = User::getUser($rq, $rs, PARAM_IN_BODY_GET);
+    public function me(Request $rq, Response $rs, array $args): Response {
+        $res = User::fromToken($rq, $rs, PARAM_IN_BODY_GET);
         if ($res["response"]->getStatusCode() !== 200) return $res["response"];
 
         $user = $res["user"];

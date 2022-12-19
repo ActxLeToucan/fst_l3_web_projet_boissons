@@ -5,9 +5,9 @@ namespace boissons\controllers;
 use boissons\models\Aliment;
 use boissons\models\Recipe;
 use boissons\models\User;
-use Slim\Container;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Container;
 
 class DbController {
     public function __construct(private readonly Container $c) {

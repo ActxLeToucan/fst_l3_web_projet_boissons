@@ -23,4 +23,21 @@ class User extends Model {
             "recipe_id"
         );
     }
+
+    public function toArrayPublic(): array {
+        return [
+            "id" => $this->id,
+            "login" => $this->login,
+            "firstname" => $this->firstname,
+            "lastname" => $this->lastname,
+            "birthdate" => $this->birthdate,
+            "email" => $this->email,
+            "city" => $this->city,
+            "zip" => $this->zip,
+            "address" => $this->address,
+            "gender_id" => $this->gender_id,
+            "gender" => $this->gender ? $this->gender->name : null,
+            "level" => $this->level
+        ];
+    }
 }

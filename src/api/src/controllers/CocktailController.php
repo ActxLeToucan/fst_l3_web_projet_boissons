@@ -52,12 +52,16 @@ class CocktailController {
      * @return Response Réponse en JSON
      */
     public function search(Request $rq, Response $rs, array $args): Response {
-        if ((!isset($_GET['query']) || trim($_GET['query']) == "") && !isset($_GET['tags_plus']) && !isset($_GET['tags_moins'])) {
+        $query = $rq->getQueryParam('query');
+        $tagsPlus = $rq->getQueryParam('tags_plus');
+        $tagsMinus = $rq->getQueryParam('tags_moins');
+
+        if ((is_null($query) || trim($query) === "") && is_null($tagsPlus) && is_null($tagsMinus)) {
             return $rs->withJson(["error" => "Query not found"], 400);
         }
 
         // liste des cocktails dont le nom contient un mot de la requête
-        $mots = isset($_GET['query']) ? explode(" ", $_GET['query']) : [];
+        $mots = is_null($query) ? [] : explode(" ", $query);
         $mots = array_filter($mots, fn($mot) => trim($mot) != ""); // supprime les mots vides
         $cocktails = Recipe::where(function ($query) use ($mots) {
             foreach ($mots as $mot) {
@@ -66,8 +70,8 @@ class CocktailController {
         })->get();
 
         // filtre, on ne garde que les cocktails dont les ingrédients contiennent la requête
-        if (isset($_GET['tags_plus'])) {
-            $tags = explode(";", $_GET['tags_plus']);
+        if (!is_null($tagsPlus)) {
+            $tags = explode(";", $tagsPlus);
             $allTags = $this->getAlimentIdsFromTags($tags);
             $cocktails = $cocktails->filter(function ($cocktail) use ($tags, $allTags) {
                 $ingredients = $cocktail->ingredients;
@@ -82,8 +86,8 @@ class CocktailController {
         }
 
         // on ne garde que les cocktails dont les ingrédients ne contiennent pas la requête
-        if (isset($_GET['tags_minus'])) {
-            $tags = explode(";", $_GET['tags_minus']);
+        if (!is_null($tagsMinus)) {
+            $tags = explode(";", $tagsMinus);
             $allTags = $this->getAlimentIdsFromTags($tags);
             $cocktails = $cocktails->filter(function ($cocktail) use ($tags, $allTags) {
                 $ingredients = $cocktail->ingredients;

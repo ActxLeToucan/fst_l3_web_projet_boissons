@@ -138,6 +138,72 @@ Liste des ingrédients :
 }
 ```
 
+## `/users`
+### POST `/login`
+Paramètres :
+
+|   Nom    | Obligatoire |           Description           |   Exemple   |
+|:--------:|:-----------:|:-------------------------------:|:-----------:|
+|  login   |     oui     | Login ou email de l'utilisateur |    toto     |
+| password |     oui     |     Mot de passe de l'user      | Toto_toto54 |
+
+Réponse :
+```json
+{
+    "token": "mon_token_unique"
+}
+```
+
+### POST `/register`
+Paramètres :
+
+|    Nom    | Obligatoire |        Description         | Vérification                                                                                                                                                                |   Exemple    |
+|:---------:|:-----------:|:--------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------:|
+|   login   |     oui     |   Login de l'utilisateur   | Taille : [4;64]<br/>Ne doit pas déjà exister                                                                                                                                |     toto     |
+| password  |     oui     |   Mot de passe de l'user   | Taille : >= 8<br/>Doit contenir :<br/> - au moins une lettre majuscule<br/> - au moins une lettre minuscule<br/> - au moins un chiffre<br/> - au moins un caractère spécial | Toto_toto54  |
+| firstname |     non     |  Prénom de l'utilisateur   | Taille : <= 32                                                                                                                                                              |     Toto     |
+| lastname  |     non     |    Nom de l'utilisateur    | Taille : <= 32                                                                                                                                                              |     Toto     |
+| birthdate |     non     |     Date de naissance      | Format : `YYYY-MM-DD`                                                                                                                                                       |  1990-01-01  |
+|   email   |     non     |   Email de l'utilisateur   | Adresse email valide<br/>Taille : <= 64                                                                                                                                     | toto@toto.fr |
+|   phone   |     non     | Téléphone de l'utilisateur | Taille : <= 32                                                                                                                                                              | +33612345789 |
+|   city    |     non     |   Ville de l'utilisateur   | Taille : <= 32                                                                                                                                                              |    Paris     |
+|    zip    |     non     |   Code postal de l'user    | Taille : <= 8                                                                                                                                                               |    75001     |
+|  address  |     non     |  Adresse de l'utilisateur  | Taille : <= 64                                                                                                                                                              |  1 rue Toto  |
+|  gender   |     non     |   Genre de l'utilisateur   | Doit correspondre à un genre dans la base de données                                                                                                                        |      1       |
+
+Réponse :
+```json
+{
+    "token": "mon_token_unique"
+}
+```
+
+### GET `/me`
+Paramètres :
+
+|  Nom   | Obligatoire |       Description       |      Exemple      |
+|:------:|:-----------:|:-----------------------:|:-----------------:|
+| token  |     oui     | Token de l'utilisateur  | mon_token_unique  |
+
+Réponse :
+```json
+{
+  "id": 1,
+  "login": "toto",
+  "firstname": "Toto",
+  "lastname": "Toto",
+  "birthdate": "1990-01-01",
+  "email": "toto@toto.fr",
+  "city": "Paris",
+  "zip": "75001",
+  "address": "1 rue Toto",
+  "gender_id": 1,
+  "gender": "Homme",
+  "level": 1
+}
+```
+
+
 ## `/db`
 ### GET `/init[/]`
 Initialise la base de données. Efface les tables avant.

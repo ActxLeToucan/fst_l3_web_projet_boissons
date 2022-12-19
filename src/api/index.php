@@ -19,6 +19,12 @@ $app->group('/ingredients', function () use ($app) {
     $app->get('[/]', 'boissons\controllers\IngredientController:all')->setName('ingredients');
 });
 
+$app->group('/users', function () use ($app) {
+    $app->post('/login', 'boissons\controllers\UserController:login')->setName('login');
+    $app->post('/register', 'boissons\controllers\UserController:register')->setName('register');
+    $app->get('/me', 'boissons\controllers\UserController:me')->setName('me');
+});
+
 $app->group('/db', function () use ($app) {
     $app->get('/init[/]', 'boissons\controllers\DbController:init')->setName('dbInit');
 });

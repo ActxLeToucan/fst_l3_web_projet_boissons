@@ -54,7 +54,7 @@ class CocktailController {
     public function search(Request $rq, Response $rs, array $args): Response {
         $query = $rq->getQueryParam('query');
         $tagsPlus = $rq->getQueryParam('tags_plus');
-        $tagsMinus = $rq->getQueryParam('tags_moins');
+        $tagsMinus = $rq->getQueryParam('tags_minus');
 
         if ((is_null($query) || trim($query) === "") && is_null($tagsPlus) && is_null($tagsMinus)) {
             return $rs->withJson(["error" => "Query not found"], 400);

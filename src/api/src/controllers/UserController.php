@@ -136,14 +136,21 @@ class UserController {
         return $rs->withJson($user->toArrayPublic());
     }
 
-    public function fromLogin(Request $rq, Response $rs, array $args): Response {
-        $login = $args["login"];
-        try {
-            $user = User::where("login", $login)->firstOrFail();
-        } catch (ModelNotFoundException $_) {
-            return $rs->withJson(["error" => "User not found"], 404);
+    public function favorites(Request $rq, Response $rs, array $args): Response {
+        $res = User::fromToken($rq, $rs, PARAM_IN_BODY_GET);
+        if ($res["response"]->getStatusCode() !== 200) return $res["response"];
+
+        $user = $res["user"];
+
+        $favorites = $user->favorites()->get();
+
+        // formatage des résultats
+        $min = [];
+        foreach ($favorites as $cocktail) {
+            $cocktailMin = $cocktail->toArrayMin($this->c);
+            $min[] = $cocktailMin;
         }
 
-        return $rs->withJson($user->toArrayPublic());
+        return $rs->withJson($min);
     }
 }

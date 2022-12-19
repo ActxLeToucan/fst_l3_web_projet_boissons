@@ -28,7 +28,11 @@ function unaccent(string $string): string {
 $app->group('/cocktails', function () use ($app) {
     $app->get('[/]', 'boissons\controllers\CocktailController:all')->setName('cocktails');
     $app->get('/search', 'boissons\controllers\CocktailController:search')->setName('search');
-    $app->get('/{id}[/]', 'boissons\controllers\CocktailController:one')->setName('cocktail');
+    $app->group('/{id}', function () use ($app) {
+        $app->get('[/]', 'boissons\controllers\CocktailController:one')->setName('cocktail');
+        $app->post('/favorite', 'boissons\controllers\CocktailController:favorite')->setName('favorite');
+        $app->delete('/favorite', 'boissons\controllers\CocktailController:unfavorite')->setName('unfavorite');
+    });
 });
 
 $app->group('/ingredients', function () use ($app) {
@@ -38,8 +42,10 @@ $app->group('/ingredients', function () use ($app) {
 $app->group('/users', function () use ($app) {
     $app->post('/login', 'boissons\controllers\UserController:login')->setName('login');
     $app->post('/register', 'boissons\controllers\UserController:register')->setName('register');
-    $app->get('/me', 'boissons\controllers\UserController:me')->setName('me');
-    $app->get('/{login}[/]', 'boissons\controllers\UserController:fromLogin')->setName('user');
+    $app->group('/me', function () use ($app) {
+        $app->get('[/]', 'boissons\controllers\UserController:me')->setName('me');
+        $app->get('/favorites', 'boissons\controllers\UserController:favorites')->setName('favorites');
+    });
 });
 
 $app->group('/genders', function () use ($app) {

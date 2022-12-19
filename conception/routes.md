@@ -23,38 +23,6 @@ Liste des cocktails :
 ]
 ```
 
-### GET `/{id}[/]`
-Détails d'un cocktail.
-
-Arguments :
-
-| Nom | Obligatoire |       Description       |
-|:---:|:-----------:|:-----------------------:|
-| id  |     oui     | Identifiant du cocktail |
-
-`/2` donne : 
-```json
-{
-  "id": 2,
-  "title": "Aperol Spritz : Boisson italien pétillant",
-  "preparation": "Préparer la quantité de Boisson souhaitée en respectant les proportions ! Garnir de glaçons et d'un morceau d'orange (sanguine si possible). Santé !",
-  "descrIngredients": [
-    "1 verre d'aperol",
-    "3 verres de vin blanc pétillant type prosecco",
-    "5 glaçons",
-    "1 orange sanguine",
-    "2 verres d'eau pétillante"
-  ],
-  "ingredients": {
-    "5": "Aperol",
-    "6": "Prosecco",
-    "7": "Glaçon",
-    "8": "Orange sanguine",
-    "9": "Eau gazeuse"
-  }
-}
-```
-
 ### GET `/search`
 Recherche de cocktails par nom et par ingrédients.
 
@@ -105,6 +73,83 @@ Exemple : On veut les cocktails qui contiennent "alcool" ou "de" ou "fruit" dans
 ]
 ```
 Les résultats sont triés par pertinence.
+
+### `/{id}`
+#### GET `[/]`
+Détails d'un cocktail.
+
+Arguments :
+
+| Nom | Obligatoire |       Description       |
+|:---:|:-----------:|:-----------------------:|
+| id  |     oui     | Identifiant du cocktail |
+
+`/2` donne :
+```json
+{
+  "id": 2,
+  "title": "Aperol Spritz : Boisson italien pétillant",
+  "preparation": "Préparer la quantité de Boisson souhaitée en respectant les proportions ! Garnir de glaçons et d'un morceau d'orange (sanguine si possible). Santé !",
+  "descrIngredients": [
+    "1 verre d'aperol",
+    "3 verres de vin blanc pétillant type prosecco",
+    "5 glaçons",
+    "1 orange sanguine",
+    "2 verres d'eau pétillante"
+  ],
+  "ingredients": {
+    "5": "Aperol",
+    "6": "Prosecco",
+    "7": "Glaçon",
+    "8": "Orange sanguine",
+    "9": "Eau gazeuse"
+  }
+}
+```
+
+#### POST `/favorite[/]`
+Ajoute un cocktail aux favoris de l'utilisateur connecté.
+
+Arguments :
+
+| Nom | Obligatoire |       Description       |
+|:---:|:-----------:|:-----------------------:|
+| id  |     oui     | Identifiant du cocktail |
+
+Paramètres :
+
+|  Nom  | Obligatoire |           Description           |
+|:-----:|:-----------:|:-------------------------------:|
+| token |     oui     | Token de l'utilisateur connecté |
+
+Retourne :
+```json
+{
+  "success": "favorited"
+}
+```
+
+#### DELETE `/favorite[/]`
+Supprime un cocktail des favoris de l'utilisateur connecté.
+
+Arguments :
+
+| Nom | Obligatoire |       Description       |
+|:---:|:-----------:|:-----------------------:|
+| id  |     oui     | Identifiant du cocktail |
+
+Paramètres :
+
+|  Nom  | Obligatoire |           Description           |
+|:-----:|:-----------:|:-------------------------------:|
+| token |     oui     | Token de l'utilisateur connecté |
+
+Retourne :
+```json
+{
+  "success": "unfavorited"
+}
+```
 
 ## GET `/ingredients[/]`
 Liste des ingrédients :
@@ -190,7 +235,8 @@ Réponse :
 }
 ```
 
-### GET `/me`
+### `/me`
+#### GET `[/]`
 Obtenir les informations de l'utilisateur connecté.
 
 Paramètres :
@@ -217,33 +263,30 @@ Réponse :
 }
 ```
 
-### GET `/{login}[/]`
-Obtenir les informations d'un utilisateur.
+#### GET `/favorites`
+Obtenir les cocktails favoris de l'utilisateur connecté.
 
-Arguments :
+Paramètres :
 
 |  Nom   | Obligatoire |       Description       |
 |:------:|:-----------:|:-----------------------:|
-| login  |     oui     | Login de l'utilisateur  |
+| token  |     oui     | Token de l'utilisateur  |
 
-
+Réponse :
 ```json
-{
-  "id": 1,
-  "login": "toto",
-  "firstname": "Toto",
-  "lastname": "Toto",
-  "birthdate": "1990-01-01",
-  "email": "toto@toto.fr",
-  "city": "Paris",
-  "zip": "75001",
-  "address": "1 rue Toto",
-  "gender_id": 1,
-  "gender": "Homme",
-  "level": 1
-}
+[
+    {
+        "id": 1,
+        "title": "Mojito",
+        "link": "/api/cocktails/1/"
+    },
+    {
+        "id": 2,
+        "title": "Margarita",
+        "link": "/api/cocktails/2/"
+    }
+]
 ```
-
 
 ## `/genders`
 ### GET `[/]`

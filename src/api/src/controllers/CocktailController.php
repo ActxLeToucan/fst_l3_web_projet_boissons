@@ -4,6 +4,7 @@ namespace boissons\controllers;
 
 use boissons\models\Aliment;
 use boissons\models\Recipe;
+use boissons\models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -164,5 +165,37 @@ class CocktailController {
             }
         }
         return array_unique($allTags);
+    }
+
+    public function favorite(Request $rq, Response $rs, array $args): Response {
+        return $this->fav($rq, $rs, $args, true);
+    }
+
+    public function unfavorite(Request $rq, Response $rs, array $args): Response {
+        return $this->fav($rq, $rs, $args, false);
+    }
+
+    private function fav(Request $rq, Response $rs, array $args, bool $add): Response {
+        try {
+            $cocktail = Recipe::findOrfail($args["id"]);
+        } catch (ModelNotFoundException $e) {
+            return $rs->withJson(["error" => "Recipe not found"], 404);
+        }
+
+        $res = User::fromToken($rq, $rs, $add ? PARAM_IN_BODY_POST : PARAM_IN_BODY_DELETE);
+        if ($res["response"]->getStatusCode() !== 200) return $res["response"];
+        $user = $res["user"];
+
+        if ($add) {
+            if (!$user->favorites->contains($cocktail)) {
+                $user->favorites()->attach($cocktail);
+            }
+        } else {
+            if ($user->favorites->contains($cocktail)) {
+                $user->favorites()->detach($cocktail);
+            }
+        }
+
+        return $rs->withJson(["success" => $add ? "favorited" : "unfavorited"]);
     }
 }

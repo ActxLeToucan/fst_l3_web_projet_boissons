@@ -86,13 +86,12 @@ function refreshCocktails() {
     }).then(cocktails => {
         cocktails_list = cocktails;
         displayCocktails(cocktails);
-        showSearchBar();
     }).catch(err => { console.error("Error fetching cocktails: ", err) });
 }
 
 function showSearchBar() {
     showAutocomplete(search_input.parentElement.parentElement, cocktails_list, item => {
-        window.location.href = "/cocktail.html?id="+item.id;
+        window.location.href = API.createParam("/cocktail.html", "id", item.id);
     });
 }
 
@@ -110,20 +109,15 @@ function fetchCocktails({query, tags_plus, tags_minus}) {
         ) resolve([]);
 
         let link = "/cocktails/search";
-        let queryParam = "query=\"\"";
-        let plusParam, minusParam;
 
-        if (requestParams.query !== "") { queryParam = "query="+requestParams.query; }
+        if (requestParams.query !== "")
+            link = API.createParam(link, "query", requestParams.query);
 
         if (requestParams.tags_plus?.length > 0)
-            plusParam = "tags_plus="+requestParams.tags_plus.join(";");
+            link = API.createParam(link, "tags_plus", requestParams.tags_plus.join(";"));
 
         if (requestParams.tags_minus?.length > 0)
-            minusParam = "tags_minus="+requestParams.tags_minus.join(";");
-
-        link += "?" + queryParam;
-        if (plusParam) link += "&" + plusParam;
-        if (minusParam) link += (plusParam? "?" : "&") + minusParam;
+            link = API.createParam(link, "tags_minus", requestParams.tags_minus.join(";"));
 
         API.execute(link).then(res => {
             resolve(res);

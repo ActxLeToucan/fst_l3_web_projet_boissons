@@ -86,7 +86,7 @@ class API {
      * @param {object[]}} headers API call additionnal headers
      * @returns a promise resolving when the API call is done
      */
-    static execute(path, method = this.METHOD.GET, body = {}, type = this.TYPE.JSON, headers = []) {
+    static execute(path, method = this.METHOD.GET, body = {}, type = this.TYPE.JSON) {
         return new Promise((resolve, reject) => {
             path = path.replace("/?", "?").replaceAll("//", "/");
             let urlparts = path.split("?");
@@ -97,15 +97,10 @@ class API {
             let reqHeaders = {
                 "User-Agent": navigator.userAgent,
                 "Accept": "application/json",
-                "Accept-Language": "fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3"
+                "Accept-Language": "fr,fr-FR"
             };
-            if (type != this.TYPE_NONE && type != this.TYPE_FILE) reqHeaders["Content-Type"] = type;
 
-            if (headers)
-                for (let key in headers)
-                    reqHeaders[key] = headers[key];
-
-            let reqBody = type == this.TYPE.FORM ? "" : {};
+            let reqBody = {};
             if (body && type != this.TYPE.FILE) {
                 switch (typeof (body)) {
                     case "string":
@@ -121,16 +116,10 @@ class API {
                 }
             }
 
-            if (type == this.TYPE.FILE) { // create a form data from the body
-                reqBody = new FormData();
-                reqBody.append("model", body);
-            }
-
             if (API.API_URL == "" || API.API_URL == undefined) {
                 API.API_URL = window.location.origin + "/api";
             }
             
-            // try with / at the request end
             fetch(API.API_URL + path, {
                 credentials: "omit",
                 method: method,
@@ -147,24 +136,7 @@ class API {
                     }).catch(err => reject(err));
                 }
             }).catch(err => {
-                // is the request fails, test the same request but without "/" at the end (in case the error it just a 307 shitty redirection)
-                fetch(API.API_URL + path.replace("?", "/?"), {
-                    credentials: "omit",
-                    method: method,
-                    body: method == this.METHOD.GET ? undefined : reqBody,
-                    headers: reqHeaders,
-                    referrer: window.location.origin,
-                    mode: "cors"
-                }).then(response => {
-                    if (response.status != 200)
-                        reject(response);
-                    else {
-                        response.json().then(data => {
-                            resolve(data);
-                        }).catch(reject);
-                    }
-                }).catch(err => reject(err)).finally(() => {
-                });
+                reject(err);
             });
         });
     }
@@ -179,35 +151,22 @@ class API {
      * @param {object[]} headers API call additionnal headers
      * @returns A promise resolving when the API call is done
      */
-    static execute_logged(path, method = API.METHOD.GET, credentials, body = {}, type = this.TYPE.JSON, headers = []) {
+    static execute_logged(path, method = API.METHOD.GET, token, body = {}, type = this.TYPE.JSON) {
         return new Promise((resolve, reject) => {
-            if (!credentials) {
-                reject({status: -1, message: "Please provide credentials (token/type or username/password)"});
-                return;
-            }
-            const token_mode = (credentials.token != undefined)
-            const login_mode = (credentials.password != undefined && credentials.username != undefined)
-
-            if (!login_mode && !token_mode) {
-                reject({status: -1, message: "Error: Invalid credentials"});
+            if (!token) {
+                reject({status: -1, message: "Please provide token"});
                 return;
             }
 
-            let reqHeaders = {};
-            if (headers)
-                for (let key in headers)
-                    reqHeaders[key] = headers[key];
-
-            if (token_mode) {
-                reqHeaders[API.AuthorizationHeader] = credentials.token;
-                this.execute(path, method, body, type, reqHeaders).then(resolve).catch(reject);
-            } else {
-                this.execute(API.ROUTE.LOGIN, this.METHOD_POST, { username: credentials.username, password: credentials.password }, this.TYPE_FORM).then(data => {
-                    reqHeaders[API.AuthorizationHeader] = data;
-                    this.execute(path, method, body, type, reqHeaders).then(resolve).catch(reject);
-                }).catch(err => reject(err));
-            }
+            this.execute(createParam(path, "token", token), method, body, type).then(resolve).catch(reject);
         });
+    }
+
+    static createParam(query, name, value) {
+        if (value == undefined || value == null) return query;
+        
+        let hasParams = query.indexOf("?") != -1;
+        return query + (hasParams ? "&" : "?") + name + "=" + value;
     }
 }
 

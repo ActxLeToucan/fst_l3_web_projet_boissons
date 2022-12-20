@@ -25,9 +25,9 @@ class DbController {
         // execute the file
         eval($file);
         if (!isset($Recettes) || !is_array($Recettes))
-            return $rs->withJson(["error" => "Array \$Recettes not found"], 500);
+            return $rs->withJson(["error" => msgLocale($rq, "db_recettes_not_found")], 500);
         if (!isset($Hierarchie) || !is_array($Hierarchie))
-            return $rs->withJson(["error" => "Array \$Hierarchie not found"], 500);
+            return $rs->withJson(["error" => msgLocale($rq, "db_hierarchie_not_found")], 500);
 
         // clear the database
         Recipe::all()->each(fn($recipe) => $recipe->delete());
@@ -113,6 +113,6 @@ class DbController {
             }
         }
 
-        return $rs->withJson(["success" => "Database initialized"]);
+        return $rs->withJson(["success" => msgLocale($rq, "db_init_success")]);
     }
 }

@@ -40,7 +40,7 @@ class CocktailController {
         try {
             $cocktail = Recipe::findOrfail($args["id"]);
         } catch (ModelNotFoundException $e) {
-            return $rs->withJson(["error" => "Recipe not found"], 404);
+            return $rs->withJson(["error" => msgLocale($rq, "recipe_not_found")], 404);
         }
         return $rs->withJson($cocktail->toArrayFull());
     }
@@ -58,7 +58,7 @@ class CocktailController {
         $tagsMinus = $rq->getQueryParam('tags_minus');
 
         if ((is_null($query) || trim($query) === "") && is_null($tagsPlus) && is_null($tagsMinus)) {
-            return $rs->withJson(["error" => "Query not found"], 400);
+            return $rs->withJson(["error" => msgLocale($rq, "missing_query")], 400);
         }
 
         // liste des cocktails dont le nom contient un mot de la requête
@@ -179,7 +179,7 @@ class CocktailController {
         try {
             $cocktail = Recipe::findOrfail($args["id"]);
         } catch (ModelNotFoundException $e) {
-            return $rs->withJson(["error" => "Recipe not found"], 404);
+            return $rs->withJson(["error" => msgLocale($rq, "recipe_not_found")], 404);
         }
 
         $res = User::fromToken($rq, $rs, $add ? PARAM_IN_BODY_POST : PARAM_IN_BODY_DELETE);
@@ -196,7 +196,7 @@ class CocktailController {
             }
         }
 
-        return $rs->withJson(["success" => $add ? "Cocktail added to favorites" : "Cocktail removed from favorites"]);
+        return $rs->withJson(["success" => $add ? msgLocale($rq, "recipe_added_to_favorites") : msgLocale($rq, "recipe_removed_from_favorites")]);
     }
 
     public function favorites(Request $rq, Response $rs, array $args): Response {
@@ -216,7 +216,7 @@ class CocktailController {
         }
 
         if (is_null($ids))
-            return $rs->withJson(["error" => "Missing ids"], 400);
+            return $rs->withJson(["error" => msgLocale($rq, "missing_ids")], 400);
 
         $ids = explode(";", $ids);
 
@@ -229,7 +229,7 @@ class CocktailController {
         foreach ($ids as $id) {
             $cocktail = Recipe::find($id);
             if ($cocktail === null) {
-                return $rs->withJson(["error" => "Cocktail $id not found"], 404);
+                return $rs->withJson(["error" => msgLocale($rq, "recipe_not_found", $id)], 404);
             }
             if ($add) {
                 if (!$favorites->contains($cocktail->id)) {
@@ -244,7 +244,7 @@ class CocktailController {
             }
         }
 
-        return $rs->withJson(["success" => $add ? "Cocktails added to favorites" : "Cocktails removed from favorites"]);
+        return $rs->withJson(["success" => $add ? msgLocale($rq, "recipes_added_to_favorites") : msgLocale($rq, "recipes_removed_from_favorites")]);
     }
 
     public function random(Request $rq, Response $rs, array $args): Response {

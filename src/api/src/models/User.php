@@ -43,7 +43,7 @@ class User extends Model {
     public static function fromToken(Request $rq, Response $rs, bool $paramInBody): array {
         if (is_null($token = $paramInBody ? $rq->getParsedBody()["token"] : $rq->getQueryParam("token")))
             return [
-                "response" => $rs->withJson(["error" => "Missing token"], 400),
+                "response" => $rs->withJson(["error" => msgLocale($rq, "missing_token")], 400),
                 "user" => null
             ];
 
@@ -51,7 +51,7 @@ class User extends Model {
             $user = User::where("token", $token)->firstOrFail();
         } catch (ModelNotFoundException $_) {
             return [
-                "response" => $rs->withJson(["error" => "Invalid token"], 404),
+                "response" => $rs->withJson(["error" => msgLocale($rq, "invalid_token")], 400),
                 "user" => null
             ];
         }

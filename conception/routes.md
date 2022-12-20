@@ -1,7 +1,15 @@
+# Langues
+L'api supporte plusieurs langues pour les réponses. Pour spécifier la langue, ajoutez un header `Accept-Language` avec la langue souhaitée. Par exemple, pour obtenir les réponses en français, ajoutez `Accept-Language: fr` à votre requête.
+
+L'api supporte les langues suivantes :
+
+* `fr` - Français
+* `en` - Anglais
+
 # Routes
 ## `/cocktails`
 ### GET `[/]`
-Liste des cocktails :
+Liste des cocktails :
 ```json
 [
   {
@@ -26,7 +34,7 @@ Liste des cocktails :
 ### GET `/search`
 Recherche de cocktails par nom et par ingrédients.
 
-Paramètres :
+Paramètres :
 
 |    Nom     |                       Obligatoire                       |        Description         |     Exemple     |
 |:----------:|:-------------------------------------------------------:|:--------------------------:|:---------------:|
@@ -34,7 +42,7 @@ Paramètres :
 | tags_plus  |                           non                           | Ingrédients à inclure (ET) |      2;6;9      |
 | tags_minus |                           non                           | Ingrédients à exclure (OU) |       1;3       |
 
-Exemple : On veut les cocktails qui contiennent "alcool" ou "de" ou "fruit" dans leur nom, qui ont les ingrédients 2, 6 et 9, mais pas les ingrédients 1 et 3.
+Exemple : On veut les cocktails qui contiennent "alcool" ou "de" ou "fruit" dans leur nom, qui ont les ingrédients 2, 6 et 9, mais pas les ingrédients 1 et 3.
 
 `/search?query=alcöol de frùît&tags_plus=2;6;9&tags_minus=1;3`
 
@@ -77,13 +85,13 @@ Les résultats sont triés par pertinence.
 ### GET `/random[/[{n}[/]]]`
 Retourne `n` cocktails aléatoires. Si `n` n'est pas spécifié, retourne un seul cocktail.
 
-Argument :
+Argument :
 
 | Nom | Obligatoire |     Description      | Valeur par défaut |
 |:---:|:-----------:|:--------------------:|:-----------------:|
 |  n  |     non     | Nombre de cocktails  |         1         |
 
-Retourne pour `n` = 3 :
+Retourne pour `n` = 3 :
 
 ```json
 [
@@ -108,13 +116,13 @@ Retourne pour `n` = 3 :
 ### POST `/favorites[/]`
 Ajoute des cocktails aux favoris de l'utilisateur connecté.
 
-Paramètres :
+Paramètres :
 
 | Nom | Obligatoire |                   Description                    | Exemple |
 |:---:|:-----------:|:------------------------------------------------:|:-------:|
 | ids |     oui     | Identifiants des cocktails à ajouter aux favoris |  1;2;3  |
 
-Retourne :
+Retourne :
 
 ```json
 {
@@ -125,13 +133,13 @@ Retourne :
 ### DELETE `/favorites[/]`
 Supprime des cocktails des favoris de l'utilisateur connecté.
 
-Paramètres :
+Paramètres :
 
 | Nom | Obligatoire |                    Description                     | Exemple |
 |:---:|:-----------:|:--------------------------------------------------:|:-------:|
 | ids |     oui     | Identifiants des cocktails à supprimer des favoris |  1;2;3  |
 
-Retourne :
+Retourne :
 
 ```json
 {
@@ -143,13 +151,13 @@ Retourne :
 #### GET `[/]`
 Détails d'un cocktail.
 
-Arguments :
+Arguments :
 
 | Nom | Obligatoire |       Description       |
 |:---:|:-----------:|:-----------------------:|
 | id  |     oui     | Identifiant du cocktail |
 
-`/2` donne :
+`/2` donne :
 ```json
 {
   "id": 2,
@@ -175,19 +183,19 @@ Arguments :
 #### POST `/favorite[/]`
 Ajoute un cocktail aux favoris de l'utilisateur connecté.
 
-Arguments :
+Arguments :
 
 | Nom | Obligatoire |       Description       |
 |:---:|:-----------:|:-----------------------:|
 | id  |     oui     | Identifiant du cocktail |
 
-Paramètres :
+Paramètres :
 
 |  Nom  | Obligatoire |           Description           |
 |:-----:|:-----------:|:-------------------------------:|
 | token |     oui     | Token de l'utilisateur connecté |
 
-Retourne :
+Retourne :
 ```json
 {
   "success": "Cocktail added to favorites"
@@ -197,19 +205,19 @@ Retourne :
 #### DELETE `/favorite[/]`
 Supprime un cocktail des favoris de l'utilisateur connecté.
 
-Arguments :
+Arguments :
 
 | Nom | Obligatoire |       Description       |
 |:---:|:-----------:|:-----------------------:|
 | id  |     oui     | Identifiant du cocktail |
 
-Paramètres :
+Paramètres :
 
 |  Nom  | Obligatoire |           Description           |
 |:-----:|:-----------:|:-------------------------------:|
 | token |     oui     | Token de l'utilisateur connecté |
 
-Retourne :
+Retourne :
 ```json
 {
   "success": "Cocktail removed from favorites"
@@ -217,7 +225,7 @@ Retourne :
 ```
 
 ## GET `/ingredients[/]`
-Liste des ingrédients :
+Liste des ingrédients :
 ```json
 {
   "1142": {
@@ -260,14 +268,14 @@ Liste des ingrédients :
 ### POST `/login`
 Obtenir un token d'authentification.
 
-Paramètres :
+Paramètres :
 
 |   Nom    | Obligatoire |           Description           |   Exemple   |
 |:--------:|:-----------:|:-------------------------------:|:-----------:|
 |  login   |     oui     | Login ou email de l'utilisateur |    toto     |
 | password |     oui     |     Mot de passe de l'user      | Toto_toto54 |
 
-Réponse :
+Réponse :
 ```json
 {
     "token": "mon_token_unique"
@@ -277,23 +285,23 @@ Réponse :
 ### POST `/register`
 Inscription d'un nouvel utilisateur et obtention d'un token d'authentification.
 
-Paramètres :
+Paramètres :
 
 |    Nom    | Obligatoire |        Description         | Vérification                                                                                                                                                                |   Exemple    |
 |:---------:|:-----------:|:--------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------:|
-|   login   |     oui     |   Login de l'utilisateur   | Taille : [4;64]<br/>Ne doit pas déjà exister                                                                                                                                |     toto     |
-| password  |     oui     |   Mot de passe de l'user   | Taille : >= 8<br/>Doit contenir :<br/> - au moins une lettre majuscule<br/> - au moins une lettre minuscule<br/> - au moins un chiffre<br/> - au moins un caractère spécial | Toto_toto54  |
-| firstname |     non     |  Prénom de l'utilisateur   | Taille : <= 32                                                                                                                                                              |     Toto     |
-| lastname  |     non     |    Nom de l'utilisateur    | Taille : <= 32                                                                                                                                                              |     Toto     |
-| birthdate |     non     |     Date de naissance      | Format : `YYYY-MM-DD`                                                                                                                                                       |  1990-01-01  |
-|   email   |     non     |   Email de l'utilisateur   | Adresse email valide<br/>Taille : <= 64                                                                                                                                     | toto@toto.fr |
-|   phone   |     non     | Téléphone de l'utilisateur | Taille : <= 32                                                                                                                                                              | +33612345789 |
-|   city    |     non     |   Ville de l'utilisateur   | Taille : <= 32                                                                                                                                                              |    Paris     |
-|    zip    |     non     |   Code postal de l'user    | Taille : <= 8                                                                                                                                                               |    75001     |
-|  address  |     non     |  Adresse de l'utilisateur  | Taille : <= 64                                                                                                                                                              |  1 rue Toto  |
+|   login   |     oui     |   Login de l'utilisateur   | Taille : [4;64]<br/>Ne doit pas déjà exister                                                                                                                                |     toto     |
+| password  |     oui     |   Mot de passe de l'user   | Taille : >= 8<br/>Doit contenir :<br/> - au moins une lettre majuscule<br/> - au moins une lettre minuscule<br/> - au moins un chiffre<br/> - au moins un caractère spécial | Toto_toto54  |
+| firstname |     non     |  Prénom de l'utilisateur   | Taille : <= 32                                                                                                                                                              |     Toto     |
+| lastname  |     non     |    Nom de l'utilisateur    | Taille : <= 32                                                                                                                                                              |     Toto     |
+| birthdate |     non     |     Date de naissance      | Format : `YYYY-MM-DD`                                                                                                                                                       |  1990-01-01  |
+|   email   |     non     |   Email de l'utilisateur   | Adresse email valide<br/>Taille : <= 64                                                                                                                                     | toto@toto.fr |
+|   phone   |     non     | Téléphone de l'utilisateur | Taille : <= 32                                                                                                                                                              | +33612345789 |
+|   city    |     non     |   Ville de l'utilisateur   | Taille : <= 32                                                                                                                                                              |    Paris     |
+|    zip    |     non     |   Code postal de l'user    | Taille : <= 8                                                                                                                                                               |    75001     |
+|  address  |     non     |  Adresse de l'utilisateur  | Taille : <= 64                                                                                                                                                              |  1 rue Toto  |
 |  gender   |     non     |   Genre de l'utilisateur   | Doit correspondre à un genre dans la base de données                                                                                                                        |      1       |
 
-Réponse :
+Réponse :
 ```json
 {
     "token": "mon_token_unique"
@@ -304,13 +312,13 @@ Réponse :
 #### GET `[/]`
 Obtenir les informations de l'utilisateur connecté.
 
-Paramètres :
+Paramètres :
 
 |  Nom   | Obligatoire |       Description       |
 |:------:|:-----------:|:-----------------------:|
 | token  |     oui     | Token de l'utilisateur  |
 
-Réponse :
+Réponse :
 ```json
 {
   "id": 1,
@@ -331,13 +339,13 @@ Réponse :
 #### GET `/favorites`
 Obtenir les cocktails favoris de l'utilisateur connecté.
 
-Paramètres :
+Paramètres :
 
 |  Nom   | Obligatoire |       Description       |
 |:------:|:-----------:|:-----------------------:|
 | token  |     oui     | Token de l'utilisateur  |
 
-Réponse :
+Réponse :
 ```json
 [
     {
@@ -355,7 +363,7 @@ Réponse :
 
 ## `/genders`
 ### GET `[/]`
-Liste des genres :
+Liste des genres :
 ```json
 {
   "1": {
@@ -377,7 +385,7 @@ Liste des genres :
 ### GET `/init[/]`
 Initialise la base de données. Efface les tables avant.
 
-Paramètres :
+Paramètres :
 
 |  Nom   | Obligatoire |        Description        |
 |:------:|:-----------:|:-------------------------:|

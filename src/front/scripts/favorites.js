@@ -144,10 +144,16 @@ function checkForMigration() {
 
     const data = localStorage.getItem("favorites");
     if (data != null) {
-        const fav = JSON.parse(data);
+        let fav = JSON.parse(data);
+        User.CurrentUser.favorites.forEach(el => {
+            const index = fav.indexOf(el);
+            if (index !== -1) fav.splice(index, 1);
+        });
         if (fav.length > 0) {
             showFavoriteMigrationPopup();
         }
+
+        localStorage.removeItem("favorites");
     }
 }
 

@@ -31,7 +31,7 @@ Liste des cocktails :
 ]
 ```
 
-### GET `/search`
+### GET `/search[/]`
 Recherche de cocktails par nom et par ingrédients.
 
 Paramètres :
@@ -91,7 +91,7 @@ Argument :
 |:---:|:-----------:|:--------------------:|:-----------------:|
 |  n  |     non     | Nombre de cocktails  |         1         |
 
-Retourne pour `n` = 3 :
+Réponse pour `n` = 3 :
 
 ```json
 [
@@ -122,7 +122,7 @@ Paramètres :
 |:---:|:-----------:|:------------------------------------------------:|:-------:|
 | ids |     oui     | Identifiants des cocktails à ajouter aux favoris |  1;2;3  |
 
-Retourne :
+Réponse :
 
 ```json
 {
@@ -139,7 +139,7 @@ Paramètres :
 |:---:|:-----------:|:--------------------------------------------------:|:-------:|
 | ids |     oui     | Identifiants des cocktails à supprimer des favoris |  1;2;3  |
 
-Retourne :
+Réponse :
 
 ```json
 {
@@ -195,7 +195,7 @@ Paramètres :
 |:-----:|:-----------:|:-------------------------------:|
 | token |     oui     | Token de l'utilisateur connecté |
 
-Retourne :
+Réponse :
 ```json
 {
   "success": "Cocktail added to favorites"
@@ -217,7 +217,7 @@ Paramètres :
 |:-----:|:-----------:|:-------------------------------:|
 | token |     oui     | Token de l'utilisateur connecté |
 
-Retourne :
+Réponse :
 ```json
 {
   "success": "Cocktail removed from favorites"
@@ -265,7 +265,7 @@ Liste des ingrédients :
 ```
 
 ## `/users`
-### POST `/login`
+### POST `/login[/]`
 Obtenir un token d'authentification.
 
 Paramètres :
@@ -282,7 +282,7 @@ Réponse :
 }
 ```
 
-### POST `/register`
+### POST `/register[/]`
 Inscription d'un nouvel utilisateur et obtention d'un token d'authentification.
 
 Paramètres :
@@ -336,7 +336,32 @@ Réponse :
 }
 ```
 
-#### GET `/favorites`
+#### PUT `[/]`
+Modifier les informations de l'utilisateur connecté.
+
+Paramètres :
+
+|    Nom    | Obligatoire |        Description         | Vérification                                         |   Exemple    |
+|:---------:|:-----------:|:--------------------------:|:-----------------------------------------------------|:------------:|
+| firstname |     non     |  Prénom de l'utilisateur   | Taille : <= 32                                       |     Toto     |
+| lastname  |     non     |    Nom de l'utilisateur    | Taille : <= 32                                       |     Toto     |
+| birthdate |     non     |     Date de naissance      | Format : `YYYY-MM-DD`                                |  1990-01-01  |
+|   email   |     non     |   Email de l'utilisateur   | Adresse email valide<br/>Taille : <= 64              | toto@toto.fr |
+|   phone   |     non     | Téléphone de l'utilisateur | Taille : <= 32                                       | +33612345789 |
+|   city    |     non     |   Ville de l'utilisateur   | Taille : <= 32                                       |    Paris     |
+|    zip    |     non     |   Code postal de l'user    | Taille : <= 8                                        |    75001     |
+|  address  |     non     |  Adresse de l'utilisateur  | Taille : <= 64                                       |  1 rue Toto  |
+|  gender   |     non     |   Genre de l'utilisateur   | Doit correspondre à un genre dans la base de données |      1       |
+
+Réponse :
+```json
+{
+  "success": "User updated"
+}
+```
+
+
+#### GET `/favorites[/]`
 Obtenir les cocktails favoris de l'utilisateur connecté.
 
 Paramètres :
@@ -391,6 +416,7 @@ Paramètres :
 |:------:|:-----------:|:-------------------------:|
 | token  |     oui     | Token de l'administrateur |
 
+Réponse :
 ```json
 {
   "success": "Database initialized"

@@ -38,14 +38,15 @@ class User extends Model {
      * @param Request $rq Requête
      * @param Response $rs Réponse
      * @param bool $paramInBody Si le token est dans le corps de la requête
-     * @return array ["user" => User, "response" => Response]
+     * @return array ["user" => User, "response" => Response], user ne peut pas être null si la requête est à 200
      */
     public static function fromToken(Request $rq, Response $rs, bool $paramInBody): array {
-        if (is_null($token = $paramInBody ? $rq->getParsedBody()["token"] : $rq->getQueryParam("token")))
+        if (is_null($token = $paramInBody ? ($rq->getParsedBody()["token"] ?? null) : ($rq->getQueryParam("token") ?? null))) {
             return [
                 "response" => $rs->withJson(["error" => msgLocale($rq, "missing_token")], 400),
                 "user" => null
             ];
+        }
 
         try {
             $user = User::where("token", $token)->firstOrFail();

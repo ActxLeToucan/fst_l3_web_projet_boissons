@@ -22,7 +22,7 @@ const DEFAULT_LANGUAGE = 'en';
 
 $app->group('/cocktails', function () use ($app) {
     $app->get('[/]', 'boissons\controllers\CocktailController:all')->setName('cocktails');
-    $app->get('/search', 'boissons\controllers\CocktailController:search')->setName('search');
+    $app->get('/search[/]', 'boissons\controllers\CocktailController:search')->setName('search');
     $app->post('/favorites[/]', 'boissons\controllers\CocktailController:favorites')->setName('favorites');
     $app->delete('/favorites[/]', 'boissons\controllers\CocktailController:unfavorites')->setName('unfavorites');
     $app->get('/random[/[{nb}[/]]]', 'boissons\controllers\CocktailController:random')->setName('random');
@@ -38,11 +38,13 @@ $app->group('/ingredients', function () use ($app) {
 });
 
 $app->group('/users', function () use ($app) {
-    $app->post('/login', 'boissons\controllers\UserController:login')->setName('login');
-    $app->post('/register', 'boissons\controllers\UserController:register')->setName('register');
+    $app->post('/login[/]', 'boissons\controllers\UserController:login')->setName('login');
+    $app->post('/register[/]', 'boissons\controllers\UserController:register')->setName('register');
     $app->group('/me', function () use ($app) {
         $app->get('[/]', 'boissons\controllers\UserController:me')->setName('me');
-        $app->get('/favorites', 'boissons\controllers\UserController:favorites')->setName('favorites');
+        $app->put('[/]', 'boissons\controllers\UserController:update')->setName('update');
+        $app->get('/favorites[/]', 'boissons\controllers\UserController:favorites')->setName('favorites');
+        $app->patch('/password[/]', 'boissons\controllers\UserController:changePassword')->setName('changePassword');
     });
 });
 
@@ -129,6 +131,10 @@ function msgLocale(Request $rq, string $key, mixed $extra = null): string {
             'en' => "User not found",
             'fr' => "Utilisateur inconnu",
         ],
+        'user_updated' => [
+            'en' => "User updated",
+            'fr' => "Utilisateur mis à jour",
+        ],
         'zip_too_long' => [
             'en' => "Zip code must be at most $extra characters long",
             'fr' => "Le code postal doit faire au plus $extra caractères",
@@ -156,6 +162,14 @@ function msgLocale(Request $rq, string $key, mixed $extra = null): string {
         'missing_password' => [
             'en' => "Missing password",
             'fr' => "Le mot de passe est manquant",
+        ],
+        'missing_new_password' => [
+            'en' => "Missing new password",
+            'fr' => "Le nouveau mot de passe est manquant",
+        ],
+        'password_changed' => [
+            'en' => "Password changed",
+            'fr' => "Le mot de passe a été modifié",
         ],
         'password_no_lowercase' => [
             'en' => "Password must contain at least one lowercase letter",
@@ -227,5 +241,10 @@ function msgLocale(Request $rq, string $key, mixed $extra = null): string {
         ],
     ];
 
-    return $messages[$key][$lang];
+    $default = [
+        'en' => "No message found",
+        'fr' => "Aucun message trouvé"
+    ];
+
+    return ($messages[$key] ?? $default)[$lang];
 }

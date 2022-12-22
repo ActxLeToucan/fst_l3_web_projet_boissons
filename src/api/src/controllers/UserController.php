@@ -84,7 +84,6 @@ class UserController {
 
         $genderId = isset($body["gender"]) && $body["gender"] !== "" && is_numeric($body["gender"]) ? intval($body["gender"]) : null;
         $res = $this->checkGenderField($rq, $rs, $genderId);
-
         if (($rs = $res['response'])->getStatusCode() !== 200) return $rs;
         $gender = $res['gender'];
 
@@ -100,11 +99,12 @@ class UserController {
         $user->city = $city;
         $user->zip = $zip;
         $user->address = $address;
-        is_null($gender) ? $user->gender_id = null : $user->gender()->associate($gender);
+        if (is_null($gender)) $user->gender_id = null;
         $user->level = 0;
         $user->token = bin2hex(random_bytes(64));
         $user->save();
 
+        if (!is_null($gender)) $user->gender()->associate($gender);
 
         return $rs->withJson(["token" => $user->token]);
     }

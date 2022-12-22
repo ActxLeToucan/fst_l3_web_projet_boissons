@@ -39,6 +39,7 @@ $app->group('/users', function () use ($app) {
     $app->group('/me', function () use ($app) {
         $app->get('[/]', 'boissons\controllers\UserController:me')->setName('me');
         $app->put('[/]', 'boissons\controllers\UserController:update')->setName('update');
+        $app->delete('[/]', 'boissons\controllers\UserController:delete')->setName('delete');
         $app->get('/favorites[/]', 'boissons\controllers\UserController:favorites')->setName('favorites');
         $app->patch('/password[/]', 'boissons\controllers\UserController:changePassword')->setName('changePassword');
     });
@@ -123,6 +124,10 @@ function msgLocale(Request $rq, string $key, mixed $extra = null): string {
             'en' => "Phone must be at most $extra characters long",
             'fr' => "Le numéro de téléphone doit faire au plus $extra caractères",
         ],
+        'user_deleted' => [
+            'en' => "User deleted",
+            'fr' => "Utilisateur supprimé",
+        ],
         'user_not_found' => [
             'en' => "User not found",
             'fr' => "Utilisateur inconnu",
@@ -163,9 +168,9 @@ function msgLocale(Request $rq, string $key, mixed $extra = null): string {
             'en' => "Missing new password",
             'fr' => "Le nouveau mot de passe est manquant",
         ],
-        'password_changed' => [
-            'en' => "Password changed",
-            'fr' => "Le mot de passe a été modifié",
+        'password_updated' => [
+            'en' => "Password updated",
+            'fr' => "Mot de passe mis à jour",
         ],
         'password_no_lowercase' => [
             'en' => "Password must contain at least one lowercase letter",

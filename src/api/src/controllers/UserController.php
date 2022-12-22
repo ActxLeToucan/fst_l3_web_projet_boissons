@@ -320,7 +320,7 @@ class UserController {
         $user->password = password_hash($new, PASSWORD_DEFAULT);
         $user->save();
 
-        return $rs->withJson(["success" => msgLocale($rq, "password_changed")]);
+        return $rs->withJson(["success" => msgLocale($rq, "password_updated")]);
     }
 
     public function update(Request $rq, Response $rs, array $args): Response {
@@ -372,5 +372,21 @@ class UserController {
         $user->save();
 
         return $rs->withJson(["success" => msgLocale($rq, "user_updated")]);
+    }
+
+    public function delete(Request $rq, Response $rs, array $args): Response {
+        if (is_null($password = $rq->getQueryParam("password")) || $password === "")
+            return $rs->withJson(["error" => msgLocale($rq, "missing_password")], 400);
+
+        $res = User::fromToken($rq, $rs, PARAM_IN_BODY_DELETE);
+        if ($res["response"]->getStatusCode() !== 200) return $res["response"];
+
+        $user = $res["user"];
+        if (!password_verify($password, $user->password))
+            return $rs->withJson(["error" => msgLocale($rq, "wrong_password")], 401);
+
+        $user->delete();
+
+        return $rs->withJson(["success" => msgLocale($rq, "user_deleted")]);
     }
 }

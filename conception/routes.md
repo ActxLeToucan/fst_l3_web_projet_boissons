@@ -315,6 +315,23 @@ Réponse :
 }
 ```
 
+#### DELETE `[/]`
+Supprimer l'utilisateur connecté.
+
+Paramètres :
+
+|   Nom    | Obligatoire |          Description          |
+|:--------:|:-----------:|:-----------------------------:|
+|  token   |     oui     |    Token de l'utilisateur     |
+| password |     oui     | Mot de passe de l'utilisateur |
+
+Réponse :
+```json
+{
+  "success": "User deleted"
+}
+```
+
 
 #### GET `/favorites[/]`
 Obtenir les cocktails favoris de l'utilisateur connecté.
@@ -339,6 +356,24 @@ Réponse :
         "link": "/api/cocktails/2/"
     }
 ]
+```
+
+#### PATCH `/password[/]`
+Modifier le mot de passe de l'utilisateur connecté.
+
+Paramètres :
+
+|  Nom   | Obligatoire |              Description              |
+|:------:|:-----------:|:-------------------------------------:|
+| token  |     oui     |        Token de l'utilisateur         |
+|  old   |     oui     | Ancien mot de passe de l'utilisateur  |
+|  new   |     oui     | Nouveau mot de passe de l'utilisateur |
+
+Réponse :
+```json
+{
+  "success": "Password updated"
+}
 ```
 
 ## `/genders`

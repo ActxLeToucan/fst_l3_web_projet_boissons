@@ -187,10 +187,7 @@ class CocktailController {
         if ($res["response"]->getStatusCode() !== 200) return $res["response"];
         $user = $res["user"];
 
-        $favorites = [];
-        foreach ($user->favorites as $favorite) {
-            $favorites[] = $favorite->id;
-        }
+        $favorites = $user->favorites->map(fn($cocktail) => $cocktail->id)->toArray();
 
         foreach ($ids as $id) {
             $cocktail = Recipe::find($id);
@@ -205,7 +202,7 @@ class CocktailController {
             } else {
                 if (in_array($cocktail->id, $favorites)) {
                     $user->favorites()->detach($cocktail);
-                    $favorites = array_filter($favorites, fn($fav) => $fav !== $cocktail->id);
+                    array_splice($favorites, array_search($cocktail->id, $favorites), 1);
                 }
             }
         }

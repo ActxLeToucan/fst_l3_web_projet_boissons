@@ -1,10 +1,11 @@
 import { initHeader } from "./header.js";
 import { getCocktailImage, setElementStyle } from "./common.js";
-import { addFavorite, getFavorites, removeFavorite } from "./favorites.js";
+import { addFavorite, checkForMigration, getFavorites, removeFavorite } from "./favorites.js";
 import API from "./API.js";
 
 onload = () => {
     initHeader();
+    checkForMigration();
     setupPage();
 }
 

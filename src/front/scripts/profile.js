@@ -1,10 +1,12 @@
 import API from "./API.js";
 import { log } from "./common.js";
+import { checkForMigration } from "./favorites.js";
 import { initHeader } from "./header.js";
 import User from "./User.js";
 
 onload = () => {
     initHeader();
+    checkForMigration();
     if (!User.isConnected()) {
         window.location.href = window.location.origin;
         return;

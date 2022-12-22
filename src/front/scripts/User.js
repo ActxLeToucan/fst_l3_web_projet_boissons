@@ -30,6 +30,7 @@ class User {
 
     static disconnect() {
         localStorage.removeItem("user");
+        localStorage.removeItem("hide-migrate-popup");
         User.#currentUser = null;
     }
 

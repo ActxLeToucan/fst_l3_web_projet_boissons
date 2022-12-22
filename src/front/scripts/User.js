@@ -5,7 +5,7 @@ class User {
     static #currentUser = null;
 
     static get CurrentUser() {
-        if (User.#currentUser == null) {
+        if (!User.#currentUser) {
             User.#currentUser = User.fromLocalStorage();
         }
         return User.#currentUser;
@@ -16,12 +16,9 @@ class User {
     }
 
     static toLocalStorage(user) {
-        localStorage.setItem("user", JSON.stringify({
-            firstname:  user.firstname,
-            lastname:   user.lastname,
-            email:      user.email,
-            favorites:  user.favorites
-        }));
+        let data = {};
+        user.props.forEach(prop => { data[prop] = user[prop]; });
+        localStorage.setItem("user", JSON.stringify(data));
     }
 
     static fromLocalStorage() {
@@ -47,8 +44,8 @@ class User {
     address;
     gender;
     token;
-    favorites;
-    props = ["id", "login", "firstname", "lastname", "birthdate", "email", "city", "zip", "address", "gender", "token", "favorites"];
+    favorites = [];
+    props = ["id", "login", "firstname", "lastname", "birthdate", "email", "city", "zip", "address", "gender", "token", "favorites", "token"];
     constructor(infos) {
         this.setProps(infos);
 
@@ -56,7 +53,7 @@ class User {
     }
 
     setProps(infos) {
-        this.props.forEach(prop => { this[prop] = infos[prop]; });
+        this.props.forEach(prop => { this[prop] = infos[prop] ?? this[prop]; });
     }
 
     fetchInformations() {
@@ -66,10 +63,26 @@ class User {
                 return;
             }
 
+            let counter = 0;
+            const checkForResolve = () => { if (++counter >= 2) resolve(this); };
+
             API.execute_logged("/users/me", API.METHOD.GET, this.token).then(res => {
+                // set gender to gender_id is possible (to get int instead of string)
+                res.gender = res.gender_id ?? res.gender;
                 this.setProps(res);
-                resolve(this);
+                checkForResolve();
             }).catch(reject);
+
+            this.fetchFavorites().then(checkForResolve).catch(reject);
+        });
+    }
+
+    fetchFavorites() {
+        return new Promise((resolve, reject) => {
+            API.execute_logged("/users/me/favorites", API.METHOD.GET, this.token).then(res => {
+                this.favorites = res.map(el => parseInt(el.id));
+                resolve();
+            }).catch(err => reject(err));
         });
     }
 
@@ -79,4 +92,5 @@ class User {
     }
 }
 
+window.User = User;
 export default User;

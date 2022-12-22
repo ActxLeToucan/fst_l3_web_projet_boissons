@@ -9,12 +9,24 @@ onload = () => {
 }
 
 function setupPage() {
-    const cocktailID = window.location.search.split("=")[1];
-    if (!cocktailID) {
+    const cocktailID = parseInt(window.location.search.split("=")[1]);
+    if (isNaN(cocktailID)) {
         window.location.href = window.location.origin;
     }
     fetchCocktail(cocktailID).then(cocktail => {
         setCocktailInfos(cocktail);
+    });
+
+    const favBtn = document.getElementById("fav-btn");
+    favBtn.addEventListener("click", ev => {
+        let promise = null;
+        if (getFavorites().includes(cocktailID)) promise = removeFavorite(cocktailID);
+        else promise = addFavorite(cocktailID);
+
+        if (promise != null)
+        promise.then(res => {
+            udpateFavStatus(cocktailID);
+        }).catch(err => console.error(err));
     });
 }
 
@@ -57,22 +69,16 @@ function setCocktailInfos(cocktail) {
         aliments.appendChild(div);
     }
 
+    udpateFavStatus(cocktail.id);
+}
+
+function udpateFavStatus(cocktailID) {
     const fav = getFavorites();
-    const isFav = fav.includes(cocktail.id);
+    const isFav = fav.includes(cocktailID);
 
     const favIcon = document.getElementById("fav-icon");
     const COLOR_WHITE = "#f8fafc";
     favIcon.style.fill = isFav ? COLOR_WHITE : "none";
-
-    const favBtn = document.getElementById("fav-btn");
-    favBtn.addEventListener("click", ev => {
-        if (isFav)
-            removeFavorite(cocktail.id);
-        else addFavorite(cocktail.id);
-
-        // update page to show the new star icon
-        setCocktailInfos(cocktail);
-    });
 }
 
 export {

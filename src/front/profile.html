@@ -13,52 +13,158 @@
     <header></header>
     <!-- END HEADER -->
 
-    <!-- START MAIN -->
-    <div class="flex flex-col grow h-fit justify-center">
+    <div class="mt-[6em] px-4 pt-4">
+        <a class="rounded-lg px-4 py-2 bg-transparent text-slate-700 font-semibold transition-all bg-pink-600/[0.1]
+                    hover:bg-pink-600 hover:text-slate-50 cursor-pointer" href="/"> Retour </a>
+    </div>
 
-        <!-- START MODAL -->
-        <div class="flex flex-col w-fit h-fit border-2 border-pink-600 rounded-lg shadow-lg bg-slate-50 mx-auto">
-            <div class="flex grow h-fit p-2 bg-pink-600">
-                <h1 class="text-xl font-extrabold text-slate-50"> Profil </h1>
-            </div>
-            <div class="flex flex-col grow h-fit p-4 space-y-4">
-                <div class="flex h-fit w-full justify-between space-x-4">
-                    <div class="flex flex-col justify-center">
-                        <p class="text-slate-700 font-semibold text-md"> Nom : </p>
-                    </div>
-                    <input
-                        name="firstname" type="text" disabled="true"
-                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
-                    >
+    <!-- START MAIN -->
+    <div class="flex flex-col grow justify-center">
+        <div class="flex flex-row h-fit justify-center p-10">
+
+            <!-- START MODAL -->
+            <div class="flex flex-col w-fit h-fit border-2 border-pink-600 rounded-lg shadow-lg bg-slate-50 mx-auto">
+                <div class="flex grow h-fit p-2 bg-pink-600">
+                    <h1 class="text-xl font-extrabold text-slate-50"> Profil </h1>
                 </div>
-                <div class="flex h-fit w-full justify-between space-x-4">
-                    <div class="flex flex-col justify-center">
-                        <p class="text-slate-700 font-semibold text-md"> Prénom : </p>
+                <div class="flex flex-col grow h-fit p-4 space-y-4">
+                    <div class="flex h-fit w-full justify-between space-x-4">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-slate-700 font-semibold text-md"> Login : </p>
+                        </div>
+                        <input
+                            name="login" type="text" disabled="true"
+                            class="border-2 border-slate-200 bg-slate-50 rounded outline-none text-md text-slate-500 px-1 bg-slate-100 text-center transition-all"
+                        >
                     </div>
-                    <input
-                        name="lastname" type="text" disabled="true"
-                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
-                    >
+                    <div class="flex h-fit w-full justify-between space-x-4">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-slate-700 font-semibold text-md"> Nom : </p>
+                        </div>
+                        <input
+                            name="firstname" type="text" placeholder="Indéfini"
+                            class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
+                        >
+                    </div>
+                    <div class="flex h-fit w-full justify-between space-x-4">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-slate-700 font-semibold text-md"> Prénom : </p>
+                        </div>
+                        <input
+                            name="lastname" type="text" placeholder="Indéfini"
+                            class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
+                        >
+                    </div>
+                    <div class="flex h-fit w-full justify-between space-x-4">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-slate-700 font-semibold text-md"> Email : </p>
+                        </div>
+                        <input
+                            name="email" type="email" placeholder="Indéfini"
+                            class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
+                        >
+                    </div>
+                    <div class="flex h-fit w-full justify-between space-x-4">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-slate-700 font-semibold text-md"> Date de naissance : </p>
+                        </div>
+                        <input
+                            name="birthdate" type="date" placeholder="Indéfini"
+                            class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
+                        >
+                    </div>
+                    <div class="flex h-fit w-full justify-between space-x-4">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-slate-700 font-semibold text-md"> Ville : </p>
+                        </div>
+                        <input
+                            name="city" type="text" placeholder="Indéfini"
+                            class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
+                        >
+                    </div>
+                    <div class="flex h-fit w-full justify-between space-x-4">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-slate-700 font-semibold text-md"> Code postal : </p>
+                        </div>
+                        <input
+                            name="zip" type="text" placeholder="Indéfini"
+                            class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
+                        >
+                    </div>
+                    <div class="flex h-fit w-full justify-between space-x-4">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-slate-700 font-semibold text-md"> Adresse : </p>
+                        </div>
+                        <input
+                            name="address" type="text" placeholder="Indéfini"
+                            class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
+                        >
+                    </div>
+                    <div class="flex h-fit w-full justify-between space-x-4">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-slate-700 font-semibold text-md"> Genre : </p>
+                        </div>
+                        <select
+                            name="gender"
+                            class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
+                        ></select>
+                    </div>
                 </div>
-                <div class="flex h-fit w-full justify-between space-x-4">
-                    <div class="flex flex-col justify-center">
-                        <p class="text-slate-700 font-semibold text-md"> Email : </p>
-                    </div>
-                    <input
-                        name="email" type="email" disabled="true"
-                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
-                    >
+                <div id="log-zone-profile" class="w-fit mx-auto transition-all overflow-hidden duration-250" style="height: 0px;">
+                    <p class="text-lg font-semibold text-pink-600 text-center"></p>
+                </div>
+                <span class="flex grow h-[2px] bg-pink-600 rounded mx-4"></span>
+                <div class="flex justify-between p-4">
+                    <a class="border-2 border-pink-600 rounded px-2 bg-transparent text-slate-700 font-semibold transition-all
+                        hover:bg-pink-600 hover:text-slate-50 cursor-pointer" id="disconnect-btn"> Se déconnecter </a>
+                    <a class="border-2 border-pink-600 rounded px-2 bg-transparent text-slate-700 font-semibold transition-all
+                        hover:bg-pink-600 hover:text-slate-50 cursor-pointer" id="modify-btn"> Modifier </a>
                 </div>
             </div>
-            <span class="flex grow h-[2px] bg-pink-600 rounded mx-4"></span>
-            <div class="flex justify-between p-4">
-                <a class="border-2 border-transparent rounded px-2 bg-transparent text-slate-700 font-semibold transition-all
-                    hover:bg-pink-600 hover:text-slate-50 cursor-pointer" onclick="window.location = window.origin"> Retour </a>
-                <a class="border-2 border-pink-600 rounded px-2 bg-transparent text-slate-700 font-semibold transition-all
-                    hover:bg-pink-600 hover:text-slate-50 cursor-pointer" id="disconnect-btn"> Se déconnecter </a>
+            <!-- END MODAL -->
+
+            <!-- START PASSWORD -->
+            <div class="flex flex-col w-fit h-fit border-2 border-pink-600 rounded-lg shadow-lg bg-slate-50 mx-auto">
+                <div class="flex grow h-fit p-2 bg-pink-600">
+                    <h1 class="text-xl font-extrabold text-slate-50"> Mot de passe </h1>
+                </div>
+                <div class="flex flex-col grow h-fit p-4 space-y-4">
+                    <div class="flex h-fit w-full justify-between space-x-4">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-slate-700 font-semibold text-md"> Ancien mot de passe : </p>
+                        </div>
+                        <input
+                            name="old-password" type="password" disabled="true"
+                            class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
+                        >
+                    </div>
+                    <div class="flex h-fit w-full justify-between space-x-4">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-slate-700 font-semibold text-md"> Nouveau mot de passe : </p>
+                        </div>
+                        <input
+                            name="new-password" type="password" disabled="true"
+                            class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
+                        >
+                    </div>
+                    <div class="flex h-fit w-full justify-between space-x-4">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-slate-700 font-semibold text-md"> Conformation mot de passe : </p>
+                        </div>
+                        <input
+                            name="confirm-password" type="password" disabled="true"
+                            class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
+                        >
+                    </div>
+                </div>
+                <span class="flex grow h-[2px] bg-pink-600 rounded mx-4"></span>
+                <div class="flex justify-end p-4">
+                    <a class="border-2 border-pink-600 rounded px-2 bg-transparent text-slate-700 font-semibold transition-all
+                        hover:bg-pink-600 hover:text-slate-50 cursor-pointer"> Modifier </a>
+                </div>
             </div>
+            <!-- END PASSWORD -->
         </div>
-        <!-- END MODAL -->
     </div>
 </body>
 </html>

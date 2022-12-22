@@ -32,24 +32,26 @@ function cleanTitle(title) {
     return title.split(":")[0].split("(")[0].trim();
 }
 
-let timeout = -1;
-function log(message) {
-    const logZone = document.getElementById("log-zone");
-    if (!logZone) return;
+let timeout = {};
+function log(message, element = document.getElementById("log-zone")) {
+    if (!element) return;
 
-    const setHeight = px => { logZone.style.height = px + "px"; };
-    const getNbLogs = () => logZone.firstElementChild.innerHTML.split("<br>").length;
+    const setHeight = px => { element.style.height = px + "px"; };
+    const getNbLogs = () => element.firstElementChild.innerHTML.split("<br>").length;
 
-    const logMsg = logZone.firstElementChild;
+    const logMsg = element.firstElementChild;
     if (logMsg.innerHTML != "") logMsg.innerHTML += "<br>";
     logMsg.innerHTML += message;
     setHeight( getNbLogs() * 28 );
 
-    if (timeout != -1) clearTimeout(timeout);
-    timeout = setTimeout(() => {
+    if (timeout[element.id]) {
+        clearTimeout(timeout[element.id]);
+        timeout[element.id] = undefined;
+    }
+    timeout[element.id] = setTimeout(() => {
         logMsg.innerHTML = "";
-        logZone.style.height = "0px";
-        timeout = -1;
+        element.style.height = "0px";
+        timeout[element.id] = undefined;
     }, 5000);
 }
 

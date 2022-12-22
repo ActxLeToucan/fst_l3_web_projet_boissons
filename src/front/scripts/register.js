@@ -13,7 +13,6 @@ function setup() {
     const genre_input = document.querySelector("select[name='genre']");
 
     continue_btn.addEventListener("click", register);
-    continue_btn.addEventListener("click", login);
     window.addEventListener("keydown", e => {
         if (e.key == "Enter") register();
     });

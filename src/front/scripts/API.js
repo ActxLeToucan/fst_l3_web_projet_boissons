@@ -168,7 +168,7 @@ class API {
                 return;
             }
 
-            if (method == API.METHOD.GET)
+            if (method === API.METHOD.GET || method === API.METHOD.DELETE)
                 this.execute(API.createParam(path, "token", token), method, body, type).then(resolve).catch(reject);
             else {
                 body["token"] = token;

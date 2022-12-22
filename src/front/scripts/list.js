@@ -47,8 +47,15 @@ function setup() {
 
     let searchTimeout = -1;
     let lastSearch = "";
-    search_input.addEventListener("focus", showSearchBar);
-    search_input.addEventListener("blur", () => setTimeout(hideAutocomplete, 100));
+    search_input.hasFocus = false;
+    search_input.addEventListener("focus", () => {
+        search_input.hasFocus = true;
+        showSearchBar();
+    });
+    search_input.addEventListener("blur", () => {
+        search_input.hasFocus = false;
+        setTimeout(hideAutocomplete, 100);
+    });
     search_input.addEventListener("keyup", e => {
         if (searchTimeout != -1)
             clearTimeout(searchTimeout);
@@ -65,6 +72,10 @@ function setup() {
             if (autoCompleteHovered()) {
                 autoCompleteSelect();
             } else refreshCocktails();
+            e.preventDefault();
+        }
+        if (e.key == "Escape") {
+            hideAutocomplete();
             e.preventDefault();
         }
         if (e.key == "ArrowDown" || e.key == "ArrowUp") {
@@ -86,6 +97,7 @@ function refreshCocktails() {
     }).then(cocktails => {
         cocktails_list = cocktails;
         displayCocktails(cocktails);
+        if (search_input.hasFocus) showSearchBar();
     }).catch(err => { console.error("Error fetching cocktails: ", err) });
 }
 

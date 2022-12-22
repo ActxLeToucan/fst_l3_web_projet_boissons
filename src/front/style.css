@@ -1,0 +1,28 @@
+@keyframes spawn-popup {
+    0% { opacity: 0; transform: translateY(10px);}
+    100% { opacity: 1; transform: translateY(0px);}
+}
+@keyframes hide-popup {
+    0% { opacity: 1; transform: translateY(0px);}
+    100% { opacity: 0; transform: translateY(10px);}
+}
+
+.popup-container {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    top: 0px; left: 0px;
+    width: 100vw; height: 100vh;
+    background-color: #0004;
+    backdrop-filter: blur(8px);
+    z-index: 100;
+}
+
+.popup-hide > div, .popup-hide {
+    animation: hide-popup 400ms ease forwards;
+}
+
+.popup-show > div, .popup-show {
+    animation: spawn-popup 400ms ease forwards;
+}

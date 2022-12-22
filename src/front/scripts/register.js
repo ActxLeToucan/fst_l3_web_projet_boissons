@@ -13,6 +13,10 @@ function setup() {
     const genre_input = document.querySelector("select[name='genre']");
 
     continue_btn.addEventListener("click", register);
+    continue_btn.addEventListener("click", login);
+    window.addEventListener("keydown", e => {
+        if (e.key == "Enter") register();
+    });
 
     API.execute("/genders").then(res => {
         while (genre_input.firstChild) genre_input.firstChild.remove();

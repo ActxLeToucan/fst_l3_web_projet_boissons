@@ -74,6 +74,10 @@ function setup() {
             } else refreshCocktails();
             e.preventDefault();
         }
+        if (e.key == "Escape") {
+            hideAutocomplete();
+            e.preventDefault();
+        }
         if (e.key == "ArrowDown" || e.key == "ArrowUp") {
             focusAutocomplete(e.key);
             e.preventDefault();

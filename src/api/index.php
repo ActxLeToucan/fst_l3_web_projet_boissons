@@ -26,11 +26,7 @@ $app->group('/cocktails', function () use ($app) {
     $app->post('/favorites[/]', 'boissons\controllers\CocktailController:favorites')->setName('favorites');
     $app->delete('/favorites[/]', 'boissons\controllers\CocktailController:unfavorites')->setName('unfavorites');
     $app->get('/random[/[{nb}[/]]]', 'boissons\controllers\CocktailController:random')->setName('random');
-    $app->group('/{id}', function () use ($app) {
-        $app->get('[/]', 'boissons\controllers\CocktailController:one')->setName('cocktail');
-        $app->post('/favorite[/]', 'boissons\controllers\CocktailController:favorite')->setName('favorite');
-        $app->delete('/favorite[/]', 'boissons\controllers\CocktailController:unfavorite')->setName('unfavorite');
-    });
+    $app->get('/{id}[/]', 'boissons\controllers\CocktailController:one')->setName('cocktail');
 });
 
 $app->group('/ingredients', function () use ($app) {

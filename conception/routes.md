@@ -147,8 +147,7 @@ Réponse :
 }
 ```
 
-### `/{id}`
-#### GET `[/]`
+### GET `/{id}[/]`
 Détails d'un cocktail.
 
 Arguments :
@@ -177,50 +176,6 @@ Arguments :
     "8": "Orange sanguine",
     "9": "Eau gazeuse"
   }
-}
-```
-
-#### POST `/favorite[/]`
-Ajoute un cocktail aux favoris de l'utilisateur connecté.
-
-Arguments :
-
-| Nom | Obligatoire |       Description       |
-|:---:|:-----------:|:-----------------------:|
-| id  |     oui     | Identifiant du cocktail |
-
-Paramètres :
-
-|  Nom  | Obligatoire |           Description           |
-|:-----:|:-----------:|:-------------------------------:|
-| token |     oui     | Token de l'utilisateur connecté |
-
-Réponse :
-```json
-{
-  "success": "Cocktail added to favorites"
-}
-```
-
-#### DELETE `/favorite[/]`
-Supprime un cocktail des favoris de l'utilisateur connecté.
-
-Arguments :
-
-| Nom | Obligatoire |       Description       |
-|:---:|:-----------:|:-----------------------:|
-| id  |     oui     | Identifiant du cocktail |
-
-Paramètres :
-
-|  Nom  | Obligatoire |           Description           |
-|:-----:|:-----------:|:-------------------------------:|
-| token |     oui     | Token de l'utilisateur connecté |
-
-Réponse :
-```json
-{
-  "success": "Cocktail removed from favorites"
 }
 ```
 

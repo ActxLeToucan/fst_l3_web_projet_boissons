@@ -167,38 +167,6 @@ class CocktailController {
         return array_unique($allTags);
     }
 
-    public function favorite(Request $rq, Response $rs, array $args): Response {
-        return $this->fav($rq, $rs, $args, true);
-    }
-
-    public function unfavorite(Request $rq, Response $rs, array $args): Response {
-        return $this->fav($rq, $rs, $args, false);
-    }
-
-    private function fav(Request $rq, Response $rs, array $args, bool $add): Response {
-        try {
-            $cocktail = Recipe::findOrfail($args["id"]);
-        } catch (ModelNotFoundException $e) {
-            return $rs->withJson(["error" => msgLocale($rq, "recipe_not_found")], 404);
-        }
-
-        $res = User::fromToken($rq, $rs, $add ? PARAM_IN_BODY_POST : PARAM_IN_BODY_DELETE);
-        if ($res["response"]->getStatusCode() !== 200) return $res["response"];
-        $user = $res["user"];
-
-        if ($add) {
-            if (!$user->favorites->contains($cocktail)) {
-                $user->favorites()->attach($cocktail);
-            }
-        } else {
-            if ($user->favorites->contains($cocktail)) {
-                $user->favorites()->detach($cocktail);
-            }
-        }
-
-        return $rs->withJson(["success" => $add ? msgLocale($rq, "recipe_added_to_favorites") : msgLocale($rq, "recipe_removed_from_favorites")]);
-    }
-
     public function favorites(Request $rq, Response $rs, array $args): Response {
         return $this->favs($rq, $rs, $args, true);
     }
@@ -208,12 +176,7 @@ class CocktailController {
     }
 
     private function favs(Request $rq, Response $rs, array $args, bool $add): Response {
-        if ($add) {
-            $body = $rq->getParsedBody();
-            $ids = $body['ids'] ?? null;
-        } else {
-            $ids = $rq->getQueryParam('ids');
-        }
+        $ids = $add ? ($rq->getParsedBody()["ids"] ?? null) : $rq->getQueryParam('ids');
 
         if (is_null($ids))
             return $rs->withJson(["error" => msgLocale($rq, "missing_ids")], 400);
@@ -232,12 +195,12 @@ class CocktailController {
                 return $rs->withJson(["error" => msgLocale($rq, "recipe_not_found", $id)], 404);
             }
             if ($add) {
-                if (!$favorites->contains($cocktail->id)) {
+                if (!in_array($cocktail->id, $favorites)) {
                     $user->favorites()->attach($cocktail);
                     $favorites->push($cocktail->id);
                 }
             } else {
-                if ($favorites->contains($cocktail->id)) {
+                if (in_array($cocktail->id, $favorites)) {
                     $user->favorites()->detach($cocktail);
                     $favorites->pull($cocktail->id);
                 }

@@ -32,6 +32,27 @@ function cleanTitle(title) {
     return title.split(":")[0].split("(")[0].trim();
 }
 
+let timeout = -1;
+function log(message) {
+    const logZone = document.getElementById("log-zone");
+    if (!logZone) return;
+
+    const setHeight = px => { logZone.style.height = px + "px"; };
+    const getNbLogs = () => logZone.firstElementChild.innerHTML.split("<br>").length;
+
+    const logMsg = logZone.firstElementChild;
+    if (logMsg.innerHTML != "") logMsg.innerHTML += "<br>";
+    logMsg.innerHTML += message;
+    setHeight( getNbLogs() * 28 );
+
+    if (timeout != -1) clearTimeout(timeout);
+    timeout = setTimeout(() => {
+        logMsg.innerHTML = "";
+        logZone.style.height = "0px";
+        timeout = -1;
+    }, 5000);
+}
+
 export {
     initCommon,
     hideDIV,
@@ -40,5 +61,6 @@ export {
     TYPE_BLOCK,
     setElementStyle,
     getCocktailImage,
-    cleanTitle
+    cleanTitle,
+    log
 }

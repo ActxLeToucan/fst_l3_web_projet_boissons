@@ -97,7 +97,8 @@ class API {
             let reqHeaders = {
                 "User-Agent": navigator.userAgent,
                 "Accept": "application/json",
-                "Accept-Language": "fr,fr-FR"
+                "Content-Type": type,
+                "Accept-Language": "fr"
             };
 
             let reqBody = {};
@@ -119,6 +120,15 @@ class API {
             if (API.API_URL == "" || API.API_URL == undefined) {
                 API.API_URL = window.location.origin + "/api";
             }
+
+            const handleError = (err) => {
+                if (!err.json) reject(err);
+                else err.json().then(error => {
+                    if (error.error)
+                        reject(error.error);
+                    else reject(err);
+                }).catch(error => reject(err));
+            };
             
             fetch(API.API_URL + path, {
                 credentials: "omit",
@@ -129,14 +139,14 @@ class API {
                 mode: "cors"
             }).then(response => {
                 if (response.status != 200)
-                    reject(response);
+                    handleError(response);
                 else {
                     response.json().then(data => {
                         resolve(data);
-                    }).catch(err => reject(err));
+                    }).catch(err => handleError(err));
                 }
             }).catch(err => {
-                reject(err);
+                handleError(err);
             });
         });
     }
@@ -158,7 +168,7 @@ class API {
                 return;
             }
 
-            this.execute(createParam(path, "token", token), method, body, type).then(resolve).catch(reject);
+            this.execute(API.createParam(path, "token", token), method, body, type).then(resolve).catch(reject);
         });
     }
 

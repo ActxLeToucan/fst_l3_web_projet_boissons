@@ -1,3 +1,5 @@
+import API from "./API.js";
+
 class User {
     /**@type {User} */
     static #currentUser = null;
@@ -34,43 +36,41 @@ class User {
         User.#currentUser = null;
     }
 
-    #firstname = "";
-    #lastname = "";
-    #email = "";
-    #favorites = [];
-
+    id;
+    login;
+    firstname;
+    lastname;
+    birthdate;
+    email;
+    city;
+    zip;
+    address;
+    gender;
+    token;
+    favorites;
+    props = ["id", "login", "firstname", "lastname", "birthdate", "email", "city", "zip", "address", "gender", "token", "favorites"];
     constructor(infos) {
-        this.#firstname = infos.firstname ?? "";
-        this.#lastname = infos.lastname ?? "";
-        this.#email = infos.email ?? "";
-        this.#favorites = infos.favorites ?? [];
+        this.setProps(infos);
 
         User.#currentUser = this;
     }
 
-    get lastname() {
-        return this.#lastname;
+    setProps(infos) {
+        this.props.forEach(prop => { this[prop] = infos[prop]; });
     }
 
-    get firstname() {
-        return this.#firstname;
-    }
+    fetchInformations() {
+        return new Promise((resolve, reject) => {
+            if (this.token === "") {
+                reject("Aucun jeton utilisateur");
+                return;
+            }
 
-    get fullname() {
-        return this.#firstname + " " + this.#lastname;
-    }
-
-    get email() {
-        return this.#email;
-    }
-
-    get favorites() {
-        return this.#favorites;
-    }
-
-    set favorites(val) {
-        this.#favorites = val;
-        this.save();
+            API.execute_logged("/users/me", API.METHOD.GET, this.token).then(res => {
+                this.setProps(res);
+                resolve(this);
+            }).catch(reject);
+        });
     }
 
     save() {

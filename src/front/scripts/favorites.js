@@ -47,6 +47,7 @@ function getFavorites() {
 function setFavorites(list) {
     if (User.isConnected()) {
         User.CurrentUser.favorites = list;
+        User.CurrentUser.save();
     } else {
         localStorage.setItem("favorites", JSON.stringify(list));
     }

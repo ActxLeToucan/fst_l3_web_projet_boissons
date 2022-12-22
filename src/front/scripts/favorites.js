@@ -35,7 +35,8 @@ function displayCocktails(list) {
 function getFavorites() {
     const fav = [];
     if (User.isConnected()) {
-        for (const el of User.CurrentUser.favorites) fav.push(el);
+        if (User.CurrentUser.favorites)
+            for (const el of User.CurrentUser.favorites) fav.push(el);
     } else {
         const data = localStorage.getItem("favorites");
         if (data != null)

@@ -168,7 +168,12 @@ class API {
                 return;
             }
 
-            this.execute(API.createParam(path, "token", token), method, body, type).then(resolve).catch(reject);
+            if (method == API.METHOD.GET)
+                this.execute(API.createParam(path, "token", token), method, body, type).then(resolve).catch(reject);
+            else {
+                body["token"] = token;
+                this.execute(path, method, body, type).then(resolve).catch(reject);
+            }
         });
     }
 

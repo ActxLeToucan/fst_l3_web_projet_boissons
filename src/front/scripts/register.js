@@ -19,20 +19,14 @@ function setup() {
 
     API.execute("/genders").then(res => {
         while (genre_input.firstChild) genre_input.firstChild.remove();
-        
-        {
-            const option = document.createElement("option");
-            option.value = "-1";
-            option.innerText = "Indéfini";
-            genre_input.appendChild(option);
-        }
-
         for (const g in res) {
             const option = document.createElement("option");
             option.value = res[g].id;
             option.innerText = res[g].name;
             genre_input.appendChild(option);
         }
+        // select the "Autre" options
+        genre_input.value = genre_input.lastElementChild.value;
     }).catch(err => console.error);
 }
 
@@ -82,10 +76,10 @@ function register() {
     if ( lastname_input.value.length > 0 )  data["lastname"] = lastname_input.value;
     if ( email_input.value.length > 0 )     data["email"] = email_input.value;
     if ( birthdate_input.value.length > 0 ) data["birthdate"] = birthdate_input.value;
-    if ( zipcode_input.value.length > 0 )   data["zipcode"] = zipcode_input.value;
+    if ( zipcode_input.value.length > 0 )   data["zip"] = zipcode_input.value;
     if ( city_input.value.length > 0 )      data["city"] = city_input.value;
     if ( address_input.value.length > 0 )   data["address"] = address_input.value;
-    if ( genre_input.value != -1 )          data["genre"] = genre_input.value;
+    if ( genre_input.value != -1 )          data["gender"] = genre_input.value;
 
     log("Inscription ...");
     API.execute("/users/register", API.METHOD.POST, data).then(res => {

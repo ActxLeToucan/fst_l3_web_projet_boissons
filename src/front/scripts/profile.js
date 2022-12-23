@@ -1,7 +1,8 @@
 import API from "./API.js";
-import { log } from "./common.js";
+import { log, setElementStyle } from "./common.js";
 import { checkForMigration } from "./favorites.js";
 import { initHeader } from "./header.js";
+import { showPopup } from "./popup.js";
 import User from "./User.js";
 
 onload = () => {
@@ -19,6 +20,7 @@ function setup() {
     const disconnect_btn = document.getElementById("disconnect-btn");
     const modify_btn = document.getElementById("modify-btn");
     const modify_password_btn = document.getElementById("modify-password-btn");
+    const delete_btn = document.getElementById("delete-btn");
     
     const user = User.CurrentUser;
     let inputs = {};
@@ -37,6 +39,7 @@ function setup() {
     });
     modify_btn.addEventListener("click", updateInformations);
     modify_password_btn.addEventListener("click", modifyPassword);
+    delete_btn.addEventListener("click", deleteAccount);
 }
 
 function retrieveGenders() {
@@ -130,5 +133,44 @@ function modifyPassword() {
             log("Erreur : " + err, log_zone);
         else log("Erreur : " + err.status + " " + err.statusText, log_zone);
         console.error(err);
+    });
+}
+
+function deleteAccount() {
+    showPopup(
+        "Suppression de compte",
+        "Vous êtes sur le point de supprimer votre compte.<br>Cette action est irréversible.",
+        "Êtes-vous sûr de vouloir continuer ?",
+        "Non, annuler",
+        "Oui, supprimer",
+        () => {},
+        removeAccount,
+        (popup) => {
+            const password_input = document.createElement("input");
+            password_input.type = "password";
+            password_input.placeholder = "Mot de passe";
+            setElementStyle(password_input, "border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all");
+            popup.body.appendChild(password_input);
+        }
+    );
+}
+
+function removeAccount(popup) {
+    return new Promise((resolve, reject) => {
+        popup.log("Suppression du compte ...");
+        API.execute_logged(API.createParam("/users/me", "password", popup.body.querySelector("input").value), API.METHOD.DELETE, User.CurrentUser.token).then(res => {
+            popup.log("Compte supprimé !");
+            setTimeout(() => {
+                User.disconnect();
+                window.location.href = window.location.origin;
+                resolve();
+            }, 1000);
+        }).catch(err => {
+            if (typeof(err) == "string")
+                popup.log("Erreur : " + err);
+            else popup.log("Erreur : " + err.status + " " + err.statusText);
+            console.error(err);
+            reject(err);
+        });
     });
 }

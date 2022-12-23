@@ -1,6 +1,7 @@
 import API from "./API.js";
 import { fetchCocktail } from "./cocktail.js";
 import { initHeader } from "./header.js";
+import { showPopup } from "./popup.js";
 import { createCocktailTile } from "./tiles.js";
 import User from "./User.js";
 
@@ -151,80 +152,50 @@ function checkForMigration() {
         });
         if (fav.length > 0) {
             showFavoriteMigrationPopup();
+        } else {
+            localStorage.removeItem("favorites");
         }
-
-        localStorage.removeItem("favorites");
     }
 }
 
-let popup = null;
 function showFavoriteMigrationPopup() {
-    if (popup != null) return;
-
-    popup = document.createElement("div");
-    popup.classList.add("popup-container");
-    popup.classList.add("popup-show");
-    popup.innerHTML = POPUP_CONTENT;
-
-    const btnYes = popup.querySelector("#btn-yes");
-    const btnNo = popup.querySelector("#btn-no");
-
-    popup.addEventListener("click", ev => {
-        let rect = popup.firstElementChild.getBoundingClientRect();
-        if (ev.clientX < rect.left || ev.clientX > rect.right || ev.clientY < rect.top || ev.clientY > rect.bottom)
-            hideFavoriteMigrationPopup();
-    });
-
-    btnYes?.addEventListener("click", migrateFavorites);
-    btnNo?.addEventListener("click", () => {
-        hideFavoriteMigrationPopup();
-        localStorage.setItem("hide-migrate-popup", "true");
-    });
-    document.body.appendChild(popup);
+    showPopup(
+        "Migration des favoris",
+        "Vous avez mis des cocktails en favoris sans être connectés.<br>Ces favoris ne sont pas encore synchronisés avec votre compte.",
+        "Voulez-vous importer vos favoris sur votre compte ?",
+        "Non, merci",
+        "Oui, importer",
+        () => { localStorage.setItem("hide-migrate-popup", "true"); },
+        migrateFavorites
+    );
 }
 
-function hideFavoriteMigrationPopup() {
-    if (popup == null) return;
+function migrateFavorites(popup) {
+    return new Promise((resolve, reject) => {
+        const fav = JSON.parse(localStorage.getItem("favorites"));
+        if (fav.length === 0) {
+            reject();
+            return;
+        }
+        
+        popup.log("Importation des favoris...");
+        API.execute_logged("/cocktails/favorites", API.METHOD.POST, User.CurrentUser.token, {ids: fav.join(";")}).then(res => {
+            popup.log("Synchronisation des favoris...");
 
-    popup.classList.remove("popup-show");
-    popup.classList.add("popup-hide");
-    setTimeout(() => {
-        popup.remove();
-        popup = null;
-    }, 500);
-}
+            localStorage.removeItem("favorites");
+            localStorage.removeItem("hide-migrate-popup");
+            User.CurrentUser.fetchFavorites().then(() => {
+                popup.log("Favoris importés !");
 
-function migrateFavorites() {
-    const fav = JSON.parse(localStorage.getItem("favorites"));
-    if (fav.length === 0) {
-        hideFavoriteMigrationPopup();
-        return;
-    }
-
-    const btnYes = popup.querySelector("#btn-yes");
-    const btnNo = popup.querySelector("#btn-no");
-    btnYes.disabled = true;
-    btnNo.disabled = true;
-    const oldtext = btnYes.innerHTML;
-    btnYes.innerHTML = "Importation ...";
-
-    API.execute_logged("/cocktails/favorites", API.METHOD.POST, User.CurrentUser.token, {ids: fav.join(";")}).then(res => {
-        localStorage.removeItem("favorites");
-        localStorage.removeItem("hide-migrate-popup");
-        btnYes.innerHTML = "Mise à jour ...";
-        User.CurrentUser.fetchFavorites().then(() => {
-            User.CurrentUser.save();
-            btnYes.innerHTML = "Fini !";
-            setTimeout(hideFavoriteMigrationPopup, 1000);
+                User.CurrentUser.save();
+                popup.validate_btn.innerHTML = "Fini !";
+                localStorage.removeItem("favorites");
+                setTimeout(resolve, 1000);
+            });
+        }).catch(err => {
+            console.error(err);
+            reject(err);
         });
-        btnYes.disabled = false;
-        btnNo.disabled = false;
-        btnYes.innerHTML = oldtext;
-    }).catch(err => {
-        btnYes.disabled = false;
-        btnNo.disabled = false;
-        btnYes.innerHTML = oldtext;
-        console.error(err);
     });
 }
 
@@ -232,7 +203,5 @@ export {
     getFavorites,
     addFavorite,
     removeFavorite,
-    checkForMigration,
-    showFavoriteMigrationPopup,
-    hideFavoriteMigrationPopup
+    checkForMigration
 }

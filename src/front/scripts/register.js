@@ -11,6 +11,9 @@ onload = () => {
 function setup() {
     const continue_btn = document.getElementById("continue-btn");
     const genre_input = document.querySelector("select[name='genre']");
+    const optionnal_banner = document.getElementById("optionnal-banner");
+
+    optionnal_banner.addEventListener("click", ToogleOptionnal);
 
     continue_btn.addEventListener("click", register);
     window.addEventListener("keydown", e => {
@@ -105,4 +108,19 @@ function register() {
         else log("Erreur : " + err.status + " " + err.statusText);
         console.error(err);
     });
+}
+
+let optionnal = false;
+function ToogleOptionnal() {
+    const content = document.getElementById("optionnal-content");
+    const banner = document.getElementById("optionnal-banner");
+
+    if (optionnal) {
+        content.style.maxHeight = "0px";
+        banner.firstElementChild.style.transform = "rotate(-90deg)";
+    } else {
+        content.style.maxHeight = content.firstElementChild.getBoundingClientRect().height + "px";
+        banner.firstElementChild.style.transform = "rotate(0deg)";
+    }
+    optionnal = !optionnal;
 }

@@ -183,7 +183,7 @@ class CocktailController {
 
         $ids = explode(";", $ids);
 
-        $res = User::fromToken($rq, $rs, $add ? PARAM_IN_BODY_POST : PARAM_IN_BODY_DELETE);
+        $res = User::fromToken($rq, $rs);
         if ($res["response"]->getStatusCode() !== 200) return $res["response"];
         $user = $res["user"];
 

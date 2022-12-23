@@ -272,7 +272,7 @@ class UserController {
     }
 
     public function me(Request $rq, Response $rs, array $args): Response {
-        $res = User::fromToken($rq, $rs, PARAM_IN_BODY_GET);
+        $res = User::fromToken($rq, $rs);
         if ($res["response"]->getStatusCode() !== 200) return $res["response"];
 
         $user = $res["user"];
@@ -281,7 +281,7 @@ class UserController {
     }
 
     public function favorites(Request $rq, Response $rs, array $args): Response {
-        $res = User::fromToken($rq, $rs, PARAM_IN_BODY_GET);
+        $res = User::fromToken($rq, $rs);
         if ($res["response"]->getStatusCode() !== 200) return $res["response"];
 
         $user = $res["user"];
@@ -299,7 +299,7 @@ class UserController {
     }
 
     public function changePassword(Request $rq, Response $rs, array $args): Response {
-        $res = User::fromToken($rq, $rs, PARAM_IN_BODY_PATCH);
+        $res = User::fromToken($rq, $rs);
         if ($res["response"]->getStatusCode() !== 200) return $res["response"];
 
         $user = $res["user"];
@@ -324,7 +324,7 @@ class UserController {
     }
 
     public function update(Request $rq, Response $rs, array $args): Response {
-        $res = User::fromToken($rq, $rs, PARAM_IN_BODY_PUT);
+        $res = User::fromToken($rq, $rs);
         if ($res["response"]->getStatusCode() !== 200) return $res["response"];
 
         $user = $res["user"];
@@ -375,10 +375,12 @@ class UserController {
     }
 
     public function delete(Request $rq, Response $rs, array $args): Response {
-        if (is_null($password = $rq->getQueryParam("password")) || $password === "")
+        $body = $rq->getParsedBody();
+
+        if (is_null($password = $body["password"] ?? null) || $password === "")
             return $rs->withJson(["error" => msgLocale($rq, "missing_password")], 400);
 
-        $res = User::fromToken($rq, $rs, PARAM_IN_BODY_DELETE);
+        $res = User::fromToken($rq, $rs);
         if ($res["response"]->getStatusCode() !== 200) return $res["response"];
 
         $user = $res["user"];

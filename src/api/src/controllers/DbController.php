@@ -14,7 +14,7 @@ class DbController {
     }
 
     public function init(Request $rq, Response $rs, array $args): Response {
-        $rs = User::checkLevel($rq, $rs, User::ADMIN, PARAM_IN_BODY_GET);
+        $rs = User::checkLevel($rq, $rs, User::ADMIN);
         if ($rs->getStatusCode() !== 200) return $rs;
 
         // get the file Donnees.inc.php

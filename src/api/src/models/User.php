@@ -21,11 +21,10 @@ class User extends Model {
      * @param Request $rq Requête
      * @param Response $rs Réponse
      * @param int $level Niveau requis
-     * @param bool $paramInBody Si le token est dans le corps de la requête
      * @return Response Réponse
      */
-    public static function checkLevel(Request $rq, Response $rs, int $level, bool $paramInBody): Response {
-        $res = self::fromToken($rq, $rs, $paramInBody);
+    public static function checkLevel(Request $rq, Response $rs, int $level): Response {
+        $res = self::fromToken($rq, $rs);
         if ($res["response"]->getStatusCode() !== 200) return $res["response"];
 
         $user = $res["user"];
@@ -37,11 +36,12 @@ class User extends Model {
      * Retourne l'utilisateur correspondant au token de la requête
      * @param Request $rq Requête
      * @param Response $rs Réponse
-     * @param bool $paramInBody Si le token est dans le corps de la requête
      * @return array ["user" => User, "response" => Response], user ne peut pas être null si la requête est à 200
      */
-    public static function fromToken(Request $rq, Response $rs, bool $paramInBody): array {
-        if (is_null($token = $paramInBody ? ($rq->getParsedBody()["token"] ?? null) : ($rq->getQueryParam("token") ?? null))) {
+    public static function fromToken(Request $rq, Response $rs): array {
+        $token = $rq->getHeader("token")[0] ?? null;
+
+        if (is_null($token) || trim($token) === "") {
             return [
                 "response" => $rs->withJson(["error" => msgLocale($rq, "missing_token")], 400),
                 "user" => null

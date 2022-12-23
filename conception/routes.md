@@ -34,7 +34,7 @@ Liste des cocktails :
 ### GET `/search[/]`
 Recherche de cocktails par nom et par ingrédients.
 
-Paramètres :
+Paramètres (query string) :
 
 |    Nom     |                       Obligatoire                       |        Description         |     Exemple     |
 |:----------:|:-------------------------------------------------------:|:--------------------------:|:---------------:|
@@ -116,7 +116,7 @@ Réponse pour `n` = 3 :
 ### POST `/favorites[/]`
 Ajoute des cocktails aux favoris de l'utilisateur connecté.
 
-Paramètres :
+Paramètres (body) :
 
 | Nom | Obligatoire |                   Description                    | Exemple |
 |:---:|:-----------:|:------------------------------------------------:|:-------:|
@@ -133,7 +133,7 @@ Réponse :
 ### DELETE `/favorites[/]`
 Supprime des cocktails des favoris de l'utilisateur connecté.
 
-Paramètres :
+Paramètres (query string) :
 
 | Nom | Obligatoire |                    Description                     | Exemple |
 |:---:|:-----------:|:--------------------------------------------------:|:-------:|
@@ -223,7 +223,7 @@ Liste des ingrédients :
 ### POST `/login[/]`
 Obtenir un token d'authentification.
 
-Paramètres :
+Paramètres (body) :
 
 |   Nom    | Obligatoire |           Description           |   Exemple   |
 |:--------:|:-----------:|:-------------------------------:|:-----------:|
@@ -240,7 +240,7 @@ Réponse :
 ### POST `/register[/]`
 Inscription d'un nouvel utilisateur et obtention d'un token d'authentification.
 
-Paramètres :
+Paramètres (body) :
 
 |    Nom    | Obligatoire |        Description         | Vérification                                                                                                                                                                |   Exemple    |
 |:---------:|:-----------:|:--------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------:|
@@ -267,7 +267,7 @@ Réponse :
 #### GET `[/]`
 Obtenir les informations de l'utilisateur connecté.
 
-Paramètres :
+Header :
 
 |  Nom   | Obligatoire |       Description       |
 |:------:|:-----------:|:-----------------------:|
@@ -294,7 +294,7 @@ Réponse :
 #### PUT `[/]`
 Modifier les informations de l'utilisateur connecté.
 
-Paramètres :
+Paramètres (body) :
 
 |    Nom    | Obligatoire |        Description         | Vérification                                         |   Exemple    |
 |:---------:|:-----------:|:--------------------------:|:-----------------------------------------------------|:------------:|
@@ -318,12 +318,17 @@ Réponse :
 #### DELETE `[/]`
 Supprimer l'utilisateur connecté.
 
-Paramètres :
+Paramètres (body) :
 
 |   Nom    | Obligatoire |          Description          |
 |:--------:|:-----------:|:-----------------------------:|
-|  token   |     oui     |    Token de l'utilisateur     |
 | password |     oui     | Mot de passe de l'utilisateur |
+
+Header :
+
+|   Nom    | Obligatoire |       Description       |
+|:--------:|:-----------:|:-----------------------:|
+|  token   |     oui     | Token de l'utilisateur  |
 
 Réponse :
 ```json
@@ -336,7 +341,7 @@ Réponse :
 #### GET `/favorites[/]`
 Obtenir les cocktails favoris de l'utilisateur connecté.
 
-Paramètres :
+Header :
 
 |  Nom   | Obligatoire |       Description       |
 |:------:|:-----------:|:-----------------------:|
@@ -361,13 +366,18 @@ Réponse :
 #### PATCH `/password[/]`
 Modifier le mot de passe de l'utilisateur connecté.
 
-Paramètres :
+Paramètres (body) :
 
 |  Nom   | Obligatoire |              Description              |
 |:------:|:-----------:|:-------------------------------------:|
-| token  |     oui     |        Token de l'utilisateur         |
 |  old   |     oui     | Ancien mot de passe de l'utilisateur  |
 |  new   |     oui     | Nouveau mot de passe de l'utilisateur |
+
+Header :
+
+|  Nom   | Obligatoire |       Description       |
+|:------:|:-----------:|:-----------------------:|
+| token  |     oui     | Token de l'utilisateur  |
 
 Réponse :
 ```json
@@ -400,11 +410,11 @@ Liste des genres :
 ### GET `/init[/]`
 Initialise la base de données. Efface les tables avant.
 
-Paramètres :
+Header :
 
-|  Nom   | Obligatoire |        Description        |
-|:------:|:-----------:|:-------------------------:|
-| token  |     oui     | Token de l'administrateur |
+|  Nom   | Obligatoire |       Description       |
+|:------:|:-----------:|:-----------------------:|
+| token  |     oui     | Token de l'utilisateur  |
 
 Réponse :
 ```json

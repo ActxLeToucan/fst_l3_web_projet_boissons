@@ -10,12 +10,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 $app = new App(dbInit::init());
 
-const PARAM_IN_BODY_GET = false;
-const PARAM_IN_BODY_POST = true;
-const PARAM_IN_BODY_PUT = true;
-const PARAM_IN_BODY_DELETE = false;
-const PARAM_IN_BODY_PATCH = true;
-
 const SUPPORTED_LANGUAGES = ['en', 'fr'];
 const DEFAULT_LANGUAGE = 'en';
 

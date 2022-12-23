@@ -1,17 +1,17 @@
 import { cleanTitle, getCocktailImage } from "./common.js";
 
-const COCKTAIL_TILE_BODY = `<div class="flex flex-col h-fit w-max max-w-[15em]">
+const COCKTAIL_TILE_BODY = `<div class="flex flex-col h-fit lg:w-[15em] w-[8em]">
     <div class="flex flex-col grow">
-        <img src="{{icon}}" alt="cocktail image" class="w-60 h-60 object-cover">
-        <div class="noimg-svg flex flex-col justify-center w-60 h-60 text-slate-300">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20 mx-auto">
+        <img src="{{icon}}" alt="cocktail image" class="lg:w-60 lg:h-60 w-20 h-20 text-center mx-auto object-cover">
+        <div class="noimg-svg flex flex-col justify-center lg:w-60 lg:h-60 w-20 h-20 mx-auto text-slate-300">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="lg:w-20 lg:h-20 w-10 h-10 mx-auto">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
             </svg>
         </div>
     </div>
     <div class="flex flex-col grow-0 justify-center p-4 bg-transparent">
-        <p class="text-lg text-slate-700 font-bold truncate mx-auto max-w-full"> {{title}} </p>
+        <p class="lg:text-lg text-md text-slate-700 font-bold truncate mx-auto max-w-full"> {{title}} </p>
     </div>
 </div>`;
 
@@ -76,7 +76,7 @@ function createCocktailTile(cocktail) {
     cocktail.icon = getCocktailImage(cocktail.title);
     
     const container = document.createElement("a");
-    const classes = "spawn-up flex flex-col m-10 rounded-lg shadow-lg border-2 border-slate-300 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all hover:border-pink-600 cursor-pointer";
+    const classes = "spawn-up flex flex-col lg:m-10 m-2 rounded-lg shadow-lg border-2 border-slate-300 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all hover:border-pink-600 cursor-pointer";
     classes.split(" ").forEach(c => container.classList.add(c));
     container.href = "/cocktail.html?id="+cocktail.id;
     container.innerHTML = COCKTAIL_TILE_BODY

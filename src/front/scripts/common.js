@@ -11,11 +11,11 @@ function initCommon() {
 }
 
 function hideDIV(id) {
-    document.getElementById(id).style.display = "none";
+    document.querySelectorAll("."+id).forEach(el => el.style.display = "none");
 }
 
 function showDIV(id, type=TYPE_FLEX) {
-    document.getElementById(id).style.display = type;
+    document.querySelectorAll("."+id).forEach(el => el.style.display = type);
 }
 
 function setElementStyle(el, classes) {

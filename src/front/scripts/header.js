@@ -48,7 +48,7 @@ const HEADER_CONTENT = `<div class="flex flex-col grow h-fit rounded-lg shadow-x
         </div>
         <span class="flex grow h-[2px] bg-slate-300 rounded w-12 mx-auto"></span>
         <div class="flex grow mt-4">
-            <div class="is-connected">
+            <div class="flex grow is-connected justify-center">
                 <a class="border-2 border-pink-600 rounded px-2 bg-transparent text-slate-700 font-semibold transition-all
                 hover:border-pink-600 hover:bg-pink-600 hover:text-slate-50" href="/profile.html"> Mon profil </a>
             </div>

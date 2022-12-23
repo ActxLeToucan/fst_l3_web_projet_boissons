@@ -15,118 +15,132 @@
     <!-- END HEADER -->
 
     <!-- START MAIN -->
-    <div class="flex flex-col grow h-fit justify-center">
+    <div class="flex flex-col grow h-fit justify-center pt-20">
 
         <!-- START MODAL -->
         <div class="flex flex-col w-fit h-fit border-2 border-pink-600 rounded-lg shadow-lg bg-slate-50 mx-auto">
             <div class="flex grow h-fit p-2 bg-pink-600">
                 <h1 class="text-xl font-extrabold text-slate-50"> S'inscrire </h1>
             </div>
-            <div class="flex flex-col grow h-fit p-4 space-y-4">
-                <div class="flex h-fit w-full justify-between space-x-4">
+            <div class="flex flex-col grow h-fit p-4 md:space-y-4 space-y-2">
+                <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
                     <div class="flex flex-col justify-center">
-                        <p class="text-slate-700 font-semibold text-md"> Login* : </p>
+                        <p class="text-slate-700 font-semibold text-md"> Login<span class="text-pink-600">*</span> : </p>
                     </div>
                     <input
                         name="login" type="text"
                         class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
                     >
                 </div>
-                <div class="flex h-fit w-full justify-between space-x-4">
-                    <div class="flex flex-col justify-center">
-                        <p class="text-slate-700 font-semibold text-md"> Nom : </p>
+                <div class="flex flex-col bg-slate-100 border-2 border-slate-300 rounded-lg">
+                    <div id="optionnal-banner" class="flex bg-slate-300 p-1 cursor-pointer">
+                        <div class="flex flex-col justify-center transition-all duration-300" style="transform: rotate(-90deg);">
+                            <svg id="optionnal-arrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="text-slate-700 w-5 h-5 mx-2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </div>
+                        <p class="text-slate-700 font-semibold"> Informations optionnelles </p>
                     </div>
-                    <input
-                        name="firstname" type="text"
-                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
-                    >
-                </div>
-                <div class="flex h-fit w-full justify-between space-x-4">
-                    <div class="flex flex-col justify-center">
-                        <p class="text-slate-700 font-semibold text-md"> Prénom : </p>
+                    <div id="optionnal-content" class="overflow-hidden transition-all duration-300" style="max-height: 0px;">
+                        <div class="flex flex-col p-2 space-y-2">
+                            <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
+                                <div class="flex flex-col justify-center">
+                                    <p class="text-slate-700 font-semibold text-md"> Nom : </p>
+                                </div>
+                                <input
+                                    name="firstname" type="text"
+                                    class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
+                                >
+                            </div>
+                            <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
+                                <div class="flex flex-col justify-center">
+                                    <p class="text-slate-700 font-semibold text-md"> Prénom : </p>
+                                </div>
+                                <input
+                                    name="lastname" type="text"
+                                    class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
+                                >
+                            </div>
+                            <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
+                                <div class="flex flex-col justify-center">
+                                    <p class="text-slate-700 font-semibold text-md"> Email : </p>
+                                </div>
+                                <input
+                                    name="email" type="email"
+                                    class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
+                                >
+                            </div>
+                            <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
+                                <div class="flex flex-col justify-center">
+                                    <p class="text-slate-700 font-semibold text-md"> Date de naissance : </p>
+                                </div>
+                                <input
+                                    name="birthdate" type="date"
+                                    class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
+                                >
+                            </div>
+                            <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
+                                <div class="flex flex-col justify-center">
+                                    <p class="text-slate-700 font-semibold text-md"> Numéro de téléphone : </p>
+                                </div>
+                                <input
+                                    name="phone" type="tel"
+                                    class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
+                                >
+                            </div>
+                            <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
+                                <div class="flex flex-col justify-center">
+                                    <p class="text-slate-700 font-semibold text-md"> Adresse : </p>
+                                </div>
+                                <input
+                                    name="address" type="text"
+                                    class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
+                                >
+                            </div>
+                            <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
+                                <div class="flex flex-col justify-center">
+                                    <p class="text-slate-700 font-semibold text-md"> Ville : </p>
+                                </div>
+                                <input
+                                    name="city" type="text"
+                                    class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
+                                >
+                            </div>
+                            <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
+                                <div class="flex flex-col justify-center">
+                                    <p class="text-slate-700 font-semibold text-md"> Code postal : </p>
+                                </div>
+                                <input
+                                    name="zipcode" type="text"
+                                    class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
+                                >
+                            </div>
+                            <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
+                                <div class="flex flex-col justify-center">
+                                    <p class="text-slate-700 font-semibold text-md"> Genre : </p>
+                                </div>
+                                <select
+                                    name="genre"
+                                    class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
+                                >
+                                    
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <input
-                        name="lastname" type="text"
-                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
-                    >
                 </div>
-                <div class="flex h-fit w-full justify-between space-x-4">
+                <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
                     <div class="flex flex-col justify-center">
-                        <p class="text-slate-700 font-semibold text-md"> Email : </p>
-                    </div>
-                    <input
-                        name="email" type="email"
-                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
-                    >
-                </div>
-                <div class="flex h-fit w-full justify-between space-x-4">
-                    <div class="flex flex-col justify-center">
-                        <p class="text-slate-700 font-semibold text-md"> Date de naissance : </p>
-                    </div>
-                    <input
-                        name="birthdate" type="date"
-                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
-                    >
-                </div>
-                <div class="flex h-fit w-full justify-between space-x-4">
-                    <div class="flex flex-col justify-center">
-                        <p class="text-slate-700 font-semibold text-md"> Numéro de téléphone : </p>
-                    </div>
-                    <input
-                        name="phone" type="tel"
-                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
-                    >
-                </div>
-                <div class="flex h-fit w-full justify-between space-x-4">
-                    <div class="flex flex-col justify-center">
-                        <p class="text-slate-700 font-semibold text-md"> Adresse : </p>
-                    </div>
-                    <input
-                        name="address" type="text"
-                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
-                    >
-                </div>
-                <div class="flex h-fit w-full justify-between space-x-4">
-                    <div class="flex flex-col justify-center">
-                        <p class="text-slate-700 font-semibold text-md"> Ville : </p>
-                    </div>
-                    <input
-                        name="city" type="text"
-                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
-                    >
-                </div>
-                <div class="flex h-fit w-full justify-between space-x-4">
-                    <div class="flex flex-col justify-center">
-                        <p class="text-slate-700 font-semibold text-md"> Code postal : </p>
-                    </div>
-                    <input
-                        name="zipcode" type="text"
-                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
-                    >
-                </div>
-                <div class="flex h-fit w-full justify-between space-x-4">
-                    <div class="flex flex-col justify-center">
-                        <p class="text-slate-700 font-semibold text-md"> Genre : </p>
-                    </div>
-                    <select
-                        name="genre"
-                        class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
-                    >
-                        
-                    </select>
-                </div>
-                <div class="flex h-fit w-full justify-between space-x-4">
-                    <div class="flex flex-col justify-center">
-                        <p class="text-slate-700 font-semibold text-md"> Mot de passe* : </p>
+                        <p class="text-slate-700 font-semibold text-md"> Mot de passe<span class="text-pink-600">*</span> : </p>
                     </div>
                     <input
                         name="password" type="password"
                         class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 transition-all"
                     >
                 </div>
-                <div class="flex h-fit w-full justify-between space-x-4">
+                <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
                     <div class="flex flex-col justify-center">
-                        <p class="text-slate-700 font-semibold text-md"> Confirmer le mot de passe* : </p>
+                        <p class="text-slate-700 font-semibold text-md"> Confirmer le mot de passe<span class="text-pink-600">*</span> : </p>
                     </div>
                     <input
                         name="confirm-password" type="password"
@@ -134,7 +148,7 @@
                     >
                 </div>
             </div>
-            <p class="mx-4 italic text-slate-500 text-sm">* champs obligatoire</p>
+            <p class="mx-4 italic text-slate-500 text-sm"><span class="text-pink-600">*</span> champs obligatoires</p>
             <div id="log-zone" class="w-fit mx-auto transition-all overflow-hidden duration-250" style="height: 0px;">
                 <p class="text-lg font-semibold text-pink-600 text-center"></p>
             </div>

@@ -18,6 +18,7 @@ onload = () => {
 function setup() {
     const disconnect_btn = document.getElementById("disconnect-btn");
     const modify_btn = document.getElementById("modify-btn");
+    const modify_password_btn = document.getElementById("modify-password-btn");
     
     const user = User.CurrentUser;
     let inputs = {};
@@ -35,6 +36,7 @@ function setup() {
         window.location.href = window.location.origin;
     });
     modify_btn.addEventListener("click", updateInformations);
+    modify_password_btn.addEventListener("click", modifyPassword);
 }
 
 function retrieveGenders() {
@@ -91,4 +93,42 @@ function updateInformations() {
         else log("Erreur : " + err.status + " " + err.statusText, log_zone);
         console.error(err);
     });;
+}
+
+function modifyPassword() {
+    const old_password = document.querySelector("input[name='old-password']");
+    const new_password = document.querySelector("input[name='new-password']");
+    const confirm_password = document.querySelector("input[name='confirm-password']");
+    const log_zone = document.getElementById("log-zone-password");
+
+    const checks = [
+        {check: old_password.value.length > 0, msg: "Veuillez saisir un mot de passe", el: old_password},
+        {check: new_password.value.length > 0, msg: "Veuillez saisir un nouveau mot de passe", el: new_password},
+        {check: confirm_password.value.length > 0, msg: "Veuillez confirmer le nouveau mot de passe", el: confirm_password},
+        {check: new_password.value == confirm_password.value, msg: "Les mots de passe ne correspondent pas", el: confirm_password}
+    ];
+
+    for (const check of checks) {
+        if (!check.check) {
+            log(check.msg, log_zone);
+            check.el.focus();
+            return;
+        }
+    }
+
+    const data = {
+        old: old_password.value,
+        new: new_password.value
+    };
+
+    log("Modification ...", log_zone);
+    API.execute_logged("/users/me/password", API.METHOD.PATCH, User.CurrentUser.token, data).then(res => {
+        log("Mot de passe modifié !", log_zone);
+        window.location.href = window.location.href;
+    }).catch(err => {
+        if (typeof(err) == "string")
+            log("Erreur : " + err, log_zone);
+        else log("Erreur : " + err.status + " " + err.statusText, log_zone);
+        console.error(err);
+    });
 }

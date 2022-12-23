@@ -23,8 +23,16 @@ class User {
 
     static fromLocalStorage() {
         const data = JSON.parse(localStorage.getItem("user"));
-        if (data)
-            return new User(data);
+        if (data) {
+            const user = new User(data);
+            user.fetchInformations().then(() => {
+                user.save();
+            }).catch(err => {
+                User.disconnect();
+                window.location.href = window.location.origin;
+            });
+            return user;
+        }
         return null;
     }
 
@@ -46,7 +54,7 @@ class User {
     gender;
     token;
     favorites = [];
-    props = ["id", "login", "firstname", "lastname", "birthdate", "email", "city", "zip", "address", "gender", "token", "favorites", "token"];
+    props = ["id", "login", "firstname", "lastname", "birthdate", "email", "city", "zip", "address", "gender", "token", "favorites"];
     constructor(infos) {
         this.setProps(infos);
 

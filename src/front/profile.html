@@ -21,15 +21,15 @@
 
     <!-- START MAIN -->
     <div class="flex flex-col grow justify-center">
-        <div class="flex flex-row h-fit justify-center p-10">
+        <div class="flex flex-wrap h-fit justify-center lg:p-10 p-4">
 
             <!-- START MODAL -->
-            <div class="flex flex-col w-fit h-fit border-2 border-pink-600 rounded-lg shadow-lg bg-slate-50 mx-auto">
+            <div class="flex flex-col w-fit h-fit border-2 border-pink-600 rounded-lg shadow-lg bg-slate-50 mx-auto m-4">
                 <div class="flex grow h-fit p-2 bg-pink-600">
                     <h1 class="text-xl font-extrabold text-slate-50"> Profil </h1>
                 </div>
-                <div class="flex flex-col grow h-fit p-4 space-y-4">
-                    <div class="flex h-fit w-full justify-between space-x-4">
+                <div class="flex flex-col grow h-fit p-4 md:space-y-4 space-y-2">
+                    <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
                         <div class="flex flex-col justify-center">
                             <p class="text-slate-700 font-semibold text-md"> Login : </p>
                         </div>
@@ -38,7 +38,7 @@
                             class="border-2 border-slate-200 bg-slate-50 rounded outline-none text-md text-slate-500 px-1 bg-slate-100 text-center transition-all"
                         >
                     </div>
-                    <div class="flex h-fit w-full justify-between space-x-4">
+                    <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
                         <div class="flex flex-col justify-center">
                             <p class="text-slate-700 font-semibold text-md"> Nom : </p>
                         </div>
@@ -47,7 +47,7 @@
                             class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
                         >
                     </div>
-                    <div class="flex h-fit w-full justify-between space-x-4">
+                    <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
                         <div class="flex flex-col justify-center">
                             <p class="text-slate-700 font-semibold text-md"> Prénom : </p>
                         </div>
@@ -56,7 +56,7 @@
                             class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
                         >
                     </div>
-                    <div class="flex h-fit w-full justify-between space-x-4">
+                    <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
                         <div class="flex flex-col justify-center">
                             <p class="text-slate-700 font-semibold text-md"> Email : </p>
                         </div>
@@ -65,7 +65,7 @@
                             class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
                         >
                     </div>
-                    <div class="flex h-fit w-full justify-between space-x-4">
+                    <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
                         <div class="flex flex-col justify-center">
                             <p class="text-slate-700 font-semibold text-md"> Date de naissance : </p>
                         </div>
@@ -74,7 +74,7 @@
                             class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
                         >
                     </div>
-                    <div class="flex h-fit w-full justify-between space-x-4">
+                    <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
                         <div class="flex flex-col justify-center">
                             <p class="text-slate-700 font-semibold text-md"> Ville : </p>
                         </div>
@@ -83,7 +83,7 @@
                             class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
                         >
                     </div>
-                    <div class="flex h-fit w-full justify-between space-x-4">
+                    <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
                         <div class="flex flex-col justify-center">
                             <p class="text-slate-700 font-semibold text-md"> Code postal : </p>
                         </div>
@@ -92,7 +92,7 @@
                             class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
                         >
                     </div>
-                    <div class="flex h-fit w-full justify-between space-x-4">
+                    <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
                         <div class="flex flex-col justify-center">
                             <p class="text-slate-700 font-semibold text-md"> Adresse : </p>
                         </div>
@@ -101,7 +101,7 @@
                             class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
                         >
                     </div>
-                    <div class="flex h-fit w-full justify-between space-x-4">
+                    <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
                         <div class="flex flex-col justify-center">
                             <p class="text-slate-700 font-semibold text-md"> Genre : </p>
                         </div>
@@ -115,7 +115,7 @@
                     <p class="text-lg font-semibold text-pink-600 text-center"></p>
                 </div>
                 <span class="flex grow h-[2px] bg-pink-600 rounded mx-4"></span>
-                <div class="flex justify-between p-4">
+                <div class="flex justify-between p-4 space-x-4">
                     <button class="border-2 border-pink-600 rounded px-2 bg-transparent text-slate-700 font-semibold transition-all
                         hover:bg-pink-600 hover:text-slate-50 cursor-pointer" id="disconnect-btn"> Se déconnecter </button>
                     <button class="border-2 border-pink-600 rounded px-2 bg-transparent text-slate-700 font-semibold transition-all
@@ -125,12 +125,12 @@
             <!-- END MODAL -->
 
             <!-- START PASSWORD -->
-            <div class="flex flex-col w-fit h-fit border-2 border-pink-600 rounded-lg shadow-lg bg-slate-50 mx-auto">
+            <div class="flex flex-col w-fit h-fit border-2 border-pink-600 rounded-lg shadow-lg bg-slate-50 mx-auto m-4">
                 <div class="flex grow h-fit p-2 bg-pink-600">
                     <h1 class="text-xl font-extrabold text-slate-50"> Mot de passe </h1>
                 </div>
                 <div class="flex flex-col grow h-fit p-4 space-y-4">
-                    <div class="flex h-fit w-full justify-between space-x-4">
+                    <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
                         <div class="flex flex-col justify-center">
                             <p class="text-slate-700 font-semibold text-md"> Ancien mot de passe : </p>
                         </div>
@@ -139,7 +139,7 @@
                             class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
                         >
                     </div>
-                    <div class="flex h-fit w-full justify-between space-x-4">
+                    <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
                         <div class="flex flex-col justify-center">
                             <p class="text-slate-700 font-semibold text-md"> Nouveau mot de passe : </p>
                         </div>
@@ -148,7 +148,7 @@
                             class="border-2 border-slate-300 bg-slate-50 rounded outline-none focus:border-slate-600 text-md text-slate-700 px-1 bg-slate-100 text-center transition-all"
                         >
                     </div>
-                    <div class="flex h-fit w-full justify-between space-x-4">
+                    <div class="flex flex-col md:flex-row h-fit w-full justify-between md:space-x-4">
                         <div class="flex flex-col justify-center">
                             <p class="text-slate-700 font-semibold text-md"> Conformation mot de passe : </p>
                         </div>
@@ -170,7 +170,7 @@
             <!-- END PASSWORD -->
 
             <!-- START DELETE -->
-            <div class="flex flex-col w-fit h-fit border-2 border-pink-600 rounded-lg shadow-lg bg-slate-50 mx-auto">
+            <div class="flex flex-col w-fit h-fit border-2 border-pink-600 rounded-lg shadow-lg bg-slate-50 mx-auto m-4">
                 <div class="flex grow h-fit p-2 bg-pink-600">
                     <h1 class="text-xl font-extrabold text-slate-50"> Supprimer mon compte </h1>
                 </div>

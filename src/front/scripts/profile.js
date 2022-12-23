@@ -27,11 +27,13 @@ function setup() {
     for (const prop of user.props) {
         inputs[prop] = document.querySelector(`input[name='${prop}']`);
         if (inputs[prop]) {
-            inputs[prop].value = user[prop] ?? "Indéfini";
+            inputs[prop].value = user[prop] ?? "";
         }
     }
 
-    retrieveGenders();
+    User.CurrentUser.fetchInformations().then(user => {
+        retrieveGenders();
+    }).catch(err => console.error);
 
     disconnect_btn.addEventListener("click", () => {
         User.disconnect();
@@ -58,8 +60,8 @@ function retrieveGenders() {
         // select the "Autre" options
         genre_input.value = genre_input.lastElementChild.value;
 
-        if (user.gender) {
-            genre_input.value = user.gender;
+        if (User.CurrentUser.gender != undefined) {
+            genre_input.value = User.CurrentUser.gender;
         }
     }).catch(err => console.error);
 }
@@ -70,8 +72,10 @@ function updateInformations() {
     let data = {};
     for (const prop of user.props) {
         inputs[prop] = document.querySelector(`input[name='${prop}']`);
-        if (inputs[prop]) {
-            if (inputs[prop].value != user[prop])
+        if (!inputs[prop]) inputs[prop] = document.querySelector(`select[name='${prop}']`);
+
+        if (inputs[prop] != undefined || inputs[prop] != null) {
+            if (inputs[prop].value != user[prop] && inputs[prop].value != "")
                 data[prop] = inputs[prop].value;
         }
     }
@@ -127,7 +131,7 @@ function modifyPassword() {
     log("Modification ...", log_zone);
     API.execute_logged("/users/me/password", API.METHOD.PATCH, User.CurrentUser.token, data).then(res => {
         log("Mot de passe modifié !", log_zone);
-        window.location.href = window.location.href;
+        setTimeout(() => { window.location.href = window.location.href; }, 1000);
     }).catch(err => {
         if (typeof(err) == "string")
             log("Erreur : " + err, log_zone);
@@ -158,6 +162,7 @@ function deleteAccount() {
 function removeAccount(popup) {
     return new Promise((resolve, reject) => {
         popup.log("Suppression du compte ...");
+        console.log("password: "+popup.body.querySelector("input").value);
         API.execute_logged(API.createParam("/users/me", "password", popup.body.querySelector("input").value), API.METHOD.DELETE, User.CurrentUser.token).then(res => {
             popup.log("Compte supprimé !");
             setTimeout(() => {

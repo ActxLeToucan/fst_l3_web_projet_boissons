@@ -15,6 +15,22 @@ onload = () => {
     setup();
     fetchIngredients().then(root => {
         aliments = root;
+
+        // check for params in url for preselected aliments
+        const params = new URLSearchParams(window.location.search);
+        const aliments_ids = params.get("aliments");
+        if (aliments_ids) {
+            const ids = aliments_ids.split(";");
+            for (const id of ids) {
+                const aliment = aliments.find(id);
+                if (aliment) {
+                    selected_aliments.push(aliment);
+                }
+            }
+            displayAliments(selected_aliments);
+            refreshCocktails();
+        }
+
     }).catch(err => { console.error("cannot get aliments"); });
 
     let searchZone_floating = false;
@@ -118,7 +134,10 @@ function fetchCocktails({query, tags_plus, tags_minus}) {
             (requestParams.query == undefined      || requestParams.query == ""           ) &&
             (requestParams.tags_plus == undefined  || requestParams.tags_plus.length == 0 ) &&
             (requestParams.tags_minus == undefined || requestParams.tags_minus.length == 0)
-        ) resolve([]);
+        ) {
+            resolve([]);
+            return;
+        }
 
         let link = "/cocktails/search";
 

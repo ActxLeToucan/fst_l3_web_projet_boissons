@@ -13,6 +13,10 @@ class Ingredient {
         this.#id = id;
     }
 
+    find(id) {
+        return tree[id];
+    }
+
     get id() {
         if (this.#id !== null) return this.#id;
         if (this.#obj !== null) return this.#obj.id;

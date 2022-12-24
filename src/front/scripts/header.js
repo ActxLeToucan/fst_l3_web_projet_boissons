@@ -1,7 +1,10 @@
 import { hideDIV, initCommon, setElementStyle, showDIV } from "./common.js";
 import User from "./User.js";
 
+// Contenu du header des pages HTML
+// Contient une partie pour la version mobile et une autre pour la version desktop
 const HEADER_CONTENT = `<div class="flex flex-col grow h-fit rounded-lg shadow-xl bg-slate-50 border-2 border-pink-600 px-4 py-4">
+<!-- DEBUT VERSION DESKTOP -->
 <div class="hidden md:flex grow">
     <div class="flex flex-col justify-center w-fit">
         <a href="/index.html" class="text-2xl font-extrabold text-slate-700 hover:text-pink-600 transition-all"> Cocktails & Cie </a>
@@ -27,6 +30,9 @@ const HEADER_CONTENT = `<div class="flex flex-col grow h-fit rounded-lg shadow-x
         </div>
     </div>
 </div>
+<!-- FIN VERSION DESKTOP -->
+
+<!-- DEBUT VERSION MOBILE -->
 <div class="flex md:hidden grow">
     <div class="flex flex-col justify-center w-fit">
         <a href="/index.html" class="text-2xl font-extrabold text-slate-700 hover:text-pink-600 transition-all"> Cocktails & Cie </a>
@@ -38,7 +44,10 @@ const HEADER_CONTENT = `<div class="flex flex-col grow h-fit rounded-lg shadow-x
             </svg>
         </div>
     </div>
-</div>
+</div>                              
+<!-- FIN VERSION MOBILE -->
+
+<!-- DEBUT MENU DEROULANT MOBILE -->
 <div id="mobile-menu" class="flex flex-col grow h-fit overflow-hidden transition-all duration-500" style="max-height: 0px;">
     <div class="flex flex-col grow">
         <span class="flex grow h-[2px] bg-pink-600 rounded mx-4 mt-2"></span>
@@ -65,37 +74,53 @@ const HEADER_CONTENT = `<div class="flex flex-col grow h-fit rounded-lg shadow-x
         </div>
     </div>
 </div>
+<!-- FIN MENU DEROULANT MOBILE -->
 </div>`;
 
 let mobile_menu_shown = false;
+/**
+ * Fonction d'initialisation du header
+ */
 function initHeader() {
+    // initialisation du module commun (on le fais ici car le header est présent sur toutes les pages)
     initCommon();
 
+    // recupération du header
     const header = document.querySelector("header");
     if (!header) return;
+    // on mets le style du header
     setElementStyle(header, "flex fixed top-0 w-full h-fit p-2 z-50");
+    // on ajoute le contenu du header
     header.innerHTML = HEADER_CONTENT;
 
+    // si l'utilisateur est connecté, on affiche le menu connecté
     if (User.isConnected()) {
         showDIV("is-connected");
         hideDIV("is-disconnected");
 
-        if (User.CurrentUser.level == 1) // admin, display the admin button
+        // on affiche le bouton d'administration si l'utilisateur est admin
+        if (User.CurrentUser.level == 1)
             header.querySelectorAll(".admin-btn").forEach(btn => btn.style.display = "flex");
         else header.querySelectorAll(".admin-btn").forEach(btn => btn.style.display = "none");
 
     } else {
+        // sinon on affiche le menu déconnecté
         hideDIV("is-connected");
         showDIV("is-disconnected");
     }
 
+    // on ajoute l'evenement au bouton du menu mobile
     const menu_btn = header.querySelector("#menu-btn");
     menu_btn?.addEventListener("click", () => {
+        // on recupere le menu mobile
         const mobile_menu = document.querySelector("#mobile-menu");
+
         if (!mobile_menu_shown) {
+            // si on doit afficher le menu, on l'affiche (on mets la taille a celle de son contenu)
             mobile_menu.style.maxHeight = mobile_menu.firstElementChild.getBoundingClientRect().height + "px";
             mobile_menu_shown = true;
         } else {
+            // sinon on le cache (on mets la taille a 0px)
             mobile_menu.style.maxHeight = "0px";
             mobile_menu_shown = false;
         }

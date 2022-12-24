@@ -13,7 +13,9 @@ const HEADER_CONTENT = `<div class="flex flex-col grow h-fit rounded-lg shadow-x
                   transition-all hover:bg-pink-600 hover:text-slate-50" href="/favorites.html"> Favoris </a>
     </div>
     <div class="flex justify-end">
-        <div class="is-connected">
+        <div class="is-connected space-x-4">
+            <a class="admin-btn border-2 border-pink-600 rounded px-2 bg-transparent text-slate-700 font-semibold transition-all
+            hover:border-pink-600 hover:bg-pink-600 hover:text-slate-50" href="/admin.html"> Administration </a>
             <a class="border-2 border-pink-600 rounded px-2 bg-transparent text-slate-700 font-semibold transition-all
             hover:border-pink-600 hover:bg-pink-600 hover:text-slate-50" href="/profile.html"> Mon profil </a>
         </div>
@@ -48,7 +50,9 @@ const HEADER_CONTENT = `<div class="flex flex-col grow h-fit rounded-lg shadow-x
         </div>
         <span class="flex grow h-[2px] bg-slate-300 rounded w-12 mx-auto"></span>
         <div class="flex grow mt-4">
-            <div class="flex grow is-connected justify-center">
+            <div class="is-connected flex grow justify-evenly space-x-4 mb-2">
+                <a class="admin-btn border-2 border-pink-600 rounded px-2 bg-transparent text-slate-700 font-semibold transition-all
+                hover:border-pink-600 hover:bg-pink-600 hover:text-slate-50" href="/admin.html"> Administration </a>
                 <a class="border-2 border-pink-600 rounded px-2 bg-transparent text-slate-700 font-semibold transition-all
                 hover:border-pink-600 hover:bg-pink-600 hover:text-slate-50" href="/profile.html"> Mon profil </a>
             </div>
@@ -75,6 +79,11 @@ function initHeader() {
     if (User.isConnected()) {
         showDIV("is-connected");
         hideDIV("is-disconnected");
+
+        if (User.CurrentUser.level == 1) // admin, display the admin button
+            header.querySelectorAll(".admin-btn").forEach(btn => btn.style.display = "flex");
+        else header.querySelectorAll(".admin-btn").forEach(btn => btn.style.display = "none");
+
     } else {
         hideDIV("is-connected");
         showDIV("is-disconnected");

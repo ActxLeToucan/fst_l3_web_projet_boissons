@@ -53,8 +53,9 @@ class User {
     address;
     gender;
     token;
+    level;
     favorites = [];
-    props = ["id", "login", "firstname", "lastname", "birthdate", "email", "city", "zip", "address", "gender", "token", "favorites"];
+    props = ["id", "login", "firstname", "lastname", "birthdate", "email", "city", "zip", "address", "gender", "token", "favorites", "level"];
     constructor(infos) {
         this.setProps(infos);
 

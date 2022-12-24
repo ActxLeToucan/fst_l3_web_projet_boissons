@@ -62,11 +62,12 @@ function setCocktailInfos(cocktail) {
     aliments.innerHTML = "";
     for (let aliment in cocktail.ingredients) {
         const div = document.createElement("div");
-        setElementStyle(div, "border-4 border-pink-600 px-4 py-1 m-2 rounded-lg w-fit h-fit");
-        const p = document.createElement("p");
+        setElementStyle(div, "border-4 border-pink-600 px-4 py-1 m-2 rounded-lg w-fit h-fit hover:bg-pink-100 hover:shadow-md hover:-translate-y-[2px] transition-all");
+        const a = document.createElement("a");
         setElementStyle(div, "text-xl font-semibold text-slate-700 whitespace-nowrap");
-        p.innerText = cocktail.ingredients[aliment];
-        div.appendChild(p);
+        a.innerText = cocktail.ingredients[aliment];
+        a.href = window.location.origin + "/list.html?aliments=" + aliment;
+        div.appendChild(a);
         aliments.appendChild(div);
     }
 

@@ -86,7 +86,7 @@ class API {
      * @param {object[]}} headers API call additionnal headers
      * @returns a promise resolving when the API call is done
      */
-    static execute(path, method = this.METHOD.GET, body = {}, type = this.TYPE.JSON) {
+    static execute(path, method = this.METHOD.GET, body = {}, type = this.TYPE.JSON, headers = {}) {
         return new Promise((resolve, reject) => {
             path = path.replace("/?", "?").replaceAll("//", "/");
             let urlparts = path.split("?");
@@ -100,6 +100,10 @@ class API {
                 "Content-Type": type,
                 "Accept-Language": "fr"
             };
+
+            if (headers)
+                for (let key in headers)
+                    reqHeaders[key] = headers[key];
 
             let reqBody = {};
             if (body && type != this.TYPE.FILE) {
@@ -168,12 +172,7 @@ class API {
                 return;
             }
 
-            if (method === API.METHOD.GET || method === API.METHOD.DELETE)
-                this.execute(API.createParam(path, "token", token), method, body, type).then(resolve).catch(reject);
-            else {
-                body["token"] = token;
-                this.execute(path, method, body, type).then(resolve).catch(reject);
-            }
+            this.execute(path, method, body, type, {token: token}).then(resolve).catch(reject);
         });
     }
 

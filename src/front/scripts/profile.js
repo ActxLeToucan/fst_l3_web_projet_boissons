@@ -162,8 +162,7 @@ function deleteAccount() {
 function removeAccount(popup) {
     return new Promise((resolve, reject) => {
         popup.log("Suppression du compte ...");
-        console.log("password: "+popup.body.querySelector("input").value);
-        API.execute_logged(API.createParam("/users/me", "password", popup.body.querySelector("input").value), API.METHOD.DELETE, User.CurrentUser.token).then(res => {
+        API.execute_logged("/users/me", API.METHOD.DELETE, User.CurrentUser.token, {password: popup.body.querySelector("input").value}).then(res => {
             popup.log("Compte supprimé !");
             setTimeout(() => {
                 User.disconnect();

@@ -100,7 +100,7 @@ function showAutocomplete(el, data, onselected) {
     autocomplete_container.innerHTML = "";
     // on ajoute les données à l'autocompletion
     data.forEach(item => {
-        const itemEl = document.createElement("div");
+        const itemEl = document.createElement("p");
         setElementStyle(itemEl, "flex items-center px-2 py-1 hover:bg-pink-100 text-md font-semibold text-slate-700 py-2");
         itemEl.innerText = item.title;
         itemEl.addEventListener("click", () => {

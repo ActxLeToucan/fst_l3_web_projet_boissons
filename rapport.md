@@ -79,7 +79,42 @@ Les résultats sont triés de la manière suivante avec un calcul de score :
  - Pour chaque mot de la recherche, on divise les points pour ce mot par 2 si le mot est entre parenthèses.
 
 ## Formulaires
+### Front
+```ini
+TODO
+```
+
+### Back
+Les formulaires de connexion et d'inscription sont gérés par l'API.
+L'API vérifie que les données envoyées par le front sont valides et renvoie une erreur si ce n'est pas le cas.
+Le détail des vérifications est présenté dans le fichier [routes.md](./conception/routes.md).
+
+Les paramètres optionnels vides sont ignorés. En revanche, les paramètres obligatoires vides sont considérés comme invalides.
+
+Chaque vérification produit un message d'erreur différent, ce message est ensuite affiché par le front.
+
+Les messages renvoyés par l'API peuvent être traduits en plusieurs langues. Nous avons travaillé au départ en anglais, mais nous avons décidé de traduire en français car le front est en français.
 
 ## Favoris
+### Front
+```ini
+TODO
+```
+
+### Back
+L'API permet d'ajouter ou de supprimer de l'utilisateur courant une liste de cocktails en favoris.
+L'API vérifie seulement que l'id du cocktail est valide et que l'utilisateur est connecté.
+Il est possible de donner plusieurs fois le même id de cocktail ou de supprimer un cocktail qui n'est pas en favoris.
 
 ## Connexion
+### Front
+```ini
+TODO
+```
+
+### Back
+Lors de la connexion ou de l'inscription, si les champs sont valides, l'API renvoie le token de l'utilisateur.
+C'est ce qui permet de ne pas avoir à se reconnecter à chaque fois que l'on envoie une requête à l'API ou à garder en mémoire le mot de passe.
+
+En prenant Discord comme exemple, nous avons décidé de ne changer le token que lors du changement de mot de passe.
+D'autres solutions sont possibles, comme changer le token à chaque connexion, mais nous avons préféré cette solution car elle est plus simple à mettre en place, et que le risque de sécurité est faible sur ce projet.

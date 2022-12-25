@@ -318,9 +318,13 @@ class UserController {
         if (($rs = $this->checkPasswordField($rq, $rs, $new))->getStatusCode() !== 200) return $rs;
 
         $user->password = password_hash($new, PASSWORD_DEFAULT);
+        $user->token = bin2hex(random_bytes(64));
         $user->save();
 
-        return $rs->withJson(["success" => msgLocale($rq, "password_updated")]);
+        return $rs->withJson([
+            "success" => msgLocale($rq, "password_updated"),
+            "token" => $user->token
+        ]);
     }
 
     public function update(Request $rq, Response $rs, array $args): Response {

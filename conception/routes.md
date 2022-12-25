@@ -382,7 +382,8 @@ Header :
 Réponse :
 ```json
 {
-  "success": "Password updated"
+  "success": "Password updated",
+  "token": "mon_nouveau_token_unique"
 }
 ```
 

@@ -21,6 +21,9 @@ function showAutocomplete(el, data, onselected) {
     // si il n'y a pas de données, on cache l'autocompletion
     if (data.length === 0) {
         if (autocomplete_container != null) {
+            // si la souris n'est pas sur l'autocompletion, on la cache
+            // (Cette condition est la car showAutocomplete avec une liste vide
+            //  est appelé quand on clique en dehors de l'input, ou qu'un element est sélectionné)
             if (!autocomplete_container.hasMouse) {
                 autocomplete_container.remove();
                 autocomplete_container = null;

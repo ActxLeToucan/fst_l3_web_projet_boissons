@@ -1,4 +1,4 @@
-import { setElementStyle } from "./common";
+import { setElementStyle } from "./common.js";
 
 let menus = [];
 

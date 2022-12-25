@@ -70,7 +70,7 @@ function setup() {
     });
     search_input.addEventListener("blur", () => {
         search_input.hasFocus = false;
-        setTimeout(hideAutocomplete, 100);
+        hideAutocomplete();
     });
     search_input.addEventListener("keyup", e => {
         if (searchTimeout != -1)

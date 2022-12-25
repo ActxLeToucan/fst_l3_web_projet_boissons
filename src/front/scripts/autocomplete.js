@@ -21,8 +21,10 @@ function showAutocomplete(el, data, onselected) {
     // si il n'y a pas de données, on cache l'autocompletion
     if (data.length === 0) {
         if (autocomplete_container != null) {
-            autocomplete_container.remove();
-            autocomplete_container = null;
+            if (!autocomplete_container.hasMouse) {
+                autocomplete_container.remove();
+                autocomplete_container = null;
+            }
         }
         return;
     }
@@ -43,6 +45,13 @@ function showAutocomplete(el, data, onselected) {
         container.style.zIndex = "1000";
         container.style.scrollBehavior = "smooth";
         autocomplete_container = container;
+
+        autocomplete_container.addEventListener("mouseenter", ev => {
+            autocomplete_container.hasMouse = true;
+        });
+        autocomplete_container.addEventListener("mouseleave", ev => {
+            autocomplete_container.hasMouse = false;
+        });
 
         // gestion des appuis sur les touches (flèches haut/bas)
         autocomplete_container.focusDown = () => {
@@ -73,7 +82,7 @@ function showAutocomplete(el, data, onselected) {
         };
 
         // Gestion du scroll de la page (pour remettre l'autocompletion à sa place)
-        window.addEventListener("scroll", () => {
+        const resizeBar = () => {
             const elBounds = el.getBoundingClientRect();
             if (autocomplete_container == null) {
                 window.removeEventListener("scroll", this);
@@ -81,7 +90,10 @@ function showAutocomplete(el, data, onselected) {
             }
             autocomplete_container.style.top = elBounds.y + elBounds.height + "px";
             autocomplete_container.style.left = elBounds.x + "px";
-        });
+            autocomplete_container.style.width = elBounds.width + "px";
+        };
+        window.addEventListener("scroll", resizeBar);
+        window.addEventListener("resize", resizeBar);
     }
     
     // on vide l'autocompletion

@@ -176,6 +176,16 @@ function modifyPassword() {
     log("Modification ...", log_zone);
     API.execute_logged("/users/me/password", API.METHOD.PATCH, User.CurrentUser.token, data).then(res => {
         // mot de passe modifie, on recharge la page
+
+        if (!res.token) {
+            log("Erreur : Aucun token recu", log_zone);
+            return;
+        }
+
+        // on sauvegarde le nouveau token
+        User.CurrentUser.token = res.token;
+        User.CurrentUser.save();
+
         log("Mot de passe modifié !", log_zone);
         setTimeout(() => { window.location.href = window.location.href; }, 1000);
     }).catch(err => {
